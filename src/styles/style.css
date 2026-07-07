@@ -81,8 +81,17 @@ textarea {
 }
 
 ::selection {
-  background: var(--color-orange);
-  color: var(--grey-2);
+  /* 反白的背景顏色：這裡換成了主題的主色 (琉璃藍) */
+  background: var(--color-blue); 
+  
+  /* 反白時的文字顏色：換成亮一點的紙白色，確保文字清晰 */
+  color: var(--grey-1); 
+}
+
+/* 針對 Firefox 瀏覽器的兼容性寫法（建議一併加上） */
+::-moz-selection {
+  background: var(--color-blue);
+  color: var(--grey-1);
 }
 
 /* Layout Structure */

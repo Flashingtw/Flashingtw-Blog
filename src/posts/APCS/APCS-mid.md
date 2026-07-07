@@ -1,8 +1,8 @@
 ---
 title: APCS 中級入門- Flashingtw
-date: 2026-06-01
-categories: [競程]
-tags: [C++,教學,APCS]
+date: 2026-02-01
+categories: [教學]
+tags: [C++,競程,APCS]
 image: ../../assets/postsImages/APCS-mid.jpg
 ---
 

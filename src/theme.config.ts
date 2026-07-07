@@ -109,20 +109,20 @@ export default defineConfig({
     "social": {
       "github": {
         "url": "https://github.com/Flashingtw",
-        "icon": "i-ri-github-fill",
+        "icon": "i-ri-github-fill"
       },
       "email": {
         "url": "mailto:0624joshua@gmail.com",
-        "icon": "i-ri-mail-line",
+        "icon": "i-ri-mail-line"
       },
       "Instagram": {
         "url": "https://www.instagram.com/dacsc_flash.zcx/",
-        "icon": "i-ri-instagram-line",
+        "icon": "i-ri-instagram-line"
       },
       "Threads": {
         "url": "https://www.threads.com/@flash.zcx",
-        "icon": "i-ri-threads-line",
-      },
+        "icon": "i-ri-threads-line"
+      }
     },
     "menu": []
   },
@@ -145,7 +145,7 @@ export default defineConfig({
     "endColor": "var(--color-blue)"
   },
   "widgets": {
-    "randomPosts": false,
+    "randomPosts": true,
     "recentComments": false,
     "recentCommentsLimit": 10
   },
@@ -193,10 +193,12 @@ export default defineConfig({
   "home": {
     "selectedCategories": [
       {
-        "name": "Tutorial"
+        "cover": "assets/cp.jpg",
+        "name": "題解"
       },
       {
-        "name": "Frontend"
+        "cover": "assets/exp.jpg",
+        "name": "心得"
       }
     ],
     "pageSize": 5,

@@ -18,7 +18,8 @@
     "e2e:smoke": "bunx playwright test --grep @smoke",
     "e2e:critical": "bunx playwright test --grep @critical",
     "e2e:regression": "bunx playwright test --grep @regression",
-    "hyc": "hyc"
+    "hyc": "hyc",
+    "prisma": "prisma"
   },
   "dependencies": {
     "@astrojs/check": "0.9.9",

@@ -1,8 +1,8 @@
 ---
 title: 競程題解筆記
 date: 2026-03-01
-categories: [競程]
-tags: [C++,題解,]
+categories: [題解]
+tags: [C++,競程]
 ---
 
 # 競程題解筆記

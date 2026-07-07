@@ -27,58 +27,97 @@ comments: true
 
 ## 🚀 經歷與時間軸
 
-<div class="relative border-l-2 border-gray-400 ml-3 mt-6 mb-10">
-  
-  {/* ===== 2026 年節點 ===== */}
-  <div class="mb-8 pl-6 relative group/item">
-    
-    {/* 💡 修正 1 (光圈)：改用 var(--body-bg)，讓光圈永遠跟隨系統背景色，完美融入並切斷直線 */}
-    <span class="absolute w-3 h-3 rounded-full -left-[7.5px] top-2 ring-4 !ring-[var(--body-bg)] transition-colors duration-300 bg-gray-400 group-hover/item:bg-blue-500"></span>
-    
-    {/* 💡 修正 2 (年份)：改用 var(--text-color)，不再寫死黑白，直接讓主題自動幫你反轉顏色 */}
-    <h3 class="text-xl font-bold mt-0 mb-4 transition-colors duration-300 !text-gray-500 group-hover/item:!text-[var(--text-color)]">2026 年</h3>
-    
-    <div class="flex flex-col gap-5">
-      <div>
-        <div class="font-bold transition-colors duration-300 text-gray-500 group-hover/item:text-blue-500">06月 ｜ 青年百億圓夢計畫</div>
-        <p class="text-sm text-gray-500 mt-1 mb-0">當選 I-J-30 計畫參與者。</p>
-      </div>
-      <div>
-        <div class="font-bold transition-colors duration-300 text-gray-500 group-hover/item:text-blue-500">04月 ｜ 114校內程式設計競賽</div>
-        <p class="text-sm text-gray-500 mt-1 mb-0">取得 <strong>冠軍 🏆</strong>，證明自身解題思維與程式編寫流暢度。</p>
-      </div>
-      <div>
-        <div class="font-bold transition-colors duration-300 text-gray-500 group-hover/item:text-blue-500">03月 ｜ TOI 臺灣國際資訊奧林匹亞初選</div>
-        <p class="text-sm text-gray-500 mt-1 mb-0">獲得 <strong>100 分</strong> 的成績，持續累積大型競賽實戰經驗。</p>
-      </div>
-      <div>
-        <div class="font-bold transition-colors duration-300 text-gray-500 group-hover/item:text-blue-500">01月 ｜ APCS 大學程式設計先修檢測</div>
-        <p class="text-sm text-gray-500 mt-1 mb-0">觀念題 <strong>4 級分</strong> / 實作題 <strong>3 級分</strong> (總分 300 分)<br/>突破自我，展現了階段性的學習成果。</p>
-      </div>
-    </div>
-  </div>
+export const timelineData = [
+  {
+    year: "2026",
+    events: [
+      { 
+        date: "07月07日", 
+        title: "Young Turing Program 線上初賽", 
+        desc: <><strong>Rk.Unknown</strong> 還是曹大哥跟科班電神帶飛 我只有寫p5跟helloworld</> 
+      },
+      { 
+        date: "07月05日", 
+        title: "APCS 大學程式設計先修檢測", 
+        desc: <>觀念題 <strong>? 級分</strong> / 實作題 <strong>? 級分(?分)</strong><br/>成績好慢 出來了再更新</> 
+      },
+      { 
+        date: "06月30日", 
+        title: "青年百億計畫", 
+        desc: <>成功錄取 <strong>IJ-8-30 解構未來技術巡航</strong> 的計畫參與者<br/>中間的過程對我來講也是一個很大的經驗了</> 
+      },
+      { 
+        date: "05月31日", 
+        title: "成大賽初賽", 
+        desc: <><strong>Rk.Unknown</strong> 曹大哥跟科班電神太強了，直接帶我進決賽</> 
+      },
+      { 
+        date: "05月24日", 
+        title: "海大賽", 
+        desc: <><strong>Rk.1st</strong> 被Zaim跟eggeggwe帶飛</> 
+      },
+      { 
+        date: "05月22日", 
+        title: "114校內程式設計競賽", 
+        desc: <><strong>Rk.1st</strong> 證明自身解題思維。</> 
+      },
+      { 
+        date: "03月07日", 
+        title: "TOI 台灣資訊奧林匹亞初選", 
+        desc: <>僅獲得 <strong>100</strong>分的成績 <br/> 取得了一次大型競賽的經驗</> 
+      },
+      { 
+        date: "01月", 
+        title: "APCS 大學程式設計先修檢測", 
+        desc: <>觀念題 <strong>4 級分</strong> / 實作題 <strong>3 級分(300分)</strong><br/>突破自我，展現階段性成果。</> 
+      }
+    ]
+  },
+  {
+    year: "2025",
+    events: [
+      { 
+        date: "10月",
+        title: "APCS 大學程式設計先修檢測",
+        desc: <>觀念題 <strong>3 級分</strong> / 實作題 <strong>1 級分 (0分)</strong><br/> 打擊了一次自信心，原本認為自己很強實，則甚麼都不是</>
+      },
+      { 
+        date: "08月",
+        title: "正式啟程",
+        desc:<>開始學習C++語法 正式踏入演算法的世界</> 
+        },  
+    ]
+  }
+];
 
-  {/* ===== 2025 年節點 ===== */}
-  <div class="mb-4 pl-6 relative group/item">
-    
-    {/* 💡 同步修正 2025 的光圈 */}
-    <span class="absolute w-3 h-3 rounded-full -left-[7.5px] top-2 ring-4 !ring-[var(--body-bg)] transition-colors duration-300 bg-gray-400 group-hover/item:bg-blue-500"></span>
-    
-    {/* 💡 同步修正 2025 的年份文字 */}
-    <h3 class="text-xl font-bold mt-0 mb-4 transition-colors duration-300 !text-gray-500 group-hover/item:!text-[var(--text-color)]">2025 年</h3>
-    
-    <div class="flex flex-col gap-5">
-      <div>
-        <div class="font-bold transition-colors duration-300 text-gray-500 group-hover/item:text-blue-500">10月 ｜ APCS 大學程式設計先修檢測</div>
-        <p class="text-sm text-gray-500 mt-1 mb-0">觀念題 <strong>3 級分</strong> / 實作題 <strong>1 級分</strong> (0 分)<br/>一次寶貴的實戰檢驗，發現盲點並成為下次進步的養分。</p>
-      </div>
-      <div>
-        <div class="font-bold transition-colors duration-300 text-gray-500 group-hover/item:text-blue-500">08月 ｜ 正式啟程</div>
-        <p class="text-sm text-gray-500 mt-1 mb-0">開始學習 C++ 程式語言，正式踏入程式設計的世界。</p>
+<div className="relative border-l-2 border-gray-400 ml-3 mt-6 mb-10">
+  {timelineData.map((group) => (
+    /* 第一層：年份區塊 (Group A) */
+    <div key={group.year} className="mb-8 pl-6 relative group/year">
+      
+      {/* 年份的光圈：監聽 group/year */}
+      <span className="absolute w-3 h-3 rounded-full -left-[7.5px] top-2 ring-4 !ring-[var(--body-bg)] transition-colors duration-300 bg-gray-400 group-hover/year:bg-blue-500"></span>
+      
+      {/* 年份文字：監聽 group/year */}
+      <h3 className="text-xl font-bold mt-0 mb-4 transition-colors duration-300 text-gray-600 group-hover/year:text-[var(--text-color)]">
+        {group.year} 年
+      </h3>
+      
+      <div className="flex flex-col gap-5">
+        {group.events.map((item, idx) => (
+          /* 第二層：項目區塊 (Group B) */
+          <div key={idx} className="group/item">
+            <div className="font-bold transition-colors duration-300 text-gray-500 group-hover/item:text-blue-500">
+              {item.date} ｜ {item.title}
+            </div>
+            <p className="text-sm text-gray-700 mt-1 mb-0 transition-colors duration-300 group-hover/item:text-gray-400">
+              {item.desc}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
-  </div>
-  
+  ))}
 </div>
 ---
 
