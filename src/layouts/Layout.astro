@@ -48,8 +48,9 @@ interface Props {
   pageTitle?: string;
   postMeta?: PostMeta;
   indexPage?: boolean;
-  pageCover?: ImageMetadata | string;
-  description?: string; // 👈 順利接收來自文章頁面的簡介
+  pageCover?: ImageMetadata | string; // 這是給頂部橫幅用的
+  ogImage?: ImageMetadata | string;   // 🎯 1. 新增專門給社群媒體 (OG) 用的屬性
+  description?: string; 
 }
 
 const {
@@ -61,7 +62,8 @@ const {
   postMeta,
   indexPage = false,
   pageCover,
-  description = "", // 👈 預設為空字串
+  ogImage,                            // 🎯 2. 解構出來
+  description = "", 
 } = Astro.props;
 
 const navLinks = themeConfig.nav;
@@ -109,13 +111,15 @@ const resolvedHeaderCover = typeof pageCover === "string"
 // ==================== ✨ 請將 Layout.astro 的這段邏輯替換 ✨ ====================
 let ogImageSrc = "";
 
+// 🎯 3. 優先使用專門傳給社群的 ogImage，如果沒有才用 pageCover 兜底
+const activeOgImage = ogImage ?? pageCover;
+
 if (indexPage) {
   ogImageSrc = "/images/home.png";
-} else if (typeof pageCover === "string" && pageCover.trim() !== "") {
-  ogImageSrc = pageCover;
-} else if (pageCover && typeof pageCover === "object" && "src" in pageCover) {
-  // 🎯 如果是 Astro 自動解析的圖片物件，直接取用它編譯後的完整路徑（會自帶 /_astro/ 網址）
-  ogImageSrc = pageCover.src;
+} else if (typeof activeOgImage === "string" && activeOgImage.trim() !== "") {
+  ogImageSrc = activeOgImage;
+} else if (activeOgImage && typeof activeOgImage === "object" && "src" in activeOgImage) {
+  ogImageSrc = activeOgImage.src;
 } else if (resolvedHeaderCover && typeof resolvedHeaderCover === "object" && "src" in resolvedHeaderCover) {
   ogImageSrc = resolvedHeaderCover.src;
 } else if (typeof resolvedHeaderCover === "string" && resolvedHeaderCover.trim() !== "") {
@@ -124,12 +128,11 @@ if (indexPage) {
   ogImageSrc = "/images/default.avif";
 }
 
-// 🎯 修正相對路徑防呆：如果既不是完整網址 (http)，開頭也沒有斜線 (/)，就幫它補上斜線
+// 修正相對路徑防呆
 if (!ogImageSrc.startsWith("http") && !ogImageSrc.startsWith("/")) {
   ogImageSrc = "/" + ogImageSrc;
 }
 
-// 產生最終給社群媒體抓取的絕對網址
 const absoluteOgImage = new URL(
   ogImageSrc,
   Astro.site ?? Astro.url.origin

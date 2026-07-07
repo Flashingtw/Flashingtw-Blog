@@ -338,12 +338,10 @@ const computedDescription = post.data.description || post.body?.slice(0, 150).re
   navigation={navigation}
   pageTitle={post.data.title}
   postMeta={postMeta}
-  pageCover={finalPageCover} 
-  description={computedDescription}>
+  ogImage={finalPageCover} description={computedDescription}>
+  
   <Fragment slot="head">
     <meta name="description" content={computedDescription} />
-    
-    {/* 加密文章添加 noindex */}
     {isEncrypted && <meta name="robots" content="noindex, nofollow" />}
   </Fragment>
 

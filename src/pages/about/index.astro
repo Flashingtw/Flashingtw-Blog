@@ -61,15 +61,13 @@ const finalPageCover = frontmatter.image || frontmatter.cover;
 <Layout 
   pageTitle={title} 
   description={description}
-  pageCover={finalPageCover} 
->
+  ogImage={finalPageCover} >
   <Fragment slot="head">
     <meta name="description" content={description} />
-  </Fragment>
+    </Fragment>
 
   <div class="article wrap">
     <Breadcrumb isHome={false} />
-
 
     <article
       itemscope
