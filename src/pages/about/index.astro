@@ -61,15 +61,15 @@ const finalPageCover = frontmatter.image || frontmatter.cover;
 <Layout 
   pageTitle={title} 
   description={description}
+  pageCover={finalPageCover} 
 >
   <Fragment slot="head">
     <meta name="description" content={description} />
-    <meta property="og:image" content={new URL(finalPageCover || "/images/default.avif", Astro.site ?? Astro.url.origin).toString()} />
-    <meta property="twitter:image" content={new URL(finalPageCover || "/images/default.avif", Astro.site ?? Astro.url.origin).toString()} />
   </Fragment>
 
   <div class="article wrap">
     <Breadcrumb isHome={false} />
+
 
     <article
       itemscope

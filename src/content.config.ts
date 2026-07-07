@@ -25,6 +25,7 @@ const posts = defineCollection({
         z.array(z.string()).nullable().optional(),
       ),
       draft: z.boolean().optional(),
+      image: image().optional(),
       cover: image().optional(),
       sticky: z.boolean().optional(),
       license: z
