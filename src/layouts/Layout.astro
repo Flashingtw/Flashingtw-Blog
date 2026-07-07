@@ -115,7 +115,7 @@ let ogImageSrc = "";
 const activeOgImage = ogImage ?? pageCover;
 
 if (indexPage) {
-  ogImageSrc = "/images/home.png";
+  ogImageSrc = "/assets/home.png";
 } else if (typeof activeOgImage === "string" && activeOgImage.trim() !== "") {
   ogImageSrc = activeOgImage;
 } else if (activeOgImage && typeof activeOgImage === "object" && "src" in activeOgImage) {
@@ -125,7 +125,7 @@ if (indexPage) {
 } else if (typeof resolvedHeaderCover === "string" && resolvedHeaderCover.trim() !== "") {
   ogImageSrc = resolvedHeaderCover;
 } else {
-  ogImageSrc = "/images/default.avif";
+  ogImageSrc = "/assets/default.avif";
 }
 
 // 修正相對路徑防呆
