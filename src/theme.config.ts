@@ -90,7 +90,7 @@ export default defineConfig({
   "brand": {
     "title": "Flashingtw's Blog",
     "subtitle": "一個小小競程仔的網站",
-    "logo": ""
+    "logo": "/assets/images/avatar.avif"
   },
   "cover": {
     "enable": true,
