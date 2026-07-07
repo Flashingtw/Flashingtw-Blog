@@ -1,10 +1,8 @@
-name: Deploy Astro to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
-  # 當代碼被推送到 main 分支時自動觸發 (如果你的主分支叫 master，請改成 master)
   push:
-    branches: [main]
-  # 允許你從 GitHub 網頁介面手動觸發
+    branches: [ main ] # 或者是 master，看你的預設分支名稱
   workflow_dispatch:
 
 permissions:
@@ -18,15 +16,24 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
-        
-      # 新增：在 Runner 上安裝 Bun 環境
+      
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-
+          
       - name: Install, build, and upload your site
-        uses: withastro/action@v2
+        uses: withastro/action@v3
         with:
-          # 新增：明確告訴 Astro 使用 bun
           package-manager: bun
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
