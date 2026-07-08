@@ -112,27 +112,32 @@
 
 <style>
   #nav {
-    /* 1. 加入完整的漸變動畫：包含位移、背景色、陰影、文字顏色 */
-    transition: transform 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
-    /* 2. 強制關閉漸層背景（這是閃爍的元凶），統一使用純色運算 */
+    /* 增加 backdrop-filter 的過渡，讓毛玻璃效果也能平滑出現 */
+    transition: transform 0.4s ease, 
+                background-color 0.4s ease, 
+                box-shadow 0.4s ease, 
+                color 0.4s ease, 
+                backdrop-filter 0.4s ease;
     background-image: none !important; 
-    background-color: transparent;
   }
 
-  .nav-bg {
-    /* 滾動後的狀態：改成你剛剛設定好的「實心底色」 */
-    background-color: var(--grey-0);
-    box-shadow: 0.1rem 0.1rem 0.2rem var(--grey-9-a1);
-    text-shadow: 0 0 0.0625rem var(--grey-9-a1);
-    color: var(--text-color);
-  }
-
+  /* --- 狀態 1：最上層 (nav-top) --- */
   .nav-top {
-    /* 在最頂部的狀態：維持純透明，透出後面的封面圖片 */
-    background-color: transparent;
-    color: var(--header-text-color);
-    /* 保留文字陰影，確保在透明背景下，白色文字依然清晰可見 */
-    text-shadow: 0 0.125rem 0.25rem var(--grey-9-a5);
+    background-color: transparent !important;
+    backdrop-filter: blur(10px) saturate(100%); /* 頂部不模糊 */
+    color: oklch(0.3 0.05 260) !important;      /* 深色文字 */
+  }
+
+  /* --- 狀態 2：滾動後 (nav-bg) --- */
+  .nav-bg {
+    /* 使用 0.7 的透明度，讓它呈現「半透明深色」的質感 */
+    background-color: oklch(0.22 0.02 260 / 0.7) !important;
+    
+    /* 開啟毛玻璃效果，這是現代網頁最愛用的「半透明質感」 */
+    backdrop-filter: blur(12px) saturate(180%);
+    
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    color: #ffffff !important; /* 白色文字 */
   }
 
   .nav-action {

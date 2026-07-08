@@ -97,7 +97,7 @@ export default defineConfig({
     "preload": true,
     "advancedCarousel": true,
     "fixedCover": {
-      "enable": true,
+      "enable": false,
       "url": "cover-1"
     },
     "coverUrls": [],

@@ -4,7 +4,7 @@ import PostSegments from "./postSegments/PostSegments.astro";
 import CategoryCards from "./categoryCard/CategoryCards.svelte";
 import Divider from "./Divider.astro";
 import { transformIndexPosts } from "@/toolkit/posts/transformIndexPosts";
-import { covers, getPostCover } from "./Images.astro";
+import { covers, getPostCover ,wallpapers} from "./Images.astro";
 import { resolveHeaderCovers } from "@/toolkit/headerCover";
 import { t } from "@/i18n";
 import themeConfig from "@/theme.config";
@@ -83,7 +83,8 @@ if (hycEnable && cardExcerptSource === "ai") {
 
 const transformOptions = {
   encryptedExcerpt: t("post.encryptedExcerpt"),
-  resolveCover: (post: CollectionEntry<"posts">) => getPostCover(post, headerCovers),
+  // 修改這裡的 getPostCover
+  resolveCover: (post: CollectionEntry<"posts">) => getPostCover(post, wallpapers), 
   excerptSource: cardExcerptSource,
   aiSummaries,
 };

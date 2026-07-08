@@ -1,6 +1,4 @@
-/* 本文件是针对 Astro 内容合集图像默认值问题的一个 hack 
-... (保留你的原始註解) ...
-*/
+/* 本文件是针对 Astro 内容合集图像默认值问题的一个 hack */
 ---
 import { sample } from "es-toolkit";
 import type { Post } from "@/toolkit/posts/types";
@@ -9,13 +7,12 @@ import type { ImageMetadata } from "astro";
 import avatarImg from "../assets/avatar.avif";
 export const avatar = avatarImg;
 
-// ✨ 關鍵修正：前面加上 export，這樣它才會跟著 coverPresets 一起被提升到全域 Scope
+// --- 原有邏輯 (保持不動，確保 resolveFixedCover 正常運作) ---
 export const coverMatches = import.meta.glob(
   "../assets/images/cover/*.avif", 
   { eager: true }
 ) as Record<string, { default: ImageMetadata }>;
 
-// 現在大家都處在同一個 Scope 了，絕對不會再找不到變數！
 export const coverPresets: Record<string, ImageMetadata> = Object.fromEntries(
   Object.entries(coverMatches).map(([path, mod]) => {
     const fileName = path.split('/').pop()?.split('.')[0] || '';
@@ -25,6 +22,15 @@ export const coverPresets: Record<string, ImageMetadata> = Object.fromEntries(
 
 export const covers: ImageMetadata[] = Object.values(coverMatches).map(mod => mod.default);
 
+// --- 新增：專門給隨機背景圖使用的邏輯 ---
+export const wallpaperMatches = import.meta.glob(
+  "../assets/images/wallpapers/*.avif", 
+  { eager: true }
+) as Record<string, { default: ImageMetadata }>;
+
+export const wallpapers: ImageMetadata[] = Object.values(wallpaperMatches).map(mod => mod.default);
+
+// --- 舊有的導出函數 (保證相容性) ---
 export function resolveFixedCover(
   fixedCover?: string,
 ): ImageMetadata | string {
@@ -42,5 +48,10 @@ export function getPostCover(
 
   const defaultCovers = Covers?.length ? Covers : covers;
   return sample(defaultCovers) ?? avatarImg;
+}
+
+// --- 新增：取得隨機背景圖的函數 ---
+export function getRandomWallpaper(): ImageMetadata {
+  return sample(wallpapers) ?? avatarImg;
 }
 ---
