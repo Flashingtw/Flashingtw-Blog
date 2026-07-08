@@ -95,10 +95,10 @@ export default defineConfig({
   "cover": {
     "enable": true,
     "preload": true,
-    "advancedCarousel": false,
+    "advancedCarousel": true,
     "fixedCover": {
-      "enable": false,
-      "url": "cover-4"
+      "enable": true,
+      "url": "cover-1"
     },
     "coverUrls": [],
     "nextGradientCover": true
@@ -244,6 +244,7 @@ export default defineConfig({
         "desc": "分享科技教學、程式開發、加密貨幣與生活隨筆的個人部落格。內容涵蓋隱私網路、應用程式分享，遊記等主題，記錄學習筆記、實作經驗與技術探索。",
         "siteImage": "https://yimang.tw/images/default-cover.webp",
         "title": "Yimang's blog",
+        "color": "#fd9b4b",
         "url": "https://yimang.tw/"
       }
     ]

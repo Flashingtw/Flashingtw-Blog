@@ -11,7 +11,7 @@ export const avatar = avatarImg;
 
 // ✨ 關鍵修正：前面加上 export，這樣它才會跟著 coverPresets 一起被提升到全域 Scope
 export const coverMatches = import.meta.glob(
-  "../assets/images/*.avif", 
+  "../assets/images/cover/*.avif", 
   { eager: true }
 ) as Record<string, { default: ImageMetadata }>;
 
