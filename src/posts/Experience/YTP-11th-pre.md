@@ -1,5 +1,5 @@
 ---
-title: 11屆YTP初賽初賽心得
+title: 11屆YTP初賽心得
 date: 2026-07-07
 categories: [心得]
 tags: [競程,C++]
