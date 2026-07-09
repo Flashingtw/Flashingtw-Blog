@@ -229,7 +229,15 @@
 </aside>
 
 <!-- Mobile dimmer -->
-<div class="dimmer" class:active={$sidebarOpen}></div>
+<div 
+  class="dimmer" 
+  class:active={$sidebarOpen} 
+  onclick={() => $sidebarOpen = false}
+  onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') $sidebarOpen = false; }}
+  role="button"
+  tabindex="0"
+  aria-label="關閉側邊欄"
+></div>
 
 <style>
   /* Sidebar container */
@@ -310,12 +318,29 @@
 
   @media (max-width: 1023px) {
     #sidebar > .inner {
-      width: 100%;
-    }
+    width: 100%;
+    height: 100%; /* 確保高度為 100%，撐滿側邊欄 */
+    display: flex;
+    flex-direction: column; /* 改為垂直排列 */
+    flex-wrap: nowrap; /* 覆蓋原本預設的 wrap，防止元素被擠到下一行 */
+  }
+  .panels {
+    flex: 1; /* 自動填滿頂部標籤與底部按鈕之間的剩餘空間 */
+    min-height: 0; /* 覆蓋全域的 100vh 限制 */
+    height: auto; 
+    padding: 4.6875rem 0 0; /* 底部 padding 可以設為 0，因為底部已經有按鈕列 */
+    display: flex;
+    flex-direction: column;
+  }
+  .panels > .inner {
+    margin-top: 0;
+    flex: 1; 
+    height: 100%;
+    overflow-y: auto; /* 當內容過多時，自動產生垂直捲軸 */
+    -webkit-overflow-scrolling: touch; /* 讓 iOS 設備上的滑動體驗更順暢 */
+    overscroll-behavior: contain;
+  }
 
-    .panels > .inner {
-      margin-top: 0;
-    }
   }
 
   .panels > .inner::-webkit-scrollbar {

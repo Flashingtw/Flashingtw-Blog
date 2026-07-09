@@ -273,6 +273,15 @@ export default defineConfig({
         "title": "匿名的貓貓",
         "url": "https://qwo877.github.io/me/",
         "color": "#d3aa8d"
+      },
+      {
+        "author": "shrimp2845",
+        "avatar": "https://cdn.discordapp.com/attachments/1524439663044071574/1524733802503606372/image.png?ex=6a50d282&is=6a4f8102&hm=2bbad259ee56789154ff336cf841166671cba9a3f7d505bc0ee23856e448d43f&",
+        "desc": "ohhi?",
+        "siteImage": "https://cdn.discordapp.com/attachments/1524439663044071574/1524733802994204702/image.png?ex=6a50d282&is=6a4f8102&hm=7a0bc04ed82839b566fb69a5ccfddea72ee86b2652279483b9e1df8a565d989b&",
+        "title": "SHRIMP2845 の BLOG",
+        "url": "https://shrimp2845-tw.github.io",
+        "color": "#e6a1ff"
       }
     ]
   },
