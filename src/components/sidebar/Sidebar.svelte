@@ -63,10 +63,10 @@
   let innerElement: HTMLElement | null = $state(null);
   let isAffix = $state(false);
 
-  // 合并静态 TOC 和加密文章解密后的 TOC
+  // 合併靜態 TOC 和加密文章解密後的 TOC
   let decryptedToc = $state<TocItem[]>([]);
 
-  // 订阅加密 TOC 更新
+  // 訂閱加密 TOC 更新
   $effect(() => {
     const unsubscribe = encryptedTocStore.subscribe((newToc) => {
       if (newToc && newToc.length > 0) {
@@ -76,9 +76,8 @@
     return unsubscribe;
   });
 
-  // 最终使用的 TOC：优先使用解密后的 TOC，否则使用静态 TOC
+  // 最終使用的 TOC：優先使用解密後的 TOC，否則使用靜態 TOC
   const effectiveToc = $derived(decryptedToc.length > 0 ? decryptedToc : toc);
-
   const menuSource = $derived(navLinks);
 
   // Determine which panels should be available
@@ -126,8 +125,7 @@
   });
 
   onMount(() => {
-    if (typeof window === "undefined" || typeof document === "undefined")
-      return;
+    if (typeof window === "undefined" || typeof document === "undefined") return;
 
     // Initialize menu active state
     initMenuActive();
@@ -140,8 +138,7 @@
         return;
       }
 
-      const sidebarTopInDocument =
-        sidebarElement.getBoundingClientRect().top + window.scrollY;
+      const sidebarTopInDocument = sidebarElement.getBoundingClientRect().top + window.scrollY;
       const innerMarginTop = Number.parseFloat(
         window.getComputedStyle(innerElement).marginTop,
       );
@@ -152,8 +149,7 @@
     // Handle scroll for affix behavior on desktop
     const handleScroll = () => {
       // Apply affix when scrolled past header and on desktop (width >= 1024px)
-      const shouldAffix =
-        window.scrollY > affixThreshold && window.innerWidth >= 1024;
+      const shouldAffix = window.scrollY > affixThreshold && window.innerWidth >= 1024;
       isAffix = shouldAffix;
     };
 
@@ -180,7 +176,6 @@
   };
 </script>
 
-<!-- Mobile overlay backdrop -->
 {#if $sidebarOpen}
   <SidebarOverlay />
 {/if}
@@ -193,7 +188,6 @@
   <div class="inner" bind:this={innerElement}>
     <SidebarTabs {panels} {activePanel} onSelect={selectPanel} />
 
-    <!-- Panels Container -->
     <div class="panels">
       <div class="inner">
         {#each panels as panel (panel.id)}
@@ -223,15 +217,13 @@
       </div>
     </div>
 
-    <!-- Quick navigation bar -->
     <SidebarQuick {navigation} isVisible={isAffix || $sidebarOpen} />
   </div>
 </aside>
 
-<!-- Mobile dimmer -->
-<div 
-  class="dimmer" 
-  class:active={$sidebarOpen} 
+<div
+  class="dimmer"
+  class:active={$sidebarOpen}
   onclick={() => $sidebarOpen = false}
   onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') $sidebarOpen = false; }}
   role="button"
@@ -247,35 +239,33 @@
     width: 100%;
     top: 0;
     bottom: 0;
+    scrollbar-width: none;
   }
 
   #sidebar::-webkit-scrollbar {
     display: none;
   }
 
-  #sidebar {
-    scrollbar-width: none;
-  }
-
   /* Tablet/Mobile styles */
   @media (max-width: 1023px) {
     #sidebar {
-      display: none;
       position: fixed;
+      top: 0;
       right: 0;
       background: var(--grey-1);
       box-shadow: var(--shadow-sidebar-mobile);
       z-index: var(--z-sidebar);
       width: 280px;
       height: 100%;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
     }
 
     #sidebar.on {
-      display: block;
+      transform: translateX(0);
     }
   }
 
-  /* Affix styles */
   /* Sidebar inner */
   #sidebar > .inner {
     margin-top: 3.5rem;
@@ -302,10 +292,11 @@
 
   /* Panels */
   .panels {
-    padding: 4.6875rem 0 2rem;
+    padding: 4.6875rem 1.25rem 2rem;
     width: 100%;
     overflow: hidden;
     min-height: 100vh;
+    text-align: center;
   }
 
   .panels > .inner {
@@ -316,35 +307,36 @@
     height: 100%;
   }
 
-  @media (max-width: 1023px) {
-    #sidebar > .inner {
-    width: 100%;
-    height: 100%; /* 確保高度為 100%，撐滿側邊欄 */
-    display: flex;
-    flex-direction: column; /* 改為垂直排列 */
-    flex-wrap: nowrap; /* 覆蓋原本預設的 wrap，防止元素被擠到下一行 */
-  }
-  .panels {
-    flex: 1; /* 自動填滿頂部標籤與底部按鈕之間的剩餘空間 */
-    min-height: 0; /* 覆蓋全域的 100vh 限制 */
-    height: auto; 
-    padding: 4.6875rem 0 0; /* 底部 padding 可以設為 0，因為底部已經有按鈕列 */
-    display: flex;
-    flex-direction: column;
-  }
-  .panels > .inner {
-    margin-top: 0;
-    flex: 1; 
-    height: 100%;
-    overflow-y: auto; /* 當內容過多時，自動產生垂直捲軸 */
-    -webkit-overflow-scrolling: touch; /* 讓 iOS 設備上的滑動體驗更順暢 */
-    overscroll-behavior: contain;
-  }
-
-  }
-
   .panels > .inner::-webkit-scrollbar {
     display: none;
+  }
+
+  @media (max-width: 1023px) {
+    #sidebar > .inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+
+    .panels {
+      flex: 1;
+      min-height: 0;
+      height: auto;
+      padding: 4.6875rem 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panels > .inner {
+      margin-top: 0;
+      flex: 1;
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
   }
 
   /* Dimmer overlay for mobile */
@@ -354,21 +346,25 @@
 
   @media (max-width: 1023px) {
     .dimmer {
-      background: black;
-      height: 100%;
-      left: 100%;
-      opacity: 0;
+      position: fixed;
       top: 0;
+      left: 0;
       width: 100%;
+      height: 100%;
+      background: black;
       z-index: var(--z-sidebar-overlay);
-      transition: opacity 1s;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     .dimmer.active {
-      position: fixed;
       display: block;
       opacity: 0.3;
-      transform: translateX(-100%);
+      visibility: visible;
+      pointer-events: auto;
+      transform: none;
     }
   }
 
