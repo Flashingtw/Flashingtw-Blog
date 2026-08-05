@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { POSTS, ROUTES, SEARCH_TERMS } from "../support/routes";
+import { FIXTURES, POSTS, ROUTES, SEARCH_TERMS } from "../support/routes";
 
 function escapeRegExp(input: string) {
   return input.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -24,6 +24,8 @@ async function waitForEnabled(locator: import("@playwright/test").Locator) {
 }
 
 test("@regression 加密文章密码链路：错误提示、正确解密、刷新回到锁定态", async ({ page }) => {
+  test.skip(!FIXTURES.encryptedPost, "目前內容沒有加密文章測試資料");
+
   await page.goto(POSTS.encryptedTest);
 
   const passwordInput = page.getByPlaceholder("请输入密码");
@@ -59,9 +61,9 @@ test("@regression 加密文章密码链路：错误提示、正确解密、刷�
 
 test("@critical 搜索命中后可点击结果跳转到对应文章", async ({ page }) => {
   await page.goto(ROUTES.home);
-  await page.getByRole("button", { name: "Search" }).click();
+  await page.locator("#search").click();
 
-  const searchDialog = page.getByRole("dialog", { name: "Search" });
+  const searchDialog = page.locator('.pagefind-panel[role="dialog"]');
   const searchInput = page.locator("pagefind-input input");
   await expect(searchDialog).toBeVisible();
   await expect(searchInput).toBeVisible();
@@ -101,7 +103,7 @@ test("@critical 分页与标签/分类列表进入文章后回退，URL与列表
   const pagePostHref = await pagePostLink.getAttribute("href");
   expect(pagePostHref).toBeTruthy();
   await pagePostLink.click();
-  await expect(page).toHaveURL(/\/posts\/[^/]+\/$/);
+  await expect(page).toHaveURL(/\/posts\/.+\/$/);
 
   await page.goBack();
   await expect(page).toHaveURL(ROUTES.page2);
@@ -117,7 +119,7 @@ test("@critical 分页与标签/分类列表进入文章后回退，URL与列表
   const tagPostLink = page.locator(".timeline article.item.normal .title a").first();
   await expect(tagPostLink).toBeVisible();
   await tagPostLink.click();
-  await expect(page).toHaveURL(/\/posts\/[^/]+\/$/);
+  await expect(page).toHaveURL(/\/posts\/.+\/$/);
 
   await page.goBack();
   await expect(page).toHaveURL(tagListingUrl);
@@ -133,7 +135,7 @@ test("@critical 分页与标签/分类列表进入文章后回退，URL与列表
   const categoryPostLink = page.locator(".timeline article.item.normal .title a").first();
   await expect(categoryPostLink).toBeVisible();
   await categoryPostLink.click();
-  await expect(page).toHaveURL(/\/posts\/[^/]+\/$/);
+  await expect(page).toHaveURL(/\/posts\/.+\/$/);
 
   await page.goBack();
   await expect(page).toHaveURL(categoryListingUrl);

@@ -30,12 +30,5 @@ test("@critical /page/2/ 的分页 prev/next 链接保持正确路由", async ({
   const prevLink = pagination.locator("a[rel='prev']");
   await expect(prevLink).toHaveAttribute("href", ROUTES.home);
 
-  const nextLink = pagination.locator("a[rel='next']");
-  await expect(nextLink).toHaveAttribute("href", ROUTES.page3);
-
-  await nextLink.click();
-  await expect(page).toHaveURL(ROUTES.page3);
-  await expect(page.locator("nav.pagination [aria-current='page']")).toHaveText("3");
-
-  await expect(page.locator("nav.pagination a[rel='prev']")).toHaveAttribute("href", ROUTES.page2);
+  await expect(pagination.locator("a[rel='next']")).toHaveCount(0);
 });

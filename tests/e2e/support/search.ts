@@ -8,7 +8,7 @@ import { expect, type Page } from "@playwright/test";
  */
 export async function openSearchDialog(page: Page) {
   const openSearchButton = page.locator("#search");
-  const searchDialog = page.getByRole("dialog", { name: "Search" });
+  const searchDialog = page.locator('.pagefind-panel[role="dialog"]');
 
   await expect(openSearchButton).toBeVisible();
 

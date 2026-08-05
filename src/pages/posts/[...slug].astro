@@ -338,7 +338,9 @@ const computedDescription = post.data.description || post.body?.slice(0, 150).re
   navigation={navigation}
   pageTitle={post.data.title}
   postMeta={postMeta}
-  ogImage={finalPageCover} description={computedDescription}>
+  pageCover={finalPageCover}
+  ogImage={finalPageCover}
+  description={computedDescription}>
   
   <Fragment slot="head">
     <meta name="description" content={computedDescription} />

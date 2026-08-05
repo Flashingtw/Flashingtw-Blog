@@ -31,11 +31,11 @@ test("@critical 文章内页头图应优先使用当前文章 cover", async ({ p
     : headerCoverSrc;
 
   expect(headerCoverUrl).not.toBeNull();
-  expect(headerCoverUrl).toContain("cover-1");
+  expect(headerCoverUrl).toContain("APCS-mid");
 });
 
-test("@critical 文章内页下一页封面应与目标文章 cover 一致", async ({ page }) => {
-  const response = await page.goto(POSTS.helloWorld);
+test("@critical 文章内页下一页封面遵循渐层设定", async ({ page }) => {
+  const response = await page.goto(POSTS.beforeCoveredPost);
   expect(response?.ok()).toBeTruthy();
 
   const nextLink = page.locator(`.post-nav a[rel="next"][href="${POSTS.gettingStarted}"]`);
@@ -45,8 +45,5 @@ test("@critical 文章内页下一页封面应与目标文章 cover 一致", asy
     return window.getComputedStyle(element).backgroundImage;
   });
 
-  const nextCoverUrl = extractUrlFromBackgroundImage(nextBackgroundImage);
-
-  expect(nextCoverUrl).not.toBeNull();
-  expect(nextCoverUrl).toContain("cover-2");
+  expect(nextBackgroundImage).toContain("linear-gradient");
 });

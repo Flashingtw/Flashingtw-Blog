@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { POSTS } from "../support/routes";
+import { FIXTURES, POSTS } from "../support/routes";
+
+test.skip(!FIXTURES.encryptedPost, "目前內容沒有加密文章測試資料");
 
 test("@critical 加密文章具备 noindex 与 Pagefind 排除标记", async ({ page }) => {
   const response = await page.goto(POSTS.encryptedTest);

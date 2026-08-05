@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { POSTS, ROUTES, SEARCH_TERMS } from "../support/routes";
+import { FIXTURES, POSTS, ROUTES, SEARCH_TERMS } from "../support/routes";
 import { openSearchDialog } from "../support/search";
 
 async function openSearchPanel(page: import("@playwright/test").Page) {
@@ -29,6 +29,8 @@ test("@critical 搜索可命中公开文章", async ({ page }) => {
 });
 
 test("@critical 搜索结果排除加密文章", async ({ page }) => {
+  test.skip(!FIXTURES.encryptedPost, "目前內容沒有加密文章測試資料");
+
   const searchInput = await openSearchPanel(page);
 
   await searchInput.fill(SEARCH_TERMS.encryptedPostTitle);
