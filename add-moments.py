@@ -8,7 +8,7 @@ from tkinter import messagebox
 # 1. 設定你的 Astro 專案根目錄與動態存放資料夾
 # 請將這裡替換成你電腦裡真實的專案路徑
 REPO_PATH = r"C:\Users\0624j\Desktop\blog" 
-MOMENTS_DIR = os.path.join(REPO_PATH, "src", "content", "moments")
+MOMENTS_DIR = os.path.join(REPO_PATH, "src", "moments")
 
 def publish_moment():
     # 獲取文字框內的內容 (支援多行排版)
