@@ -9,6 +9,8 @@ export interface FriendLink {
   siteImage?: string;
 }
 
+import { t } from "@/i18n";
+
 interface Props {
   links: FriendLink[];
 }
@@ -32,11 +34,11 @@ const { links } = Astro.props;
           >
             <img
               src={link.siteImage}
-              alt={`${link.title} 站点预览`}
+              alt={t("friends.previewAlt", { title: link.title })}
               loading="lazy"
               decoding="async"
             />
-            <span class="site-preview-mask">前往連結</span>
+            <span class="site-preview-mask">{t("friends.visitLink")}</span>
           </a>
         )}
         <div class="friend-body">
@@ -45,11 +47,11 @@ const { links } = Astro.props;
             href={link.url}
             target="_blank"
             rel="noreferrer"
-            aria-label={`访问 ${link.author} 站点`}
+            aria-label={t("friends.visitSite", { author: link.author })}
           >
             <img
               src={link.avatar}
-              alt={`${link.author} 头像`}
+              alt={t("friends.avatarAlt", { author: link.author })}
               loading="lazy"
               decoding="async"
             />
@@ -66,7 +68,9 @@ const { links } = Astro.props;
               </a>
             </div>
             <div class="friend-meta">
-              <span class="friend-author">by {link.author}</span>
+              <span class="friend-author">
+                {t("friends.byAuthor", { author: link.author })}
+              </span>
             </div>
             <p class="friend-desc">{link.desc}</p>
           </div>

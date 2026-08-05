@@ -1,4 +1,6 @@
 ---
+import { t } from "@/i18n";
+
 interface Props {
   summary?: string | null;
   title?: string;
@@ -6,14 +8,14 @@ interface Props {
   showModel?: boolean;
 }
 
-const { summary, title = "AI 摘要", model, showModel = false } = Astro.props;
+const { summary, title = t("ai.summary"), model, showModel = false } = Astro.props;
 
 const normalizedSummary = typeof summary === "string" ? summary.trim() : "";
 ---
 
 {
   normalizedSummary.length > 0 && (
-    <section class="ai-summary-card" aria-label="AI 摘要">
+    <section class="ai-summary-card" aria-label={t("ai.summary")}>
       <div class="ai-summary-card__title">
         <i class="icon i-ri-robot-2-line" />
         <span>{title}</span>

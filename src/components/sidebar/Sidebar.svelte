@@ -228,7 +228,7 @@
   onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') $sidebarOpen = false; }}
   role="button"
   tabindex="0"
-  aria-label="關閉側邊欄"
+  aria-label={t("accessibility.closeSidebar")}
 ></div>
 
 <style>

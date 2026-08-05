@@ -15,7 +15,7 @@
 
 {#if state && (state.posts || state.categories || state.tags)}
   <nav
-    aria-label="站点统计导航"
+    aria-label={t("accessibility.siteStatistics")}
     class="state flex justify-center leading-[1.4] mt-2.5 overflow-hidden text-center whitespace-nowrap"
   >
     {#if state.posts && state.posts > 0}

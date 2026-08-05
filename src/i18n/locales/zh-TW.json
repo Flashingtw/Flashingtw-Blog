@@ -56,6 +56,10 @@
     "all": "全部",
     "year": "年",
     "month": "月",
+    "yearLabel": "{{year}} 年",
+    "monthLabel": "{{month}} 月",
+    "yearTitle": "{{year}} 年歸檔",
+    "monthTitle": "{{year}} 年 {{month}} 月歸檔",
     "excellent": "太棒了",
     "great": "非常好",
     "good": "很好",
@@ -145,7 +149,8 @@
   },
   "pagination": {
     "prev": "上一頁",
-    "next": "下一頁"
+    "next": "下一頁",
+    "pageTitle": "第 {{page}} 頁"
   },
   "button": {
     "readMore": "閱讀更多",
@@ -165,7 +170,10 @@
   },
   "search": {
     "devModeSkipped": "目前為開發模式，已跳過 Pagefind 載入。",
-    "buildHint": "請先執行建置（含索引生成）後，再預覽站內搜尋效果。"
+    "buildHint": "請先執行建置（含索引生成）後，再預覽站內搜尋效果。",
+    "dialog": "全站搜尋",
+    "close": "關閉搜尋",
+    "closeOverlay": "關閉搜尋遮罩"
   },
   "encrypted": {
     "title": "文章已加密",
@@ -178,9 +186,55 @@
   },
   "moments": {
     "title": "動態",
+    "pagedTitle": "動態－第 {{page}} 頁",
+    "description": "動態－記錄生活的點滴",
     "noContent": "暫無動態",
     "publishedAt": "發佈於",
     "imageAlt": "動態圖片 {{index}}"
+  },
+  "friends": {
+    "title": "友鏈",
+    "description": "以卡片展示友站，支援網站預覽與主題色。",
+    "listTitle": "友鏈列表",
+    "commentsTitle": "評論區",
+    "visitLink": "前往連結",
+    "previewAlt": "{{title}} 網站預覽",
+    "avatarAlt": "{{author}} 頭像",
+    "visitSite": "前往 {{author}} 的網站",
+    "byAuthor": "由 {{author}} 建立"
+  },
+  "accessibility": {
+    "mainNavigation": "主導覽",
+    "primarySidebar": "主要側欄",
+    "secondarySidebar": "次要側欄",
+    "closeSidebar": "關閉側欄",
+    "toggleSidebar": "切換側欄",
+    "toggleTheme": "切換主題",
+    "scrollTop": "返回頂部",
+    "comments": "前往評論區",
+    "togglePlayer": "顯示或隱藏播放器",
+    "togglePlayback": "播放或暫停",
+    "sideMenu": "側欄選單導覽",
+    "siteStatistics": "站點統計導覽",
+    "tabs": "分頁標籤導覽",
+    "quizGap": "填空題答案欄位"
+  },
+  "codeBlock": {
+    "copy": "複製程式碼",
+    "copied": "已複製程式碼",
+    "enterFullscreen": "進入全螢幕",
+    "exitFullscreen": "離開全螢幕",
+    "expand": "展開程式碼",
+    "collapse": "收合程式碼"
+  },
+  "ai": {
+    "summary": "AI 摘要",
+    "similarPosts": "AI 推薦・相近文章",
+    "similarPostsLabel": "AI 相近文章推薦",
+    "similarity": "相似度 {{score}}%"
+  },
+  "rss": {
+    "description": "{{siteName}} 的文章訂閱"
   },
   "imageZoom": {
     "dialog": "圖片預覽",

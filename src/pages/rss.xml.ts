@@ -3,6 +3,7 @@ import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
 import themeConfig from "@/theme.config";
 import { toPostHref } from "@/toolkit/posts/url";
+import { t } from "@/i18n";
 
 // 生成站点 RSS 订阅源（/rss.xml）
 export async function GET(context: APIContext) {
@@ -13,7 +14,9 @@ export async function GET(context: APIContext) {
 
   const siteName = themeConfig.siteName;
   const description =
-    themeConfig.sidebar?.description || themeConfig.brand?.subtitle || `${siteName} 的文章订阅`;
+    themeConfig.sidebar?.description ||
+    themeConfig.brand?.subtitle ||
+    t("rss.description", { siteName });
 
   return rss({
     title: siteName,

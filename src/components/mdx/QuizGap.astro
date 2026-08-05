@@ -1,4 +1,6 @@
 ---
+import { t } from "@/i18n";
+
 interface Props {
   answer?: string;
 }
@@ -6,6 +8,10 @@ interface Props {
 const { answer = "" }: Props = Astro.props;
 ---
 
-<span class="quiz-gap" data-answer={answer} aria-label="填空题答案占位">
+<span
+  class="quiz-gap"
+  data-answer={answer}
+  aria-label={t("accessibility.quizGap")}
+>
   {answer}
 </span>

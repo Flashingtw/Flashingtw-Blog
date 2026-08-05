@@ -56,6 +56,10 @@
     "all": "すべて",
     "year": "年",
     "month": "月",
+    "yearLabel": "{{year}} 年",
+    "monthLabel": "{{month}} 月",
+    "yearTitle": "{{year}} 年のアーカイブ",
+    "monthTitle": "{{year}} 年 {{month}} 月のアーカイブ",
     "excellent": "最高です",
     "great": "とても良いです",
     "good": "良いです",
@@ -145,7 +149,8 @@
   },
   "pagination": {
     "prev": "前へ",
-    "next": "次へ"
+    "next": "次へ",
+    "pageTitle": "{{page}} ページ目"
   },
   "button": {
     "readMore": "続きを読む",
@@ -165,7 +170,10 @@
   },
   "search": {
     "devModeSkipped": "現在は開発モードのため、Pagefind の読み込みをスキップしました。",
-    "buildHint": "サイト内検索を確認するには、まず本番ビルド（インデックス生成を含む）を実行してください。"
+    "buildHint": "サイト内検索を確認するには、まず本番ビルド（インデックス生成を含む）を実行してください。",
+    "dialog": "サイト内検索",
+    "close": "検索を閉じる",
+    "closeOverlay": "検索オーバーレイを閉じる"
   },
   "encrypted": {
     "title": "暗号化された記事",
@@ -178,9 +186,55 @@
   },
   "moments": {
     "title": "モーメント",
+    "pagedTitle": "モーメント — {{page}} ページ目",
+    "description": "日々の出来事を記録するモーメント",
     "noContent": "モーメントはまだありません",
     "publishedAt": "公開日",
     "imageAlt": "モーメント画像 {{index}}"
+  },
+  "friends": {
+    "title": "フレンドリンク",
+    "description": "プレビューとテーマカラー付きのカードで友人のサイトを紹介します。",
+    "listTitle": "フレンドリンク一覧",
+    "commentsTitle": "コメント",
+    "visitLink": "サイトを見る",
+    "previewAlt": "{{title}} のサイトプレビュー",
+    "avatarAlt": "{{author}} のアバター",
+    "visitSite": "{{author}} のサイトを見る",
+    "byAuthor": "{{author}} によるサイト"
+  },
+  "accessibility": {
+    "mainNavigation": "メインナビゲーション",
+    "primarySidebar": "メインサイドバー",
+    "secondarySidebar": "サブサイドバー",
+    "closeSidebar": "サイドバーを閉じる",
+    "toggleSidebar": "サイドバーを切り替える",
+    "toggleTheme": "テーマを切り替える",
+    "scrollTop": "ページ上部へ戻る",
+    "comments": "コメントへ移動",
+    "togglePlayer": "プレーヤーを表示または非表示",
+    "togglePlayback": "再生または一時停止",
+    "sideMenu": "サイドバーメニューナビゲーション",
+    "siteStatistics": "サイト統計ナビゲーション",
+    "tabs": "タブナビゲーション",
+    "quizGap": "穴埋め問題の解答欄"
+  },
+  "codeBlock": {
+    "copy": "コードをコピー",
+    "copied": "コードをコピーしました",
+    "enterFullscreen": "全画面表示にする",
+    "exitFullscreen": "全画面表示を終了",
+    "expand": "コードを展開",
+    "collapse": "コードを折りたたむ"
+  },
+  "ai": {
+    "summary": "AI 要約",
+    "similarPosts": "AI おすすめ・関連記事",
+    "similarPostsLabel": "AI による関連記事のおすすめ",
+    "similarity": "類似度 {{score}}%"
+  },
+  "rss": {
+    "description": "{{siteName}} の記事フィード"
   },
   "imageZoom": {
     "dialog": "画像プレビュー",

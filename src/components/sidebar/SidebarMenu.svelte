@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { NavItemType } from "../navbar/NavTypes";
+  import { t } from "@/i18n";
 
   interface Props {
     menu?: NavItemType[];
@@ -24,7 +25,10 @@
   const menuItems = $derived(renderNavItems(menu || []));
 </script>
 
-<nav class="menu p-5 m-0 bg-transparent" aria-label="侧栏菜单导航">
+<nav
+  class="menu p-5 m-0 bg-transparent"
+  aria-label={t("accessibility.sideMenu")}
+>
   <ul class="menu-list list-none m-0 p-0">
     {#each menuItems as item (item.data.href)}
       {@const icon = item.data.icon}

@@ -270,7 +270,7 @@
   <button
     type="button"
     class="search-overlay"
-    aria-label="Close search overlay"
+    aria-label={t("search.closeOverlay")}
     onclick={closeSearch}
   ></button>
 
@@ -279,7 +279,7 @@
     class="pagefind-panel"
     role="dialog"
     aria-modal="true"
-    aria-label="Search"
+    aria-label={t("search.dialog")}
   >
     <div class="search-panel__ornament" aria-hidden="true">
       <span class="search-panel__icon i-ri-search-line"></span>
@@ -290,7 +290,7 @@
       type="button"
       class="search-panel__close"
       onclick={closeSearch}
-      aria-label="Close search"
+      aria-label={t("search.close")}
       aria-controls="pagefind-results-region"
     >
       <span class="i-ri-close-line"></span>

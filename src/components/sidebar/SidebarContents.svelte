@@ -1,6 +1,7 @@
 <script lang='ts'>
   import type { TocItem } from './SidebarTypes'
   import { onMount } from 'svelte'
+  import { t } from '@/i18n'
 
   interface Props {
     toc?: TocItem[]
@@ -156,7 +157,7 @@
       {/each}
     </ol>
   {:else}
-    <p class='no-toc'>No contents available</p>
+    <p class='no-toc'>{t("sidebar.related.noContent")}</p>
   {/if}
 </div>
 

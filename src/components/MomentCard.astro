@@ -11,11 +11,13 @@ const { moment } = Astro.props;
 // 格式化日期
 function formatDate(date: Date): string {
   return date.toLocaleDateString(currentLocale, {
+    timeZone: "Asia/Taipei",
     year: "numeric",
     month: "long",
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   });
 }
 

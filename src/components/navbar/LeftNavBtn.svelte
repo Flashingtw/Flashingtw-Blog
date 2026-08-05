@@ -1,5 +1,6 @@
 <script lang="ts">
   import { sidebarOpen, toggleSidebar } from "../../stores/sidebarStore";
+  import { t } from "@/i18n";
 
   interface Props {
     clickCallback?: (state: boolean) => void;
@@ -16,7 +17,7 @@
 <button
   class="left-nav-btn border-none bg-transparent flex flex-col cursor-pointer items-center justify-center lg:hidden"
   onclick={handleToggle}
-  aria-label="Toggle sidebar"
+  aria-label={t("accessibility.toggleSidebar")}
   type="button"
 >
   <div class="line-height-0 p-5 w-5.5 box-unset">

@@ -74,7 +74,7 @@
 
 <nav
   id="nav"
-  aria-label="主导航"
+  aria-label={t("accessibility.mainNavigation")}
   class={`h-12.5 fixed top-0 w-full z-9 backdrop-blur-8 backdrop-saturate-180 ${atTop ? "nav-top" : "nav-bg"}`.trim()}
   style={showNav ? "" : "transform: translateY(-100%);"}
 >
@@ -90,7 +90,7 @@
           type="button"
           class="nav-action text-5 border-none bg-transparent"
           onclick={handleToggleTheme}
-          aria-label="Toggle theme"
+          aria-label={t("accessibility.toggleTheme")}
         >
           <div class={isDark ? "i-ri-moon-line" : "i-ri-sun-line"}></div>
         </button>
@@ -101,7 +101,7 @@
           id="search"
           class="nav-action text-5 border-none bg-transparent"
           onclick={handleSearch}
-          aria-label="Search"
+          aria-label={t("search.dialog")}
         >
           <div class="i-ri-search-line"></div>
         </button>

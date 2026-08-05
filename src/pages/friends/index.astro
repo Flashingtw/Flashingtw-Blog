@@ -4,15 +4,15 @@ import Layout from "../../layouts/Layout.astro";
 import FriendLinks from "@/components/friends/FriendLinks.astro";
 import FriendRules from "@/content/friends-rules.md";
 import WalineComments from "@/components/post/WalineComments.svelte";
-import { currentLocale } from "@/i18n";
+import { currentLocale, t } from "@/i18n";
 import themeConfig from "@/theme.config";
 import astroConfig from "../../../astro.config.mjs";
 
 const friendsConfig = themeConfig.friends;
 const friendLinks = friendsConfig?.links ?? [];
-const pageTitle = friendsConfig?.title ?? "友链";
+const pageTitle = friendsConfig?.title ?? t("friends.title");
 const pageDescription =
-  friendsConfig?.description ?? "卡片式展示，支持站点预览与主题色点缀。";
+  friendsConfig?.description ?? t("friends.description");
 const commentsConfig = themeConfig.comments || {};
 const walineConfig = commentsConfig.waline || {};
 const friendsPath = "/friends/";
@@ -43,13 +43,13 @@ const friendsJson = JSON.stringify(friendsSnippet, null, 2);
   
     </section>
     <section class="friend-section friend-links-section">
-      <h3>友鏈列表</h3>
+      <h3>{t("friends.listTitle")}</h3>
       <FriendLinks links={friendLinks} />
     </section>
     {
       friendsConfig?.comments && commentsConfig.enable !== false && (
         <section class="friend-section friend-comments" id="comments">
-          <h3>评论区</h3>
+          <h3>{t("friends.commentsTitle")}</h3>
           <div class="comment">
             <WalineComments
               client:visible

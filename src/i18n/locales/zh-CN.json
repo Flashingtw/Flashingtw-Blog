@@ -56,6 +56,10 @@
     "all": "全部",
     "year": "年",
     "month": "月",
+    "yearLabel": "{{year}} 年",
+    "monthLabel": "{{month}} 月",
+    "yearTitle": "{{year}} 年归档",
+    "monthTitle": "{{year}} 年 {{month}} 月归档",
     "excellent": "太棒了",
     "great": "非常好",
     "good": "很好",
@@ -145,7 +149,8 @@
   },
   "pagination": {
     "prev": "上一頁",
-    "next": "下一頁"
+    "next": "下一頁",
+    "pageTitle": "第 {{page}} 页"
   },
   "button": {
     "readMore": "閱讀更多",
@@ -165,7 +170,10 @@
   },
   "search": {
     "devModeSkipped": "目前為開發模式，已跳過 Pagefind 載入。",
-    "buildHint": "請先執行建置（含索引生成）後，再預覽站內搜尋效果。"
+    "buildHint": "請先執行建置（含索引生成）後，再預覽站內搜尋效果。",
+    "dialog": "全站搜索",
+    "close": "关闭搜索",
+    "closeOverlay": "关闭搜索遮罩"
   },
   "encrypted": {
     "title": "文章已加密",
@@ -178,9 +186,55 @@
   },
   "moments": {
     "title": "動態",
+    "pagedTitle": "动态－第 {{page}} 页",
+    "description": "动态－记录生活的点滴",
     "noContent": "暫無動態",
     "publishedAt": "發佈於",
     "imageAlt": "動態圖片 {{index}}"
+  },
+  "friends": {
+    "title": "友链",
+    "description": "以卡片展示友站，支持网站预览与主题色。",
+    "listTitle": "友链列表",
+    "commentsTitle": "评论区",
+    "visitLink": "前往链接",
+    "previewAlt": "{{title}} 网站预览",
+    "avatarAlt": "{{author}} 头像",
+    "visitSite": "访问 {{author}} 的网站",
+    "byAuthor": "由 {{author}} 创建"
+  },
+  "accessibility": {
+    "mainNavigation": "主导航",
+    "primarySidebar": "主侧栏",
+    "secondarySidebar": "次侧栏",
+    "closeSidebar": "关闭侧栏",
+    "toggleSidebar": "切换侧栏",
+    "toggleTheme": "切换主题",
+    "scrollTop": "返回顶部",
+    "comments": "前往评论区",
+    "togglePlayer": "显示或隐藏播放器",
+    "togglePlayback": "播放或暂停",
+    "sideMenu": "侧栏菜单导航",
+    "siteStatistics": "站点统计导航",
+    "tabs": "选项卡导航",
+    "quizGap": "填空题答案栏位"
+  },
+  "codeBlock": {
+    "copy": "复制代码",
+    "copied": "已复制代码",
+    "enterFullscreen": "进入全屏",
+    "exitFullscreen": "退出全屏",
+    "expand": "展开代码",
+    "collapse": "收起代码"
+  },
+  "ai": {
+    "summary": "AI 摘要",
+    "similarPosts": "AI 推荐・相近文章",
+    "similarPostsLabel": "AI 相近文章推荐",
+    "similarity": "相似度 {{score}}%"
+  },
+  "rss": {
+    "description": "{{siteName}} 的文章订阅"
   },
   "imageZoom": {
     "dialog": "圖片預覽",

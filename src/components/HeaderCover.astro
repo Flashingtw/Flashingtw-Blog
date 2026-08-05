@@ -40,7 +40,7 @@ const singleImage =
       class="imgs-container"
     >
       {isMultipleImages ? (
-        <ul class="image-list">
+        <ul class="image-list" data-cover-carousel>
           {covers.map((cover, index) => (
             <CoverImage
               src={cover}
@@ -64,32 +64,66 @@ const singleImage =
 )}
 
 <script>
-  const imgs = document.querySelector('#imgs')
+  const CAROUSEL_INTERVAL_MS = 6000;
 
-  if (imgs) {
-    const toggleHoverByPointer = (event: MouseEvent) => {
-      const rect = imgs.getBoundingClientRect()
-      const isInside =
-        event.clientX >= rect.left &&
-        event.clientX <= rect.right &&
-        event.clientY >= rect.top &&
-        event.clientY <= rect.bottom
+  document.querySelectorAll<HTMLElement>("[data-cover-carousel]").forEach((carousel) => {
+    if (carousel.dataset.carouselInitialized === "true") return;
 
-      imgs.classList.toggle('is-hovered', isInside)
-    }
+    const items = Array.from(carousel.querySelectorAll<HTMLElement>(".cover-item"));
+    if (items.length < 2) return;
 
-    const clearHover = () => {
-      imgs.classList.remove('is-hovered')
-    }
+    carousel.dataset.carouselInitialized = "true";
+    let activeIndex = Math.max(
+      0,
+      items.findIndex((item) => item.classList.contains("is-active")),
+    );
+    let isPointerOver = false;
 
-    window.addEventListener('mousemove', toggleHoverByPointer, {
-      passive: true,
-    })
-    window.addEventListener('blur', clearHover)
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) clearHover()
-    })
-  }
+    const prepareImage = async (index: number) => {
+      const image = items[index]?.querySelector<HTMLImageElement>("img");
+      if (!image) return;
+
+      image.loading = "eager";
+      if (image.complete && image.naturalWidth > 0) return;
+
+      try {
+        await image.decode();
+      } catch {
+        // 圖片載入失敗時仍繼續輪播，避免計時器永久停止。
+      }
+    };
+
+    const showNext = async () => {
+      const nextIndex = (activeIndex + 1) % items.length;
+      const currentItem = items[activeIndex];
+      const nextItem = items[nextIndex];
+
+      await prepareImage(nextIndex);
+      currentItem?.classList.remove("is-active");
+      nextItem?.classList.add("is-active");
+
+      activeIndex = nextIndex;
+      const upcomingIndex = (activeIndex + 1) % items.length;
+      void prepareImage(upcomingIndex);
+    };
+
+    const tick = async () => {
+      if (!carousel.isConnected) return;
+      if (!document.hidden && !isPointerOver) await showNext();
+      window.setTimeout(tick, CAROUSEL_INTERVAL_MS);
+    };
+
+    carousel.addEventListener("pointerenter", () => {
+      isPointerOver = true;
+    });
+    carousel.addEventListener("pointerleave", () => {
+      isPointerOver = false;
+    });
+
+    const nextIndex = (activeIndex + 1) % items.length;
+    void prepareImage(nextIndex);
+    window.setTimeout(tick, CAROUSEL_INTERVAL_MS);
+  });
 </script>
 
 <style>
@@ -122,12 +156,7 @@ const singleImage =
     min-height: 25rem;
     content-visibility: auto;
     contain-intrinsic-size: 100vw 70vh;
-    filter: blur(4px) brightness(var(--header-cover-brightness));
-    transition: filter 0.35s ease;
-  }
-
-  .imgs-container.is-hovered {
-    filter: blur(0) brightness(var(--header-cover-brightness));
+    filter: brightness(var(--header-cover-brightness));
   }
 
   .image-list {

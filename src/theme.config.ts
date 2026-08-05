@@ -1,5 +1,23 @@
-import { defineConfig } from "./toolkit/themeConfig";
+import { defineConfig, type FriendLinkConfig } from "./toolkit/themeConfig";
+import { isThemeColorValue } from "./toolkit/themeColor";
 import friendsList from "./assets/friends.json";
+
+const configuredFriends: FriendLinkConfig[] = friendsList.map((friend) => {
+  const configuredFriend: FriendLinkConfig = {
+    url: friend.url,
+    title: friend.title,
+    desc: friend.desc,
+    author: friend.author,
+    avatar: friend.avatar,
+    siteImage: friend.siteImage,
+  };
+
+  if (friend.color && isThemeColorValue(friend.color)) {
+    configuredFriend.color = friend.color;
+  }
+
+  return configuredFriend;
+});
 
 export default defineConfig({
   "siteName": "Flashingtw's Blog",
@@ -230,7 +248,7 @@ export default defineConfig({
     "title": "朋友們!",
     "description": "是大佬，這裡全部都是大佬!",
     "comments": false,
-    "links": friendsList as any,
+    "links": configuredFriends,
   },
   
   "copyright": {

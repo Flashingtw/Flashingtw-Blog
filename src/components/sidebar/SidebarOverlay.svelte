@@ -1,5 +1,6 @@
 <script lang="ts">
   import { toggleSidebar } from "../../stores/sidebarStore";
+  import { t } from "@/i18n";
 </script>
 
 <div
@@ -10,7 +11,7 @@
   onkeydown={(e) => {
     if (e.key === "Enter" || e.key === " ") toggleSidebar();
   }}
-  aria-label="Close sidebar"
+  aria-label={t("accessibility.closeSidebar")}
 ></div>
 
 <style>

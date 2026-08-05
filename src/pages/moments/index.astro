@@ -4,6 +4,7 @@ import MomentsContent from "@/components/MomentsContent.astro";
 import Pagination from "@/components/Pagination.astro";
 import { getCollection } from "astro:content";
 import themeConfig from "@/theme.config";
+import { t } from "@/i18n";
 
 // 获取所有动态
 const allMoments = await getCollection("moments");
@@ -26,7 +27,7 @@ const paginationNavigation = {
 };
 
 // 页面标题
-const pageTitle = "动态";
+const pageTitle = t("moments.title");
 ---
 
 <Layout
@@ -35,7 +36,7 @@ const pageTitle = "动态";
   navigation={paginationNavigation}
 >
   <Fragment slot="head">
-    <meta name="description" content="动态 - 记录生活的点滴" />
+    <meta name="description" content={t("moments.description")} />
   </Fragment>
 
   <MomentsContent moments={pageMoments} />

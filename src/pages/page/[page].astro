@@ -4,6 +4,7 @@ import IndexContent from "@/components/IndexContent.astro";
 import Pagination from "@/components/Pagination.astro";
 import { getCollection } from "astro:content";
 import themeConfig from "@/theme.config";
+import { t } from "@/i18n";
 import type { CollectionEntry } from "astro:content";
 import type { GetStaticPaths } from "astro";
 
@@ -34,7 +35,8 @@ const { page } = Astro.props as {
   };
 };
 
-const pageTitle = `${themeConfig.brand?.logo || ""} = ${themeConfig.brand?.title || ""} = ${themeConfig.brand?.subtitle || ""} - 第${page.currentPage}页`;
+const brandTitle = `${themeConfig.brand?.logo || ""} = ${themeConfig.brand?.title || ""} = ${themeConfig.brand?.subtitle || ""}`;
+const pageTitle = `${brandTitle} - ${t("pagination.pageTitle", { page: page.currentPage })}`;
 
 // Build pagination navigation
 const paginationNavigation = {

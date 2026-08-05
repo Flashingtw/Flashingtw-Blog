@@ -56,6 +56,10 @@
     "all": "All",
     "year": "Year",
     "month": "Month",
+    "yearLabel": "{{year}}",
+    "monthLabel": "Month {{month}}",
+    "yearTitle": "{{year}} Archives",
+    "monthTitle": "{{month}}/{{year}} Archives",
     "excellent": "Excellent",
     "great": "Great",
     "good": "Good",
@@ -145,7 +149,8 @@
   },
   "pagination": {
     "prev": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "pageTitle": "Page {{page}}"
   },
   "button": {
     "readMore": "Read More",
@@ -165,7 +170,10 @@
   },
   "search": {
     "devModeSkipped": "Development mode is active, so Pagefind loading has been skipped.",
-    "buildHint": "Please run a production build (with index generation) before previewing on-site search."
+    "buildHint": "Please run a production build (with index generation) before previewing on-site search.",
+    "dialog": "Site search",
+    "close": "Close search",
+    "closeOverlay": "Close search overlay"
   },
   "encrypted": {
     "title": "Encrypted Post",
@@ -178,9 +186,55 @@
   },
   "moments": {
     "title": "Moments",
+    "pagedTitle": "Moments — Page {{page}}",
+    "description": "Moments from everyday life",
     "noContent": "No moments available",
     "publishedAt": "Published on",
     "imageAlt": "Moment image {{index}}"
+  },
+  "friends": {
+    "title": "Friends",
+    "description": "Discover friendly sites through previews and themed cards.",
+    "listTitle": "Friend Links",
+    "commentsTitle": "Comments",
+    "visitLink": "Visit site",
+    "previewAlt": "Preview of {{title}}",
+    "avatarAlt": "{{author}} avatar",
+    "visitSite": "Visit {{author}}'s site",
+    "byAuthor": "By {{author}}"
+  },
+  "accessibility": {
+    "mainNavigation": "Main navigation",
+    "primarySidebar": "Primary sidebar",
+    "secondarySidebar": "Secondary sidebar",
+    "closeSidebar": "Close sidebar",
+    "toggleSidebar": "Toggle sidebar",
+    "toggleTheme": "Toggle theme",
+    "scrollTop": "Back to top",
+    "comments": "Go to comments",
+    "togglePlayer": "Show or hide player",
+    "togglePlayback": "Play or pause",
+    "sideMenu": "Sidebar menu navigation",
+    "siteStatistics": "Site statistics navigation",
+    "tabs": "Tabs navigation",
+    "quizGap": "Fill-in-the-blank answer field"
+  },
+  "codeBlock": {
+    "copy": "Copy code",
+    "copied": "Code copied",
+    "enterFullscreen": "Enter fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "expand": "Expand code",
+    "collapse": "Collapse code"
+  },
+  "ai": {
+    "summary": "AI Summary",
+    "similarPosts": "AI Recommendations · Similar Posts",
+    "similarPostsLabel": "AI similar post recommendations",
+    "similarity": "{{score}}% similar"
+  },
+  "rss": {
+    "description": "Posts from {{siteName}}"
   },
   "imageZoom": {
     "dialog": "Image preview",

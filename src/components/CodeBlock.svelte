@@ -9,6 +9,7 @@
   import FileCopyFill from "@/assets/icons/file-copy-fill.svg";
   import FullscreenLine from "@/assets/icons/fullscreen-line.svg";
   import FullscreenExitLine from "@/assets/icons/fullscreen-exit-line.svg";
+  import { t } from "@/i18n";
 
   let container = $state<HTMLElement | null>(null);
   let copied = $state(false);
@@ -192,7 +193,7 @@
           ? CheckFill.src
           : FileCopyFill.src});"
         onclick={copyCode}
-        aria-label="Copy code"
+        aria-label={copied ? t("codeBlock.copied") : t("codeBlock.copy")}
       ></button>
       <button
         class="action-btn"
@@ -202,7 +203,9 @@
           ? FullscreenExitLine.src
           : FullscreenLine.src});"
         onclick={toggleFullscreen}
-        aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+        aria-label={isFullscreen
+          ? t("codeBlock.exitFullscreen")
+          : t("codeBlock.enterFullscreen")}
       ></button>
     </div>
   </div>
@@ -225,7 +228,9 @@
           ? ArrowDownSLine.src
           : ArrowUpSLine.src});"
         onclick={toggleCollapse}
-        aria-label={isCollapsed ? "Expand code" : "Collapse code"}
+        aria-label={isCollapsed
+          ? t("codeBlock.expand")
+          : t("codeBlock.collapse")}
       ></button>
     {/if}
   </div>
