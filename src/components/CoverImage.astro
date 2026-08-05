@@ -96,6 +96,12 @@ const assetSrc = !isStringSrc ? (src as ImageMetadata) : undefined;
     height: 100%;
     width: 100%;
     object-fit: cover;
+    transform: scale(1.1);
+  }
+
+  .cover-item.is-active .cover-image {
+    animation: cover-image-zoom 6s linear forwards;
+    will-change: transform;
   }
 
   .single-image {
@@ -112,9 +118,29 @@ const assetSrc = !isStringSrc ? (src as ImageMetadata) : undefined;
     transform-origin: center;
   }
 
+  @keyframes cover-image-zoom {
+    0% {
+      transform: scale(1);
+    }
+
+    48% {
+      transform: scale(1.05);
+    }
+
+    100% {
+      transform: scale(1.1);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .cover-item {
       transition: opacity 0.2s linear;
+    }
+
+    .cover-item.is-active .cover-image {
+      animation: none;
+      transform: scale(1);
+      will-change: auto;
     }
   }
 </style>
