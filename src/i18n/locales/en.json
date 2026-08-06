@@ -138,6 +138,16 @@
     "poweredBy": "Powered by",
     "and": "&",
     "poweredSuffix": "Theme",
+    "uptimePrefix": "Site uptime:",
+    "uptimeUnits": {
+      "year": "y",
+      "month": "mo",
+      "day": "d",
+      "hour": "h",
+      "minute": "min",
+      "second": "s",
+      "separator": " "
+    },
     "totalWordsTitle": "Total words",
     "estimatedReadingTimeTitle": "Estimated reading time",
     "randomPosts": "Random Posts",

@@ -1,6 +1,5 @@
 import { defineConfig } from "@hyacine/core/config";
 
-import SiteUpTime from "@hyacine/site-uptime";
 import MouseFirework from "@hyacine/mouse-firework";
 
 export default defineConfig({
@@ -23,10 +22,6 @@ export default defineConfig({
   },
 
   plugins: [
-    SiteUpTime({
-      siteCreatedAt: "2026-07-06T00:00:00Z",
-      prefixText: "已存在"
-    }),
     MouseFirework({
       colors: [
         "rgba(255,182,185,.9)",

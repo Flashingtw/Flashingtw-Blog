@@ -135,6 +135,11 @@ interface FooterConfig {
   powered?: boolean;
 
   /**
+   * 網站建立時間（ISO 8601），用於顯示多語系站點運行時間。
+   */
+  siteCreatedAt?: string;
+
+  /**
    * ICP 备案配置（中国大陆网站必需）。
    */
   icp?: {

@@ -136,8 +136,18 @@
   },
   "footer": {
     "poweredBy": "由",
-    "and": "和",
+    "and": "與",
     "poweredSuffix": "主題強力驅動",
+    "uptimePrefix": "本站已運行",
+    "uptimeUnits": {
+      "year": "年",
+      "month": "個月",
+      "day": "天",
+      "hour": "小時",
+      "minute": "分鐘",
+      "second": "秒",
+      "separator": ""
+    },
     "totalWordsTitle": "總字數",
     "estimatedReadingTimeTitle": "預估閱讀時間",
     "randomPosts": "隨機文章",

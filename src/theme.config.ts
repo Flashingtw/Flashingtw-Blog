@@ -153,6 +153,7 @@ export default defineConfig({
     },
     "count": true,
     "powered": true,
+    "siteCreatedAt": "2026-07-06T00:00:00Z",
     "icp": {
       "enable": false,
       "icpnumber": "津ICP备2022001375号",

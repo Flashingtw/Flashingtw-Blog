@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { currentLocale, getT } from "@/i18n";
 import { sanitizeThemeColor, type ThemeColorValue } from "@/toolkit/themeColor";
+import SiteUptime from "./SiteUptime.svelte";
 import "./footer.css";
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
     };
     count?: boolean;
     powered?: boolean;
+    siteCreatedAt?: string;
     icp?: {
       enable?: boolean;
       icon?: string;
@@ -54,6 +56,16 @@ const readingTimeStr =
   readingMinutes === 1
     ? `1 ${t("post.minutes")}`
     : `${readingMinutes} ${t("post.minutes")}`;
+
+const uptimeUnits = {
+  year: t("footer.uptimeUnits.year"),
+  month: t("footer.uptimeUnits.month"),
+  day: t("footer.uptimeUnits.day"),
+  hour: t("footer.uptimeUnits.hour"),
+  minute: t("footer.uptimeUnits.minute"),
+  second: t("footer.uptimeUnits.second"),
+  separator: t("footer.uptimeUnits.separator"),
+};
 
 // Get current year for copyright
 const currentYear = new Date().getFullYear();
@@ -130,6 +142,17 @@ const iconColor = sanitizeThemeColor(
             </a>{" "}
             {t("footer.poweredSuffix")}
           </div>
+        )
+      }
+
+      {
+        config.siteCreatedAt && (
+          <SiteUptime
+            client:load
+            siteCreatedAt={config.siteCreatedAt}
+            prefix={t("footer.uptimePrefix")}
+            units={uptimeUnits}
+          />
         )
       }
 

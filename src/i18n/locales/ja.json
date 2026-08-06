@@ -138,6 +138,16 @@
     "poweredBy": "Powered by",
     "and": "と",
     "poweredSuffix": "テーマ",
+    "uptimePrefix": "サイト稼働時間：",
+    "uptimeUnits": {
+      "year": "年",
+      "month": "か月",
+      "day": "日",
+      "hour": "時間",
+      "minute": "分",
+      "second": "秒",
+      "separator": ""
+    },
     "totalWordsTitle": "総文字数",
     "estimatedReadingTimeTitle": "推定読了時間",
     "randomPosts": "ランダム記事",
