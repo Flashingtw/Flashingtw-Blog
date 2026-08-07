@@ -1,0 +1,104 @@
+[
+  {
+    "datetime": "2026-08-14",
+    "title": "第 12 屆成大高中生程式設計邀請賽決賽",
+    "category": "團隊競賽",
+    "result": "即將參賽",
+    "description": "賽事尚未開始，目前持續準備團隊分工與競賽內容。",
+    "featured": true,
+    "status": "upcoming"
+  },
+  {
+    "datetime": "2026-07-07",
+    "title": "Young Turing Program 線上初賽",
+    "category": "團隊競賽",
+    "result": "獲邀復活賽",
+    "description": "與隊友共同參賽，並獲邀參加後續的 AI 復活賽。",
+    "role": "主要完成 P5 與 Hello World。",
+    "learning": "更熟悉團隊分工，也看見自己在中高難度題目上的進步空間。",
+    "href": "/posts/experience/ytp-11th-pre/"
+  },
+  {
+    "datetime": "2026-07-05",
+    "title": "APCS 大學程式設計先修檢測",
+    "category": "能力檢測",
+    "result": "觀念 4 級｜實作 4 級・240 分",
+    "description": "在 40 分鐘內完成作答，達成觀念與實作皆為 4 級的成果。",
+    "learning": "題目細節與作答檢查仍有改善空間。",
+    "href": "/posts/apcs/2675-mh/",
+    "featured": true
+  },
+  {
+    "datetime": "2026-06-30",
+    "title": "青年百億計畫",
+    "category": "計畫錄取",
+    "result": "錄取 IJ-8-30",
+    "description": "成功錄取「解構未來技術巡航」計畫。",
+    "learning": "申請與準備的過程，也成為一次重要的學習經驗。",
+    "featured": true
+  },
+  {
+    "datetime": "2026-05-31",
+    "title": "第 12 屆成大高中生程式設計邀請賽初賽",
+    "category": "團隊競賽",
+    "result": "晉級決賽",
+    "description": "與隊友合作完成初賽，在團隊分工與解題交流中累積實戰經驗。",
+    "learning": "團隊溝通與題目分配會直接影響整體解題效率。",
+    "href": "/posts/experience/hspc-12th-pre/",
+    "featured": true
+  },
+  {
+    "datetime": "2026-05-24",
+    "title": "海大程式設計競賽",
+    "category": "團隊競賽",
+    "result": "團隊第 1 名",
+    "description": "與 Zaim、eggeggwe 組隊參賽，透過合作解題取得團隊第一名。",
+    "featured": true
+  },
+  {
+    "datetime": "2026-05-22",
+    "title": "114 學年度校內程式設計競賽",
+    "category": "個人競賽",
+    "result": "第 1 名",
+    "description": "取得校內第一名，驗證這段時間在解題思維與程式實作上的累積。",
+    "featured": true
+  },
+  {
+    "datetime": "2026-03-07",
+    "title": "TOI 臺灣資訊奧林匹亞初選",
+    "category": "個人競賽",
+    "result": "100 分",
+    "description": "第一次參與大型實體程式競賽，完成比賽並累積面對正式賽事的經驗。",
+    "learning": "正式賽場的時間壓力與臨場狀態，也是競賽能力的一部分。",
+    "href": "/posts/experience/2026-toi-pre/"
+  },
+  {
+    "datetime": "2026-01",
+    "title": "APCS 大學程式設計先修檢測",
+    "category": "能力檢測",
+    "result": "觀念 4 級｜實作 3 級・300 分",
+    "description": "在觀念與實作成績上取得階段性突破，建立繼續挑戰競賽的信心。"
+  },
+  {
+    "datetime": "2025-10",
+    "title": "APCS 大學程式設計先修檢測",
+    "category": "能力檢測",
+    "result": "觀念 3 級｜實作 1 級・0 分",
+    "description": "第一次參加 APCS，也第一次明確看見自己的基礎不足。",
+    "learning": "這次挫折成為重新檢視基礎、加強演算法訓練的起點。"
+  },
+  {
+    "datetime": "2025-08",
+    "title": "開始學習競技程式設計",
+    "category": "學習里程碑",
+    "result": "從 C++ 出發",
+    "description": "開始系統性學習 C++，正式踏入演算法與競技程式設計的世界。"
+  },
+  {
+    "datetime": "2025-07",
+    "title": "進入大安高工電子科",
+    "category": "學習里程碑",
+    "result": "新的開始",
+    "description": "會考放榜後進入大安高工電子科，從新的學習環境展開高中生活。"
+  }
+]

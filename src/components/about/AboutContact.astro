@@ -1,0 +1,159 @@
+<section class="about-contact" aria-labelledby="about-contact-title">
+  <header>
+    <span>
+      <i class="i-ri-chat-smile-3-line" aria-hidden="true" />
+    </span>
+    <div>
+      <h2 id="about-contact-title">聯絡與社群</h2>
+      <p>歡迎交流技術、競賽心得或社團相關內容。</p>
+    </div>
+  </header>
+
+  <div class="about-contact__links">
+    <a href="mailto:0624joshua@gmail.com">
+      <i class="i-ri-mail-line" aria-hidden="true" />
+      <span>Email</span>
+      <strong>0624joshua@gmail.com</strong>
+    </a>
+
+    <a
+      href="https://github.com/Flashingtw/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <i class="i-ri-github-fill" aria-hidden="true" />
+      <span>GitHub</span>
+      <strong>Flashingtw</strong>
+    </a>
+
+    <button type="button" data-copy-discord>
+      <i class="i-ri-discord-fill" aria-hidden="true" />
+      <span>Discord · 點擊複製</span>
+      <strong>flash.zcx</strong>
+      <em role="status" aria-live="polite" data-copy-status></em>
+    </button>
+  </div>
+</section>
+
+<script>
+  function setupDiscordCopy() {
+    const button = document.querySelector<HTMLButtonElement>("[data-copy-discord]");
+    const status = button?.querySelector<HTMLElement>("[data-copy-status]");
+
+    if (!button || !status || button.dataset.copyReady === "true") return;
+
+    button.dataset.copyReady = "true";
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText("flash.zcx");
+        status.textContent = "已複製！";
+        window.setTimeout(() => {
+          status.textContent = "";
+        }, 2000);
+      } catch (error) {
+        status.textContent = "複製失敗，請手動複製";
+        console.error("複製 Discord 帳號失敗:", error);
+      }
+    });
+  }
+
+  setupDiscordCopy();
+  document.addEventListener("astro:page-load", setupDiscordCopy);
+</script>
+
+<style>
+  .about-contact {
+    margin-top: 2.5rem;
+  }
+
+  .about-contact > header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-contact > header > span {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    border-radius: 0.75rem;
+    background: color-mix(in srgb, var(--color-green) 14%, transparent);
+    color: var(--color-green);
+    font-size: 1.3rem;
+  }
+
+  .about-contact h2,
+  .about-contact header p {
+    margin: 0;
+  }
+
+  .about-contact header p {
+    margin-top: 0.2rem;
+    color: var(--text-color-muted);
+    font-size: 0.82rem;
+  }
+
+  .about-contact__links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .about-contact__links > a,
+  .about-contact__links > button {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.1rem 0.6rem;
+    align-items: center;
+    min-width: 0;
+    margin: 0;
+    border: 1px solid var(--border-color-muted);
+    border-radius: 0.8rem;
+    background: var(--box-bg-shadow);
+    padding: 0.9rem;
+    color: var(--text-color);
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .about-contact__links > :is(a, button):hover {
+    border-color: var(--color-green);
+  }
+
+  .about-contact__links i {
+    grid-row: span 2;
+    color: var(--color-green);
+    font-size: 1.25rem;
+  }
+
+  .about-contact__links span {
+    color: var(--text-color-subtle);
+    font-size: 0.7rem;
+  }
+
+  .about-contact__links strong {
+    overflow: hidden;
+    font-size: 0.82rem;
+    text-overflow: ellipsis;
+  }
+
+  .about-contact__links em {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.35rem;
+    color: var(--color-green);
+    font-size: 0.68rem;
+    font-style: normal;
+  }
+
+  @media (max-width: 720px) {
+    .about-contact__links {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

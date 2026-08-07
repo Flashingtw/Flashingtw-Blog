@@ -1,0 +1,401 @@
+---
+import timelineJson from "@/data/about-timeline.json";
+import {
+  buildAboutTimeline,
+  type AboutTimelineEvent,
+} from "@/toolkit/about/buildAboutTimeline";
+
+const timelineEvents: AboutTimelineEvent[] = timelineJson;
+const timelineData = buildAboutTimeline(timelineEvents);
+
+function getCategoryTone(category: string) {
+  if (category.includes("競賽")) return "competition";
+  if (category.includes("檢測")) return "assessment";
+  if (category.includes("錄取")) return "opportunity";
+  if (category.includes("里程碑")) return "milestone";
+  return "default";
+}
+---
+
+<section class="about-timeline" aria-label="競賽與學習時間軸" data-about-timeline>
+  {
+    timelineData.map((group) => (
+      <section class="timeline-year" aria-labelledby={`timeline-year-${group.year}`}>
+        <header class="timeline-year__header">
+          <span class="timeline-year__marker" aria-hidden="true" />
+          <h3 id={`timeline-year-${group.year}`}>{group.year} 年</h3>
+          <span class="timeline-year__count">{group.events.length} 項經歷</span>
+        </header>
+
+        <ol class="timeline-list">
+          {group.events.map((event) => (
+            <li class="timeline-event" data-timeline-event>
+              <span class="timeline-event__marker" aria-hidden="true" />
+              <time datetime={event.datetime}>{event.displayDate}</time>
+
+              <article
+                class:list={[
+                  "timeline-card",
+                  {
+                    "timeline-card--featured": event.featured,
+                    "timeline-card--upcoming": event.status === "upcoming",
+                  },
+                ]}
+              >
+                <div class="timeline-card__heading">
+                  <span
+                    class="timeline-card__category"
+                    data-tone={getCategoryTone(event.category)}
+                  >
+                    {event.category}
+                  </span>
+                  {event.featured && (
+                    <span class="timeline-card__featured">
+                      <i class="i-ri-star-fill" aria-hidden="true" />
+                      精選
+                    </span>
+                  )}
+                  <h4>{event.title}</h4>
+                </div>
+
+                {event.result && <p class="timeline-card__result">{event.result}</p>}
+                <p class="timeline-card__description">{event.description}</p>
+
+                {(event.role || event.learning) && (
+                  <dl class="timeline-card__details">
+                    {event.role && (
+                      <div>
+                        <dt>我的參與</dt>
+                        <dd>{event.role}</dd>
+                      </div>
+                    )}
+                    {event.learning && (
+                      <div>
+                        <dt>這次收穫</dt>
+                        <dd>{event.learning}</dd>
+                      </div>
+                    )}
+                  </dl>
+                )}
+
+                {event.href && (
+                  <a class="timeline-card__link" href={event.href}>
+                    閱讀相關心得
+                    <i class="i-ri-arrow-right-line" aria-hidden="true" />
+                  </a>
+                )}
+              </article>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+</section>
+
+<style>
+  .about-timeline {
+    --timeline-axis: 6.35rem;
+    position: relative;
+    margin: 1.75rem 0 2.5rem;
+  }
+
+  .about-timeline::before {
+    position: absolute;
+    top: 0.75rem;
+    bottom: 0.75rem;
+    left: var(--timeline-axis);
+    width: 2px;
+    background: var(--border-color-muted);
+    content: "";
+  }
+
+  .timeline-year + .timeline-year {
+    margin-top: 2rem;
+  }
+
+  .timeline-year__header {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-left: calc(var(--timeline-axis) + 1.5rem);
+  }
+
+  .timeline-year__header h3 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1.35rem;
+  }
+
+  .timeline-year__count {
+    color: var(--text-color-muted);
+    font-size: 0.8rem;
+  }
+
+  .timeline-year__marker,
+  .timeline-event__marker {
+    position: absolute;
+    left: var(--timeline-axis);
+    z-index: 1;
+    box-sizing: border-box;
+    border: 3px solid var(--box-bg-shadow);
+    border-radius: 999px;
+    background: var(--color-blue);
+    transform: translateX(-50%);
+  }
+
+  .timeline-year__marker {
+    top: 0.35rem;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .timeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .timeline-event {
+    position: relative;
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    gap: 2.2rem;
+    align-items: start;
+    margin: 0;
+  }
+
+  .timeline-event::before {
+    display: none;
+    content: none;
+  }
+
+  .timeline-event__marker {
+    top: 1.2rem;
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .timeline-event > time {
+    padding-top: 0.85rem;
+    color: var(--text-color-muted);
+    font-size: 0.84rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .timeline-card {
+    min-width: 0;
+    border: 1px solid var(--border-color-muted);
+    border-radius: 0.85rem;
+    background: var(--box-bg-shadow);
+    padding: 1rem 1.1rem;
+    box-shadow: var(--shadow-card-soft);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .timeline-card:hover {
+    border-color: var(--color-blue);
+    box-shadow: var(--shadow-card-soft-hover);
+    transform: translateY(-2px);
+  }
+
+  .timeline-card--featured {
+    border-left: 3px solid var(--color-blue);
+  }
+
+  .timeline-card--upcoming {
+    border-color: var(--color-yellow);
+  }
+
+  .timeline-card__heading {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  .timeline-card__heading h4 {
+    min-width: 0;
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .timeline-card__category {
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: var(--cb-focus-bg);
+    padding: 0.2rem 0.55rem;
+    color: var(--color-blue);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .timeline-card__category[data-tone="assessment"] {
+    background: color-mix(in srgb, var(--color-purple) 14%, transparent);
+    color: var(--color-purple);
+  }
+
+  .timeline-card__category[data-tone="opportunity"] {
+    background: color-mix(in srgb, var(--color-green) 14%, transparent);
+    color: var(--color-green);
+  }
+
+  .timeline-card__category[data-tone="milestone"] {
+    background: color-mix(in srgb, var(--color-orange) 14%, transparent);
+    color: var(--color-orange);
+  }
+
+  .timeline-card__featured {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.2rem;
+    color: var(--color-yellow);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .timeline-card__result {
+    display: inline-block;
+    margin: 0.7rem 0 0;
+    border-radius: 0.4rem;
+    background: var(--line-hover-bg);
+    padding: 0.35rem 0.6rem;
+    color: var(--text-color);
+    font-size: 0.84rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  .timeline-card__description {
+    margin: 0.65rem 0 0;
+    color: var(--text-color-muted);
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  .timeline-card__details {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0.7rem 0 0;
+    padding: 0;
+  }
+
+  .timeline-card__details > div {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 0.55rem;
+  }
+
+  .timeline-card__details dt,
+  .timeline-card__details dd {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+
+  .timeline-card__details dt {
+    color: var(--text-color);
+    font-weight: 700;
+  }
+
+  .timeline-card__details dd {
+    color: var(--text-color-muted);
+  }
+
+  .timeline-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.7rem;
+    color: var(--color-blue);
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .timeline-card__link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .about-timeline {
+      --timeline-axis: 0.45rem;
+      margin-top: 1.35rem;
+    }
+
+    .timeline-year + .timeline-year {
+      margin-top: 1.65rem;
+    }
+
+    .timeline-year__header {
+      flex-wrap: wrap;
+      gap: 0.35rem 0.65rem;
+      padding-left: 1.75rem;
+    }
+
+    .timeline-year__header h3 {
+      font-size: 1.2rem;
+    }
+
+    .timeline-event {
+      display: block;
+      padding-left: 1.75rem;
+    }
+
+    .timeline-event__marker {
+      top: 1.15rem;
+    }
+
+    .timeline-event > time {
+      display: inline-block;
+      margin-bottom: 0.4rem;
+      padding-top: 0;
+      color: var(--color-blue);
+      text-align: left;
+    }
+
+    .timeline-card {
+      padding: 0.9rem;
+    }
+
+    .timeline-card__heading {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .timeline-card__details > div {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+
+    .timeline-card__heading h4 {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .timeline-card {
+      transition: none;
+    }
+
+    .timeline-card:hover {
+      transform: none;
+    }
+  }
+</style>

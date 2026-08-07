@@ -1,8 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import AboutOverview from "@/components/about/AboutOverview.astro";
 import Breadcrumb from "@/components/post/Breadcrumb.astro";
-import PostHeader from "@/components/post/PostHeader.astro";
-import PostFooter from "@/components/post/PostFooter.astro";
 import WalineComments from "@/components/post/WalineComments.svelte";
 import { currentLocale } from "@/i18n";
 import AboutContent, { frontmatter as aboutFrontmatter } from "@/content/about.mdx";
@@ -16,8 +15,8 @@ interface AboutFrontmatter {
   description?: string;
   date?: string | Date;
   updated?: string | Date;
-  image?: string;         // 🎯 擴充型別定義
-  cover?: string;         // 🎯 擴充型別定義
+  image?: string;
+  cover?: string;
 }
 
 const frontmatter = (aboutFrontmatter ?? {}) as AboutFrontmatter;
@@ -38,23 +37,12 @@ const parseDate = (value: string | Date | undefined, fallback: Date) => {
 const fallbackDate = new Date();
 const title = frontmatter.title || "關於我";
 const description = frontmatter.description || "一個從不會演算法到熱愛演算法的人";
-const publishDate = parseDate(frontmatter.date, fallbackDate);
-const updatedDate = frontmatter.updated
-  ? parseDate(frontmatter.updated, publishDate)
-  : undefined;
+const updatedDate = parseDate(frontmatter.updated ?? frontmatter.date, fallbackDate);
 
 const postPath = "/about/";
-const permalink = import.meta.env.SITE
-  ? new URL(postPath, import.meta.env.SITE).toString()
-  : postPath;
-
-const siteConfig = themeConfig.sidebar || {};
-const author = siteConfig.author || "Author";
-const siteName = themeConfig.siteName || "Site";
 const commentsConfig = themeConfig.comments || {};
 const walineConfig = commentsConfig.waline || {};
 
-// 🎯 關鍵修正：從 mdx 的 frontmatter 提取自訂圖片路徑
 const finalPageCover = frontmatter.image || frontmatter.cover;
 ---
 
@@ -71,29 +59,21 @@ const finalPageCover = frontmatter.image || frontmatter.cover;
 
     <article
       itemscope
-      itemtype="http://schema.org/Article"
-      class="post block"
+      itemtype="https://schema.org/ProfilePage"
+      class="post block about-page"
       data-pagefind-body
       lang={currentLocale}
     >
-      <link itemprop="mainEntityOfPage" href={permalink} />
-
-      <PostHeader title={title} date={publishDate} />
-
-      <div class="body md" itemprop="articleBody">
+      <div
+        class="body md about-page__body"
+        itemprop="mainEntity"
+        itemscope
+        itemtype="https://schema.org/Person"
+      >
+        <meta itemprop="name" content="Flashingtw" />
+        <AboutOverview updated={updatedDate} />
         <AboutContent />
       </div>
-
-      <PostFooter
-        date={publishDate}
-        updated={updatedDate}
-        permalink={permalink}
-        title={title}
-        author={author}
-        siteName={siteName}
-        showCopyright={true}
-        showReward={false}
-      />
     </article>
   </div>
 
@@ -112,3 +92,15 @@ const finalPageCover = frontmatter.image || frontmatter.cover;
     )
   }
 </Layout>
+
+<style>
+  .about-page__body {
+    padding-top: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .about-page__body {
+      padding-top: 1.2rem;
+    }
+  }
+</style>

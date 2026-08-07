@@ -1,183 +1,26 @@
 ---
-title: About Me
+title: 關於我
 date: 2026-07-07
-updated: 2026-07-07
+updated: 2026-08-07
 image: /assets/avatar.avif
-description: "一個從不會演算法到熱愛演算法的人"
+description: "從零開始學習演算法，持續在競賽、實作與分享中成長。"
 comments: true
 ---
 
-{/* 在 MDX 中，你可以使用大括號包住註解，這些內容在編譯後不會顯示在網頁上 */}
+import AboutContact from "@/components/about/AboutContact.astro";
+import AboutFeaturedContent from "@/components/about/AboutFeaturedContent.astro";
+import AboutTimeline from "@/components/about/AboutTimeline.astro";
 
-## Hello World!
+## 經歷與時間軸
 
-我是來自 **大安高工電子科** 的學生，目前擔任 **大安電研社** 的社長。
-對程式邏輯有著濃厚的興趣，熱衷於演算法與競技程式設計 (Competitive Programming)。
-這裡記錄了我的學習軌跡、競賽經歷以及在程式之路上的點點滴滴。
+每一次檢測、競賽與學習轉折，都是目前能力的一部分。除了結果，我也記錄自己實際參與的內容與得到的收穫。
 
----
-
-## 核心技能與專長
-
-* **程式語言**：`C++` (自 2025 年 8 月起)
-* **專注領域**：**演算法**、**資料結構**、**競賽解題**
-* **社團經歷**：帶領大安電研社，推廣資訊科學與技術交流
+<AboutTimeline />
 
 ---
 
-## 🚀 經歷與時間軸
+<AboutFeaturedContent />
 
-export const timelineData = [
-  {
-    year: "2026",
-    events: [
-      { 
-        date: "07月07日", 
-        title: "Young Turing Program 線上初賽", 
-        desc: <><strong>Rk.?</strong> 還是曹大哥跟科班電神帶飛 我只有寫p5跟helloworld<br/>然後準備打復活賽-w- 騙你的復活賽是競AI 不打</> 
-      },
-      { 
-        date: "07月05日", 
-        title: "APCS 大學程式設計先修檢測", 
-        desc: <>觀念題 <strong>4 級分</strong> / 實作題 <strong>4 級分(240分)</strong><br/>40分鐘光速出來然後寫爛p1</> 
-      },
-      { 
-        date: "06月30日", 
-        title: "青年百億計畫", 
-        desc: <>成功錄取 <strong>IJ-8-30 解構未來技術巡航</strong> 的計畫參與者<br/>中間的過程對我來講也是一個很大的經驗了</> 
-      },
-      { 
-        date: "05月31日", 
-        title: "成大賽初賽", 
-        desc: <><strong>Rk.Unknown</strong> 曹大哥跟科班電神太強了，直接帶我進決賽</> 
-      },
-      { 
-        date: "05月24日", 
-        title: "海大賽", 
-        desc: <><strong>Rk.1st</strong> 被Zaim跟eggeggwe帶飛</> 
-      },
-      { 
-        date: "05月22日", 
-        title: "114校內程式設計競賽", 
-        desc: <><strong>Rk.1st</strong> 證明自身解題思維。</> 
-      },
-      { 
-        date: "03月07日", 
-        title: "TOI 台灣資訊奧林匹亞初選", 
-        desc: <>僅獲得 <strong>100</strong>分的成績 <br/> 取得了一次大型競賽的經驗</> 
-      },
-      { 
-        date: "01月", 
-        title: "APCS 大學程式設計先修檢測", 
-        desc: <>觀念題 <strong>4 級分</strong> / 實作題 <strong>3 級分(300分)</strong><br/>突破自我，展現階段性成果。</> 
-      }
-    ]
-  },
-  {
-    year: "2025",
-    events: [
-      { 
-        date: "10月",
-        title: "APCS 大學程式設計先修檢測",
-        desc: <>觀念題 <strong>3 級分</strong> / 實作題 <strong>1 級分 (0分)</strong><br/> 打擊了一次自信心，原本認為自己很強實，則甚麼都不是</>
-      },
-      { 
-        date: "08月",
-        title: "正式啟程",
-        desc:<>開始學習C++語法 正式踏入演算法的世界</> 
-        },  
-    ]
-  }
-];
-
-<div className="relative border-l-2 border-gray-400 ml-3 mt-6 mb-10">
-  {timelineData.map((group) => (
-    /* 第一層：年份區塊 (Group A) */
-    <div key={group.year} className="mb-8 pl-6 relative group/year">
-      
-      {/* 年份的光圈：監聽 group/year */}
-      <span className="absolute w-3 h-3 rounded-full -left-[7.5px] top-2 ring-4 !ring-[var(--body-bg)] transition-colors duration-300 bg-gray-400 group-hover/year:bg-blue-500"></span>
-      
-      {/* 年份文字：監聽 group/year */}
-      <h3 className="text-xl font-bold mt-0 mb-4 transition-colors duration-300 text-gray-600 group-hover/year:text-[var(--text-color)]">
-        {group.year} 年
-      </h3>
-      {/*項目文字*/}
-      <div className="flex flex-col gap-5">
-        {group.events.map((item, idx) => (
-          <div key={idx} className="group/item">
-
-            <div className="font-bold transition-colors duration-300 text-[var(--text-color-subtle)] group-hover/item:text-[var(--color-blue)]">
-              {item.date} ｜ {item.title}
-            </div>
-
-            <p className="text-sm text-[var(--text-color-muted)] mt-1 mb-0 transition-colors duration-300 group-hover/item:text-[var(--text-color)]">
-              {item.desc}
-            </p>
-
-          </div>
-        ))}
-      </div>
-    </div>
-  ))}
-</div>
 ---
 
-## 📬 聯絡與社群
-
-歡迎透過以下方式與我交流技術或討論合作：
-
-<div class="mt-4 flex flex-col gap-2">
-  
-  <a href="mailto:0624joshua@gmail.com" target="_blank" class="group flex items-center gap-3 p-2 -ml-2 rounded-lg no-underline text-[var(--text-color)] hover:bg-[var(--line-hover-bg)] transition-all duration-150">
-    <div class="flex items-center justify-center w-8 h-8 rounded-md bg-[var(--color-red-a1)] group-hover:bg-[var(--color-red-a3)] transition-colors">
-      <i class="i-ri-mail-line text-xl text-[var(--color-red)]"></i>
-    </div>
-    
-    <span class="font-medium group-hover:text-[var(--color-red)] transition-colors">
-      {"0624joshua@gmail.com"}
-    </span>
-    
-  </a>
-  
-  <a href="https://github.com/Flashingtw/" target="_blank" class="group flex items-center gap-3 p-2 -ml-2 rounded-lg no-underline text-[var(--text-color)] hover:bg-[var(--line-hover-bg)] transition-all duration-150">
-    <div class="flex items-center justify-center w-8 h-8 rounded-md bg-[var(--grey-9-a1)] group-hover:bg-[var(--grey-9-a2)] transition-colors">
-      <i class="i-ri-github-fill text-xl text-[var(--text-color)]"></i>
-    </div>
-    <span class="font-medium group-hover:text-[var(--text-color-muted)] transition-colors">github.com/Flashingtw/</span>
-  </a>
-  
-  <button id="discord-copy-btn" class="group flex items-center gap-3 p-2 -ml-2 w-full rounded-lg bg-transparent border-none cursor-pointer text-left text-[var(--text-color)] hover:bg-[var(--line-hover-bg)] transition-all duration-150">
-    <div class="flex items-center justify-center w-8 h-8 rounded-md bg-[var(--cb-focus-bg)] group-hover:bg-[var(--cb-focus-bg)] transition-colors">
-      <i class="i-ri-discord-fill text-xl text-[var(--color-blue)]"></i>
-    </div>
-    <span class="font-medium group-hover:text-[var(--color-blue)] transition-colors">flash.zcx</span>
-    
-    <div class="ml-auto flex items-center gap-2">
-      <i class="i-ri-file-copy-line text-[var(--text-color-subtle)] opacity-0 group-hover:opacity-100 transition-opacity" title="點擊複製"></i>
-      <span id="copy-toast" class="text-sm text-[var(--color-green)] opacity-0 transition-opacity">已複製！</span>
-    </div>
-  </button>
-  
-</div>
-
-{/* 這段腳本在 Astro 編譯時會被打包，並在客戶端瀏覽器上執行 */}
-{/* 使用 set:html 並用反引號把整段 JS 包起來，避開 MDX 的大括號解析地雷 */}
-<script set:html={`
-  const copyBtn = document.getElementById('discord-copy-btn');
-  const toast = document.getElementById('copy-toast');
-
-  if (copyBtn) {
-    copyBtn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText('flash.zcx');
-        toast.style.opacity = '1';
-        setTimeout(() => {
-          toast.style.opacity = '0';
-        }, 2000);
-      } catch (err) {
-        console.error('複製失敗:', err);
-      }
-    });
-  }
-`} />
+<AboutContact />

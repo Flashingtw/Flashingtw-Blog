@@ -1,0 +1,139 @@
+<section class="about-featured" aria-labelledby="about-featured-title">
+  <header>
+    <span>
+      <i class="i-ri-file-line" aria-hidden="true" />
+    </span>
+    <div>
+      <h2 id="about-featured-title">代表內容</h2>
+      <p>從專案、教學與競賽心得認識我正在累積的內容。</p>
+    </div>
+  </header>
+
+  <div class="about-featured__grid">
+    <a
+      href="https://github.com/Flashingtw/Flashingtw-Blog"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <i class="i-ri-github-fill" aria-hidden="true" />
+      <span>個人專案</span>
+      <strong>Flashingtw Blog</strong>
+      <p>以 Astro、Svelte 與 Pagefind 建置並持續維護的個人技術部落格。</p>
+    </a>
+
+    <a href="/posts/apcs/apcs-mid/">
+      <i class="i-ri-book-open-line" aria-hidden="true" />
+      <span>教學整理</span>
+      <strong>APCS 中級入門</strong>
+      <p>整理 C++ 基礎、解題觀念與準備 APCS 時累積的學習內容。</p>
+    </a>
+
+    <a href="/posts/experience/2026-toi-pre/">
+      <i class="i-ri-medal-line" aria-hidden="true" />
+      <span>競賽紀錄</span>
+      <strong>2026 TOI 初選心得</strong>
+      <p>記錄第一次參加大型實體程式競賽時的準備、過程與反思。</p>
+    </a>
+  </div>
+</section>
+
+<style>
+  .about-featured {
+    margin: 2.5rem 0;
+  }
+
+  .about-featured > header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-featured > header > span {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    border-radius: 0.75rem;
+    background: color-mix(in srgb, var(--color-purple) 14%, transparent);
+    color: var(--color-purple);
+    font-size: 1.3rem;
+  }
+
+  .about-featured h2,
+  .about-featured header p {
+    margin: 0;
+  }
+
+  .about-featured header p {
+    margin-top: 0.2rem;
+    color: var(--text-color-muted);
+    font-size: 0.82rem;
+  }
+
+  .about-featured__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .about-featured__grid > a {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid var(--border-color-muted);
+    border-radius: 0.85rem;
+    background: var(--box-bg-shadow);
+    padding: 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition:
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .about-featured__grid > a:hover {
+    border-color: var(--color-purple);
+    transform: translateY(-2px);
+  }
+
+  .about-featured__grid i {
+    margin-bottom: 0.7rem;
+    color: var(--color-purple);
+    font-size: 1.35rem;
+  }
+
+  .about-featured__grid span {
+    color: var(--text-color-subtle);
+    font-size: 0.7rem;
+  }
+
+  .about-featured__grid strong {
+    margin-top: 0.15rem;
+    line-height: 1.45;
+  }
+
+  .about-featured__grid p {
+    margin: 0.55rem 0 0;
+    color: var(--text-color-muted);
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 720px) {
+    .about-featured__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-featured__grid > a {
+      transition: none;
+    }
+
+    .about-featured__grid > a:hover {
+      transform: none;
+    }
+  }
+</style>
