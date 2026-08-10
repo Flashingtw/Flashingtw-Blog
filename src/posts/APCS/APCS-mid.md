@@ -1,6 +1,6 @@
 ---
 title: APCS 中級入門- Flashingtw
-date: 2026-02-01
+date: 2026-08-11
 categories: [教學]
 tags: [C++,競程,APCS]
 image: ../../assets/postsImages/APCS-mid.jpg
@@ -15,8 +15,8 @@ cover: ../../assets/postsImages/APCS-mid.jpg
 我是閃光>:D
 
 目前APCS只考了 識讀4/實作3(300滿分) ~~所以寫中級入門~~
-AT coder Rating: 1105小綠人
-CodeForces Rating: 1538小青人
+AT coder Rating: 1364小青人
+CodeForces Rating: 1820小藍人 但很久沒打了
 
 由於筆者只會C++,所以以下的示範皆為C++,如果有Python使用者 ~~請自行翻譯~~
 我自己是因為要考TOI TOI只給用C++所以也沒去學Python競程寫法
