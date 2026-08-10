@@ -73,7 +73,7 @@ collections:
       - label: 草稿
         field: draft
         pattern: true
-    fields:
+    fields: &post_fields
       - label: 標題
         name: title
         widget: string
@@ -151,3 +151,41 @@ collections:
       - label: 內容
         name: body
         widget: richtext
+
+  - name: posts_apcs
+    label: APCS 文章
+    label_singular: APCS 文章
+    description: 管理 src/posts/APCS 內的既有文章。
+    icon: code
+    folder: src/posts/APCS
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{fields._slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: [date, title]
+    view_filters:
+      - label: 草稿
+        field: draft
+        pattern: true
+    fields: *post_fields
+
+  - name: posts_experience
+    label: 心得文章
+    label_singular: 心得文章
+    description: 管理 src/posts/Experience 內的既有文章。
+    icon: history_edu
+    folder: src/posts/Experience
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{fields._slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: [date, title]
+    view_filters:
+      - label: 草稿
+        field: draft
+        pattern: true
+    fields: *post_fields
