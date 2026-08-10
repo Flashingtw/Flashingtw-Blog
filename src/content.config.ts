@@ -25,8 +25,8 @@ const posts = defineCollection({
         z.array(z.string()).nullable().optional(),
       ),
       draft: z.boolean().optional(),
-      image: z.union([z.string(), image()]).optional(),
-      cover: z.union([z.string(), image()]).optional(),
+      image: z.union([image(), z.string()]).optional(),
+      cover: z.union([image(), z.string()]).optional(),
       sticky: z.boolean().optional(),
       license: z
         .enum([
