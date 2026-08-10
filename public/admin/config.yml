@@ -1,0 +1,153 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: Flashingtw/Flashingtw-Blog
+  branch: main
+  auth_methods: [token]
+
+site_url: https://flashing.tw
+display_url: https://flashing.tw
+logo_url: https://flashing.tw/assets/avatar.png
+locale: zh_Hant
+
+media_folder: public/assets/uploads
+public_folder: /assets/uploads
+
+slug:
+  encoding: unicode
+  clean_accents: false
+  sanitize_replacement: "-"
+  trim: true
+  lowercase: false
+  timezone: local
+
+collections:
+  - name: moments
+    label: 動態
+    label_singular: 動態
+    description: 隨手記錄近況、短文與照片。
+    icon: dynamic_feed
+    folder: src/moments
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    identifier_field: date
+    slug: "moment-{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}{{second}}"
+    summary: "{{date}} — {{body | truncate(60)}}"
+    sortable_fields: [date]
+    fields:
+      - label: 發布時間
+        name: date
+        widget: datetime
+        default: "{{now}}"
+        input_timezone: Asia/Taipei
+        output_utc: false
+      - label: 圖片
+        name: images
+        widget: list
+        required: false
+        field:
+          label: 圖片
+          name: image
+          widget: image
+      - label: 內容
+        name: body
+        widget: richtext
+
+  - name: posts
+    label: 文章
+    label_singular: 文章
+    description: 撰寫完整文章，可設定分類、標籤、封面與草稿。
+    icon: article
+    folder: src/posts
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{fields._slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: [date, title]
+    view_filters:
+      - label: 草稿
+        field: draft
+        pattern: true
+    fields:
+      - label: 標題
+        name: title
+        widget: string
+      - label: 摘要
+        name: description
+        widget: text
+        required: false
+      - label: 發布日期
+        name: date
+        widget: datetime
+        type: date
+        default: "{{now}}"
+      - label: 更新日期
+        name: updated
+        widget: datetime
+        type: date
+        required: false
+      - label: 分類
+        name: categories
+        widget: list
+        required: false
+        field:
+          label: 分類
+          name: category
+          widget: string
+      - label: 標籤
+        name: tags
+        widget: list
+        required: false
+        field:
+          label: 標籤
+          name: tag
+          widget: string
+      - label: 封面圖片
+        name: cover
+        widget: image
+        required: false
+      - label: 頁首圖片
+        name: image
+        widget: image
+        required: false
+        hint: 未設定時會沿用封面圖片。
+      - label: 置頂
+        name: sticky
+        widget: boolean
+        default: false
+        required: false
+      - label: 草稿
+        name: draft
+        widget: boolean
+        default: false
+        required: false
+      - label: 授權
+        name: license
+        widget: select
+        required: false
+        options:
+          - CC-BY-4.0
+          - CC-BY-SA-4.0
+          - CC-BY-ND-4.0
+          - CC-BY-NC-4.0
+          - CC-BY-NC-SA-4.0
+          - CC-BY-NC-ND-4.0
+          - NOREPRINT
+      - label: 加密文章
+        name: encrypted
+        widget: boolean
+        default: false
+        required: false
+      - label: 文章密碼
+        name: password
+        widget: string
+        required: false
+        hint: 僅在啟用加密文章時填寫。
+      - label: 內容
+        name: body
+        widget: richtext

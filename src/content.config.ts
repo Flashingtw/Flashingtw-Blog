@@ -14,10 +14,10 @@ const posts = defineCollection({
     z.object({
       title: z.string(),
       description: z.string().optional(),
-      date: z.date().refine((date) => !Number.isNaN(date.getTime()), {
+      date: z.coerce.date().refine((date) => !Number.isNaN(date.getTime()), {
         message: "Invalid date format",
       }),
-      updated: z.date().optional(),
+      updated: z.coerce.date().optional(),
       tags: z.array(z.string()).nullable().optional(),
       categories: z.preprocess(
         (categories) =>
@@ -25,8 +25,8 @@ const posts = defineCollection({
         z.array(z.string()).nullable().optional(),
       ),
       draft: z.boolean().optional(),
-      image: image().optional(),
-      cover: image().optional(),
+      image: z.union([z.string(), image()]).optional(),
+      cover: z.union([z.string(), image()]).optional(),
       sticky: z.boolean().optional(),
       license: z
         .enum([
@@ -53,7 +53,7 @@ const moments = defineCollection({
   }),
   schema: ({ image }) =>
     z.object({
-      date: z.date().refine((date) => !Number.isNaN(date.getTime()), {
+      date: z.coerce.date().refine((date) => !Number.isNaN(date.getTime()), {
         message: "Invalid date format",
       }),
       images: z.array(z.union([z.string(), image()])).optional(),
