@@ -1,3 +1,7 @@
+---
+import { aboutProjects } from "@/data/about";
+---
+
 <section class="about-work" aria-labelledby="about-work-title">
   <header class="about-work__heading">
     <span>02</span>
@@ -8,58 +12,33 @@
   </header>
 
   <div class="about-work__grid">
-    <a
-      class="about-work__card about-work__card--wide"
-      href="https://github.com/Flashingtw/DungeonGenerator-paper"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <span class="about-work__icon"><i class="i-ri-layout-grid-line" aria-hidden="true" /></span>
-      <div class="about-work__meta"><span>JAVA · PAPER</span><i class="i-ri-arrow-right-up-line" /></div>
-      <strong>DungeonGenerator</strong>
-      <p>支援 DFS、Kruskal、Prim 的 Minecraft 迷宮生成插件。迷宮算完只是開始，真正的 Boss 是效能 ww</p>
-      <ul aria-label="專案重點">
-        <li>3 種 perfect-maze 演算法</li>
-        <li>非同步拓撲計算</li>
-        <li>逐 Tick 建造</li>
-      </ul>
-    </a>
-
-    <a
-      class="about-work__card about-work__card--wide"
-      href="https://github.com/Flashingtw/CityGenerator-Paper"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <span class="about-work__icon about-work__icon--orange"><i class="i-ri-road-map-line" aria-hidden="true" /></span>
-      <div class="about-work__meta"><span>JAVA · PROCEDURAL GENERATION</span><i class="i-ri-arrow-right-up-line" /></div>
-      <strong>CityGenerator</strong>
-      <p>用道路、路口和 `.schem` 模板慢慢拼出城市，把「隨機生成一座城」拆成真的可以跑的小問題。</p>
-      <ul aria-label="專案重點">
-        <li>道路與環狀結構</li>
-        <li>WorldEdit / FAWE</li>
-        <li>可調生成設定</li>
-      </ul>
-    </a>
-
-    <a class="about-work__card" href="/posts/apcs/apcs-mid/">
-      <span class="about-work__icon about-work__icon--purple"><i class="i-ri-book-open-line" aria-hidden="true" /></span>
-      <div class="about-work__meta"><span>ARTICLE · C++</span><i class="i-ri-arrow-right-line" /></div>
-      <strong>APCS 中級入門</strong>
-      <p>把自己從零開始踩過的坑整理成教學，希望下一個人可以少 WA 幾次。</p>
-    </a>
-
-    <a
-      class="about-work__card"
-      href="https://github.com/Flashingtw/CP-Practice"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <span class="about-work__icon about-work__icon--green"><i class="i-ri-code-s-slash-line" aria-hidden="true" /></span>
-      <div class="about-work__meta"><span>PRACTICE · C++</span><i class="i-ri-arrow-right-up-line" /></div>
-      <strong>CP Practice</strong>
-      <p>競程練習和解題紀錄。看起來可能很亂，但那就是正在升級的證據 :D</p>
-    </a>
+    {aboutProjects.map((project) => {
+      const isExternal = project.href.startsWith("http");
+      return (
+        <a
+          class:list={["about-work__card", project.featured && "about-work__card--featured"]}
+          href={project.href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+        >
+          {project.featured && (
+            <div class="about-work__featured-topline"><span>FEATURED PROJECT</span><i class="i-ri-arrow-right-up-line" /></div>
+          )}
+          <span class:list={["about-work__icon", project.tone && `about-work__icon--${project.tone}`]}>
+            <i class={project.icon} aria-hidden="true" />
+          </span>
+          <div class="about-work__meta">
+            <span>{project.meta}</span>
+            {!project.featured && <i class={isExternal ? "i-ri-arrow-right-up-line" : "i-ri-arrow-right-line"} />}
+          </div>
+          <strong>{project.name}</strong>
+          <p>{project.description}</p>
+          {project.highlights && (
+            <ul aria-label="專案重點">{project.highlights.map((highlight) => <li>{highlight}</li>)}</ul>
+          )}
+        </a>
+      );
+    })}
   </div>
 </section>
 
@@ -99,7 +78,7 @@
 
   .about-work__grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.8rem;
   }
 
@@ -139,8 +118,28 @@
     transform: translateY(-3px);
   }
 
-  .about-work__card--wide {
-    min-height: 14rem;
+  .about-work__card--featured {
+    grid-row: span 2;
+    min-height: 25rem;
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--color-blue) 13%, transparent), transparent 52%),
+      var(--box-bg-shadow);
+  }
+
+  .about-work__featured-topline {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: auto;
+    color: var(--color-blue);
+    font-size: 0.67rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+  }
+
+  .about-work__featured-topline i {
+    font-size: 1.05rem;
   }
 
   .about-work__icon {
@@ -191,6 +190,10 @@
     font-size: 1.08rem;
   }
 
+  .about-work__card--featured > strong {
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+  }
+
   .about-work__card > p {
     position: relative;
     z-index: 1;
@@ -225,13 +228,25 @@
     content: none;
   }
 
-  @media (max-width: 680px) {
+  @media (max-width: 860px) {
+    .about-work__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .about-work__card--featured {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      min-height: auto;
+    }
+  }
+
+  @media (max-width: 560px) {
     .about-work__grid {
       grid-template-columns: 1fr;
     }
 
-    .about-work__card--wide {
-      min-height: auto;
+    .about-work__card--featured {
+      grid-column: auto;
     }
   }
 

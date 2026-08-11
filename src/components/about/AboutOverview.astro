@@ -1,9 +1,12 @@
 ---
+import { aboutOverview } from "@/data/about";
+
 interface Props {
   updated: Date;
 }
 
 const { updated } = Astro.props;
+const { eyebrow, title, lead, introduction, tags, links, progress, focus } = aboutOverview;
 const updatedLabel = updated.toLocaleDateString("zh-TW", {
   year: "numeric",
   month: "2-digit",
@@ -15,27 +18,27 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
   <div class="about-hero__copy">
     <span class="about-hero__eyebrow">
       <i class="i-ri-terminal-box-line" aria-hidden="true" />
-      HELLO, WORLD :D
+      {eyebrow}
     </span>
-    <h2 id="about-introduction-title">我是 Flashingtw，<br /><em>還在慢慢變強的人。</em></h2>
-    <p>
-      大安高工電子科學生，也是大安電研社社長。現在主要用 C++
-      寫競程、學演算法，偶爾把腦中很怪的生成想法做成 Minecraft 插件。
-    </p>
-    <p>
-      這裡放的是我真的做過、撞過牆、debug 過的東西。技術還在補，當然不會假裝自己什麼都會
-      <del>會的話就不會一直 WA 了</del> uwu
-    </p>
+    <h2 id="about-introduction-title">{title}</h2>
+    <p class="about-hero__lead"><em>{lead.highlight}</em>{lead.text}</p>
+    <p>{introduction}</p>
+
+    <ul class="about-hero__tags" aria-label="目前身份與方向">
+      {tags.map((tag) => <li><i class={tag.icon} aria-hidden="true" />{tag.label}</li>)}
+    </ul>
 
     <div class="about-hero__actions">
-      <a href="https://github.com/Flashingtw/" target="_blank" rel="noopener noreferrer">
-        <i class="i-ri-github-fill" aria-hidden="true" />
-        GitHub
-      </a>
-      <a href="#about-timeline" class="about-hero__secondary-action">
-        <i class="i-ri-time-line" aria-hidden="true" />
-        看時間線
-      </a>
+      {links.map((link, index) => (
+        <a
+          href={link.href}
+          class:list={{ "about-hero__secondary-action": index > 0 }}
+          target={link.href.startsWith("http") ? "_blank" : undefined}
+          rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+        >
+          <i class={link.icon} aria-hidden="true" />{link.label}
+        </a>
+      ))}
     </div>
 
     <p class="about-hero__updated">
@@ -43,32 +46,12 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
     </p>
   </div>
 
-  <aside class="about-status" aria-label="目前狀態">
-    <div class="about-status__topline">
-      <span class="about-status__pulse" aria-hidden="true" />
-      NOW BUILDING
-    </div>
-    <strong>下一個更好的自己</strong>
-    <p>從第一次 APCS 實作 0 分開始，現在還在競賽、專案和社團之間繼續疊經驗值。</p>
-
-    <dl>
-      <div>
-        <dt>MAIN</dt>
-        <dd>C++ / 演算法</dd>
-      </div>
-      <div>
-        <dt>LEVEL</dt>
-        <dd>APCS 實作 4 級</dd>
-      </div>
-      <div>
-        <dt>ROLE</dt>
-        <dd>大安電研社社長</dd>
-      </div>
-      <div>
-        <dt>SINCE</dt>
-        <dd>2025.08</dd>
-      </div>
-    </dl>
+  <aside class="about-hero__aside" aria-label="學習進度">
+    <span>{progress.from}</span>
+    <div class="about-hero__route" aria-hidden="true"><i /><i /><i /></div>
+    <span>{progress.to}</span>
+    <strong><small>{progress.label}</small>{progress.value}</strong>
+    <p>{progress.note}</p>
   </aside>
 </section>
 
@@ -76,24 +59,18 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
   <header class="about-heading">
     <span>01</span>
     <div>
-      <h2 id="about-focus-title">現在的主線任務</h2>
-      <p>先把正在做的事做好，技能樹之後再慢慢點 ww</p>
+      <h2 id="about-focus-title">{focus.title}</h2>
+      <p>{focus.description}</p>
     </div>
   </header>
 
   <ul class="about-focus__list">
-    <li>
-      <i class="i-ri-code-box-line" aria-hidden="true" />
-      <div><strong>競技程式設計</strong><span>持續練演算法、資料結構與正式賽事的臨場能力。</span></div>
-    </li>
-    <li>
-      <i class="i-ri-group-line" aria-hidden="true" />
-      <div><strong>社團與交流</strong><span>帶領大安電研社，一起寫題、做東西和交流技術。</span></div>
-    </li>
-    <li>
-      <i class="i-ri-hammer-line" aria-hidden="true" />
-      <div><strong>把想法做出來</strong><span>用 Java 做 Minecraft 生成插件，順便跟效能問題互毆。</span></div>
-    </li>
+    {focus.items.map((item) => (
+      <li>
+        <i class={item.icon} aria-hidden="true" />
+        <div><strong>{item.title}</strong><span>{item.description}</span></div>
+      </li>
+    ))}
   </ul>
 </section>
 
@@ -101,8 +78,8 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
   .about-hero {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(17rem, 0.75fr);
-    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr) minmax(13rem, 0.38fr);
+    gap: clamp(1.5rem, 5vw, 4rem);
     overflow: hidden;
     margin-bottom: 2.75rem;
     border: 1px solid var(--border-color-muted);
@@ -126,7 +103,7 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
   }
 
   .about-hero__copy,
-  .about-status {
+  .about-hero__aside {
     position: relative;
     z-index: 1;
   }
@@ -142,15 +119,24 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
   }
 
   .about-hero h2 {
-    margin: 0.6rem 0 1rem;
-    font-size: clamp(1.8rem, 4.8vw, 3.25rem);
+    margin: 0.7rem 0 0.35rem;
+    font-size: clamp(1.8rem, 4vw, 2.75rem);
     line-height: 1.12;
     letter-spacing: -0.035em;
   }
 
-  .about-hero h2 em {
+  .about-hero__lead em {
     color: var(--color-blue);
     font-style: normal;
+  }
+
+  .about-hero__copy > .about-hero__lead {
+    max-width: none;
+    margin: 0 0 1rem;
+    color: var(--text-color);
+    font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+    font-weight: 700;
+    line-height: 1.55;
   }
 
   .about-hero__copy > p:not(.about-hero__updated) {
@@ -158,6 +144,36 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
     margin: 0.55rem 0;
     color: var(--text-color-muted);
     line-height: 1.85;
+  }
+
+  .about-hero__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 1.15rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-hero__tags li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0;
+    border: 1px solid var(--border-color-muted);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--box-bg-shadow) 76%, transparent);
+    padding: 0.35rem 0.65rem;
+    color: var(--text-color-muted);
+    font-size: 0.72rem;
+  }
+
+  .about-hero__tags li::before {
+    display: none;
+  }
+
+  .about-hero__tags i {
+    color: var(--color-blue);
   }
 
   .about-hero__actions {
@@ -197,75 +213,66 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
     font-size: 0.72rem;
   }
 
-  .about-status {
+  .about-hero__aside {
     align-self: center;
-    border: 1px solid color-mix(in srgb, var(--color-blue) 24%, var(--border-color-muted));
-    border-radius: 1rem;
-    background: color-mix(in srgb, var(--box-bg-shadow) 88%, transparent);
-    padding: 1.15rem;
-    backdrop-filter: blur(8px);
+    border-left: 1px solid var(--border-color-muted);
+    padding: 0.5rem 0 0.5rem clamp(1.2rem, 3vw, 2rem);
   }
 
-  .about-status__topline {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    color: var(--color-green);
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-  }
-
-  .about-status__pulse {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background: var(--color-green);
-    box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--color-green) 15%, transparent);
-  }
-
-  .about-status > strong {
-    display: block;
-    margin-top: 0.7rem;
-    font-size: 1.05rem;
-  }
-
-  .about-status > p {
-    margin: 0.4rem 0 1rem;
-    color: var(--text-color-muted);
-    font-size: 0.82rem;
-    line-height: 1.65;
-  }
-
-  .about-status dl {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.55rem;
-    margin: 0;
-  }
-
-  .about-status dl > div {
-    border-radius: 0.65rem;
-    background: var(--line-hover-bg);
-    padding: 0.65rem;
-  }
-
-  .about-status dt,
-  .about-status dd {
-    margin: 0;
-  }
-
-  .about-status dt {
+  .about-hero__aside > span {
     color: var(--text-color-subtle);
-    font-size: 0.62rem;
+    font-family: var(--font-monospace);
+    font-size: 0.66rem;
     letter-spacing: 0.08em;
   }
 
-  .about-status dd {
-    margin-top: 0.2rem;
-    color: var(--text-color);
-    font-size: 0.76rem;
+  .about-hero__route {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0.6rem 0;
+  }
+
+  .about-hero__route::before,
+  .about-hero__route::after {
+    height: 1px;
+    flex: 1;
+    background: color-mix(in srgb, var(--color-blue) 45%, transparent);
+    content: "";
+  }
+
+  .about-hero__route i {
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 50%;
+    background: var(--color-blue);
+  }
+
+  .about-hero__route i + i {
+    margin-left: 26%;
+  }
+
+  .about-hero__aside > strong {
+    display: block;
+    margin-top: 1.2rem;
+    color: var(--color-blue);
+    font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  }
+
+  .about-hero__aside small {
+    display: block;
+    margin-bottom: 0.15rem;
+    color: var(--text-color-subtle);
+    font-size: 0.67rem;
     font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .about-hero__aside p {
+    margin: 0.45rem 0 0;
+    color: var(--text-color-muted);
+    font-size: 0.76rem;
+    line-height: 1.65;
   }
 
   .about-focus {
@@ -355,13 +362,15 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
     .about-focus__list {
       grid-template-columns: 1fr;
     }
+
+    .about-hero__aside {
+      border-top: 1px solid var(--border-color-muted);
+      border-left: 0;
+      padding: 1.2rem 0 0;
+    }
   }
 
   @media (max-width: 420px) {
-    .about-status dl {
-      grid-template-columns: 1fr;
-    }
-
     .about-hero__actions a {
       justify-content: center;
       width: 100%;
