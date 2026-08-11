@@ -9,8 +9,8 @@ export const ROUTES = {
 
 export const POSTS = {
   helloWorld: "/posts/apcs/apcs-mid/",
-  gettingStarted: "/posts/apcs/apcs-mid/",
-  beforeCoveredPost: "/posts/experience/2026-toi-pre/",
+  gettingStarted: "/posts/experience/2026-toi-pre/",
+  beforeCoveredPost: "/posts/experience/hspc-12th-pre/",
   encryptedTest: "/posts/encrypted-test/",
   imageZoomTest: "/posts/image-zoom-test/",
   noteMdxDemo: "/posts/note-mdx-demo/",
