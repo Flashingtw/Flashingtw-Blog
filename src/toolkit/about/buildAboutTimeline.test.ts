@@ -15,13 +15,17 @@ function createEvent(
 }
 
 describe("buildAboutTimeline", () => {
-  it("sorts events from newest to oldest and groups them by year", () => {
+  it("sorts events from newest to oldest and groups them by year and month", () => {
     const events = [createEvent("2025-08"), createEvent("2026-01"), createEvent("2026-07-05")];
 
     const result = buildAboutTimeline(events);
 
     expect(result.map((group) => group.year)).toEqual(["2026", "2025"]);
-    expect(result[0].events.map((event) => event.datetime)).toEqual(["2026-07-05", "2026-01"]);
+    expect(result[0].months.map((group) => group.month)).toEqual(["07", "01"]);
+    expect(
+      result[0].months.flatMap((group) => group.events.map((event) => event.datetime)),
+    ).toEqual(["2026-07-05", "2026-01"]);
+    expect(result[0].eventCount).toBe(2);
   });
 
   it("creates display dates and preserves an explicit date label", () => {
@@ -31,8 +35,10 @@ describe("buildAboutTimeline", () => {
       createEvent("2025-08-15", { dateLabel: "決賽日" }),
     ]);
 
-    expect(result[0].events.map((event) => event.displayDate)).toEqual(["07.05", "01 月"]);
-    expect(result[1].events[0].displayDate).toBe("決賽日");
+    expect(
+      result[0].months.flatMap((group) => group.events.map((event) => event.displayDate)),
+    ).toEqual(["05", "整月"]);
+    expect(result[1].months[0].events[0].displayDate).toBe("決賽日");
   });
 
   it("does not mutate the source order", () => {

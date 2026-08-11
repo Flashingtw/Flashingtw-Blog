@@ -16,9 +16,16 @@ export interface AboutTimelineDisplayEvent extends AboutTimelineEvent {
   displayDate: string;
 }
 
-export interface AboutTimelineGroup {
-  year: string;
+export interface AboutTimelineMonthGroup {
+  month: string;
+  label: string;
   events: AboutTimelineDisplayEvent[];
+}
+
+export interface AboutTimelineYearGroup {
+  year: string;
+  months: AboutTimelineMonthGroup[];
+  eventCount: number;
 }
 
 const DATE_PATTERN = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/;
@@ -34,27 +41,35 @@ function parseTimelineDate(value: string) {
 
   return {
     year,
-    displayDate: day ? `${month}.${day}` : `${month} 月`,
+    month,
+    displayDate: day ?? "整月",
   };
 }
 
-export function buildAboutTimeline(events: AboutTimelineEvent[]): AboutTimelineGroup[] {
+export function buildAboutTimeline(events: AboutTimelineEvent[]): AboutTimelineYearGroup[] {
   const sortedEvents = [...events].toSorted((a, b) => b.datetime.localeCompare(a.datetime));
-  const groups = new Map<string, AboutTimelineDisplayEvent[]>();
+  const groups = new Map<string, Map<string, AboutTimelineDisplayEvent[]>>();
 
   sortedEvents.forEach((event) => {
-    const { year, displayDate } = parseTimelineDate(event.datetime);
-    const group = groups.get(year) ?? [];
+    const { year, month, displayDate } = parseTimelineDate(event.datetime);
+    const yearGroup = groups.get(year) ?? new Map<string, AboutTimelineDisplayEvent[]>();
+    const monthGroup = yearGroup.get(month) ?? [];
 
-    group.push({
+    monthGroup.push({
       ...event,
       displayDate: event.dateLabel ?? displayDate,
     });
-    groups.set(year, group);
+    yearGroup.set(month, monthGroup);
+    groups.set(year, yearGroup);
   });
 
-  return [...groups.entries()].map(([year, groupEvents]) => ({
+  return [...groups.entries()].map(([year, months]) => ({
     year,
-    events: groupEvents,
+    eventCount: [...months.values()].reduce((count, monthEvents) => count + monthEvents.length, 0),
+    months: [...months.entries()].map(([month, monthEvents]) => ({
+      month,
+      label: `${Number(month)} 月`,
+      events: monthEvents,
+    })),
   }));
 }

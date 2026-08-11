@@ -1,12 +1,12 @@
 ---
 import timelineJson from "@/data/about-timeline.json";
-import {
-  buildAboutTimeline,
-  type AboutTimelineEvent,
-} from "@/toolkit/about/buildAboutTimeline";
+import { buildAboutTimeline, type AboutTimelineEvent } from "@/toolkit/about/buildAboutTimeline";
 
-const timelineEvents: AboutTimelineEvent[] = timelineJson;
-const timelineData = buildAboutTimeline(timelineEvents);
+const timelineData = buildAboutTimeline(timelineJson as AboutTimelineEvent[]).map((group) => ({
+  year: group.year,
+  eventCount: group.eventCount,
+  events: group.months.flatMap((month) => month.events),
+}));
 
 function getCategoryIcon(category: string) {
   if (category.includes("競賽")) return "i-ri-trophy-line";
@@ -24,14 +24,9 @@ function getCategoryTone(category: string) {
 }
 ---
 
-<section
-  id="about-timeline"
-  class="about-timeline"
-  aria-labelledby="about-timeline-title"
-  data-about-timeline
->
+<section id="about-timeline" class="about-timeline" aria-labelledby="about-timeline-title" data-about-timeline>
   <header class="about-timeline__heading">
-    <span>03</span>
+    <span>02</span>
     <div>
       <h2 id="about-timeline-title">一路亂撞的紀錄</h2>
       <p>不是每一次都很厲害，但都是我真的走過、真的學到東西的地方。</p>
@@ -39,69 +34,64 @@ function getCategoryTone(category: string) {
   </header>
 
   <div class="about-timeline__years">
-    {
-      timelineData.map((group) => (
-        <section class="timeline-year" aria-labelledby={`timeline-year-${group.year}`}>
-          <header class="timeline-year__header">
-            <h3 id={`timeline-year-${group.year}`}>{group.year}</h3>
-            <span>{group.events.length.toString().padStart(2, "0")}</span>
-          </header>
+    {timelineData.map((group, index) => (
+      <details class="timeline-year" open={index === 0}>
+        <summary>
+          <strong>{group.year}</strong>
+          <span>{group.eventCount.toString().padStart(2, "0")}</span>
+          <i class="i-ri-arrow-down-s-line" aria-hidden="true" />
+        </summary>
 
-          <ol class="timeline-list">
-            {group.events.map((event) => (
-              <li class="timeline-event" data-timeline-event>
-                <div class="timeline-event__date">
-                  <time datetime={event.datetime}>{event.displayDate}</time>
-                  <span aria-hidden="true" />
+        <ol class="timeline-list">
+          {group.events.map((event) => (
+            <li class="timeline-event" data-timeline-event>
+              <div class="timeline-event__date">
+                <time datetime={event.datetime}>{event.datetime.slice(5).replace("-", ".")}</time>
+                <span aria-hidden="true" />
+              </div>
+
+              <article
+                class:list={[
+                  "timeline-card",
+                  {
+                    "timeline-card--featured": event.featured,
+                    "timeline-card--upcoming": event.status === "upcoming",
+                  },
+                ]}
+              >
+                <div class="timeline-card__topline">
+                  <span class="timeline-card__category" data-tone={getCategoryTone(event.category)}>
+                    <i class={getCategoryIcon(event.category)} aria-hidden="true" />{event.category}
+                  </span>
+                  {event.featured && (
+                    <span class="timeline-card__featured" aria-label="精選紀錄" title="精選紀錄">
+                      <i class="i-ri-star-fill" aria-hidden="true" />
+                    </span>
+                  )}
                 </div>
 
-                <article
-                  class:list={[
-                    "timeline-card",
-                    {
-                      "timeline-card--featured": event.featured,
-                      "timeline-card--upcoming": event.status === "upcoming",
-                    },
-                  ]}
-                >
-                  <div class="timeline-card__topline">
-                    <span
-                      class="timeline-card__category"
-                      data-tone={getCategoryTone(event.category)}
-                    >
-                      <i class={getCategoryIcon(event.category)} aria-hidden="true" />
-                      {event.category}
-                    </span>
-                    {event.featured && <span class="timeline-card__featured">FEATURED</span>}
+                <h4>{event.title}</h4>
+                {event.result && <p class="timeline-card__result">{event.result}</p>}
+                <p class="timeline-card__description">{event.description}</p>
+
+                {(event.role || event.learning) && (
+                  <div class="timeline-card__details">
+                    {event.role && <p><strong>我做了什麼</strong><span>{event.role}</span></p>}
+                    {event.learning && <p><strong>帶走了什麼</strong><span>{event.learning}</span></p>}
                   </div>
+                )}
 
-                  <h4>{event.title}</h4>
-                  {event.result && <p class="timeline-card__result">{event.result}</p>}
-                  <p class="timeline-card__description">{event.description}</p>
-
-                  {(event.role || event.learning) && (
-                    <div class="timeline-card__details">
-                      {event.role && (
-                        <p><strong>我做了什麼</strong><span>{event.role}</span></p>
-                      )}
-                      {event.learning && (
-                        <p><strong>帶走了什麼</strong><span>{event.learning}</span></p>
-                      )}
-                    </div>
-                  )}
-
-                  {event.href && (
-                    <a class="timeline-card__link" href={event.href}>
-                      看相關紀錄 <i class="i-ri-arrow-right-line" aria-hidden="true" />
-                    </a>
-                  )}
-                </article>
-              </li>
-            ))}
-          </ol>
-        </section>
-      ))
-    }
+                {event.href && (
+                  <a class="timeline-card__link" href={event.href}>
+                    看相關紀錄 <i class="i-ri-arrow-right-line" aria-hidden="true" />
+                  </a>
+                )}
+              </article>
+            </li>
+          ))}
+        </ol>
+      </details>
+    ))}
   </div>
 </section>
 
@@ -122,7 +112,6 @@ function getCategoryTone(category: string) {
     color: var(--color-orange);
     font-size: 0.78rem;
     font-weight: 850;
-    letter-spacing: 0.1em;
   }
 
   .about-timeline__heading h2,
@@ -146,37 +135,50 @@ function getCategoryTone(category: string) {
     gap: 2rem;
   }
 
-  .timeline-year {
+  .timeline-year[open] {
     display: grid;
     grid-template-columns: 5rem minmax(0, 1fr);
     gap: 1.25rem;
   }
 
-  .timeline-year__header {
+  .timeline-year > summary {
     position: sticky;
     top: 5rem;
     align-self: start;
-    margin: 0;
     border-top: 2px solid var(--color-orange);
     padding-top: 0.55rem;
+    cursor: pointer;
+    list-style: none;
   }
 
-  .timeline-year__header h3,
-  .timeline-year__header span {
-    margin: 0;
+  .timeline-year > summary::-webkit-details-marker {
+    display: none;
   }
 
-  .timeline-year__header h3 {
+  .timeline-year > summary strong {
+    display: block;
     font-size: 1.25rem;
     line-height: 1;
   }
 
-  .timeline-year__header span {
-    display: block;
+  .timeline-year > summary span {
+    display: inline-block;
     margin-top: 0.4rem;
     color: var(--text-color-subtle);
     font-size: 0.7rem;
     letter-spacing: 0.1em;
+  }
+
+  .timeline-year > summary i {
+    display: inline-block;
+    margin-left: 0.2rem;
+    color: var(--color-orange);
+    font-size: 0.85rem;
+    transition: transform 160ms ease;
+  }
+
+  .timeline-year[open] > summary i {
+    transform: rotate(180deg);
   }
 
   .timeline-list {
@@ -209,7 +211,6 @@ function getCategoryTone(category: string) {
 
   .timeline-event::before {
     display: none;
-    content: none;
   }
 
   .timeline-event__date {
@@ -242,10 +243,7 @@ function getCategoryTone(category: string) {
     border-radius: 0.95rem;
     background: var(--box-bg-shadow);
     padding: 1rem 1.05rem;
-    transition:
-      border-color 180ms ease,
-      box-shadow 180ms ease,
-      transform 180ms ease;
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
   }
 
   .timeline-card:hover {
@@ -280,23 +278,13 @@ function getCategoryTone(category: string) {
     font-weight: 750;
   }
 
-  .timeline-card__category[data-tone="assessment"] {
-    color: var(--color-purple);
-  }
-
-  .timeline-card__category[data-tone="opportunity"] {
-    color: var(--color-green);
-  }
-
-  .timeline-card__category[data-tone="milestone"] {
-    color: var(--color-orange);
-  }
+  .timeline-card__category[data-tone="assessment"] { color: var(--color-purple); }
+  .timeline-card__category[data-tone="opportunity"] { color: var(--color-green); }
+  .timeline-card__category[data-tone="milestone"] { color: var(--color-orange); }
 
   .timeline-card__featured {
     color: var(--color-orange);
-    font-size: 0.58rem;
-    font-weight: 850;
-    letter-spacing: 0.1em;
+    font-size: 0.9rem;
   }
 
   .timeline-card h4 {
@@ -340,13 +328,7 @@ function getCategoryTone(category: string) {
     line-height: 1.6;
   }
 
-  .timeline-card__details strong {
-    color: var(--text-color);
-  }
-
-  .timeline-card__details span {
-    color: var(--text-color-muted);
-  }
+  .timeline-card__details span { color: var(--text-color-muted); }
 
   .timeline-card__link {
     display: inline-flex;
@@ -359,58 +341,31 @@ function getCategoryTone(category: string) {
     text-decoration: none;
   }
 
-  .timeline-card__link:hover {
-    text-decoration: underline;
-  }
-
   @media (max-width: 640px) {
-    .timeline-year {
+    .timeline-year[open] {
       grid-template-columns: 1fr;
       gap: 0.85rem;
     }
 
-    .timeline-year__header {
+    .timeline-year > summary strong,
+    .timeline-year > summary span,
+    .timeline-year > summary i {
+      display: inline-block;
+    }
+
+    .timeline-year > summary {
       position: static;
-      display: flex;
-      align-items: baseline;
-      gap: 0.55rem;
     }
 
-    .timeline-year__header span {
-      margin: 0;
-    }
-
-    .timeline-list {
-      padding-left: 1rem;
-    }
-
-    .timeline-event {
-      grid-template-columns: 1fr;
-      gap: 0.3rem;
-    }
-
-    .timeline-event__date {
-      padding-top: 0;
-    }
-
-    .timeline-event__date span {
-      top: 0.35rem;
-      left: -0.95rem;
-    }
-
-    .timeline-card__details p {
-      grid-template-columns: 1fr;
-      gap: 0.08rem;
-    }
+    .timeline-list { padding-left: 1rem; }
+    .timeline-event { grid-template-columns: 1fr; gap: 0.3rem; }
+    .timeline-event__date { padding-top: 0; }
+    .timeline-event__date span { top: 0.35rem; left: -0.95rem; }
+    .timeline-card__details p { grid-template-columns: 1fr; gap: 0.08rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .timeline-card {
-      transition: none;
-    }
-
-    .timeline-card:hover {
-      transform: none;
-    }
+    .timeline-card { transition: none; }
+    .timeline-card:hover { transform: none; }
   }
 </style>

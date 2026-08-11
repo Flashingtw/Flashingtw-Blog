@@ -5,14 +5,15 @@ test("@regression 關於我使用專屬個人概覽而非文章資訊", async ({
   await page.goto(ROUTES.about);
 
   const article = page.locator("article.about-page");
-  await expect(article.getByRole("heading", { name: /我是 Flashingtw/ })).toBeVisible();
+  await expect(article.getByRole("heading", { name: /歡迎來到我的小角落/ })).toBeVisible();
+  await expect(article.getByText("大安高工電子科 · 準高二")).toBeVisible();
   await expect(article.getByText("大安電研社社長", { exact: true })).toBeVisible();
   await expect(article.getByText("最後更新")).toBeVisible();
   await expect(article.locator(":scope > header")).toHaveCount(0);
   await expect(article.getByText("閱讀時間", { exact: true })).toHaveCount(0);
 
-  const featuredContent = article.getByRole("region", { name: "有把它做出來的東西" });
-  await expect(featuredContent.getByRole("link")).toHaveCount(4);
+  const featuredContent = article.getByRole("region", { name: "三個精選小專案" });
+  await expect(featuredContent.getByRole("link")).toHaveCount(3);
   await expect(featuredContent.getByRole("link", { name: /DungeonGenerator/ })).toBeVisible();
   await expect(featuredContent.getByRole("link", { name: /CityGenerator/ })).toBeVisible();
 });
@@ -22,8 +23,8 @@ test("@regression 關於我時間線具備完整語意與文章連結", async ({
 
   const timeline = page.locator("[data-about-timeline]");
   await expect(timeline).toBeVisible();
-  await expect(timeline.getByRole("heading", { name: "2026" })).toBeVisible();
-  await expect(timeline.getByRole("heading", { name: "2025" })).toBeVisible();
+  await expect(timeline.getByText("2026", { exact: true })).toBeVisible();
+  await expect(timeline.getByText("2025", { exact: true })).toBeAttached();
   await expect(timeline.locator("[data-timeline-event]")).toHaveCount(12);
 
   const ytpLink = timeline.getByRole("link", { name: "看相關紀錄" }).filter({
