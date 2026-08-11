@@ -11,256 +11,345 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
 });
 ---
 
-<section class="about-overview" aria-labelledby="about-introduction-title">
-  <div class="about-overview__intro">
-    <span class="about-overview__eyebrow">STUDENT · COMPETITIVE PROGRAMMING</span>
-    <h2 id="about-introduction-title">Hello World，我是 Flashingtw！</h2>
+<section class="about-hero" aria-labelledby="about-introduction-title">
+  <div class="about-hero__copy">
+    <span class="about-hero__eyebrow">
+      <i class="i-ri-terminal-box-line" aria-hidden="true" />
+      HELLO, WORLD :D
+    </span>
+    <h2 id="about-introduction-title">我是 Flashingtw，<br /><em>還在慢慢變強的人。</em></h2>
     <p>
-      我是大安高工電子科的學生，目前擔任大安電研社社長。我喜歡從程式邏輯中找出規律，主要投入演算法、資料結構與競技程式設計。
+      大安高工電子科學生，也是大安電研社社長。現在主要用 C++
+      寫競程、學演算法，偶爾把腦中很怪的生成想法做成 Minecraft 插件。
     </p>
     <p>
-      我從 2025 年 8 月開始學習 C++，並在一次次檢測與競賽中修正不足、累積經驗。這裡記錄我的成果，也保留一路上的反思。
+      這裡放的是我真的做過、撞過牆、debug 過的東西。技術還在補，當然不會假裝自己什麼都會
+      <del>會的話就不會一直 WA 了</del> uwu
     </p>
 
-    <div class="about-overview__actions">
+    <div class="about-hero__actions">
       <a href="https://github.com/Flashingtw/" target="_blank" rel="noopener noreferrer">
         <i class="i-ri-github-fill" aria-hidden="true" />
-        查看 GitHub
+        GitHub
       </a>
-      <a href="mailto:0624joshua@gmail.com" class="about-overview__secondary-action">
-        <i class="i-ri-mail-line" aria-hidden="true" />
-        聯絡我
+      <a href="#about-timeline" class="about-hero__secondary-action">
+        <i class="i-ri-time-line" aria-hidden="true" />
+        看時間線
       </a>
     </div>
 
-    <p class="about-overview__updated">
-      <i class="i-ri-refresh-line" aria-hidden="true" />
-      最後更新：<time datetime={updated.toISOString()}>{updatedLabel}</time>
+    <p class="about-hero__updated">
+      最後更新 <time datetime={updated.toISOString()}>{updatedLabel}</time>
     </p>
   </div>
 
-  <ul class="about-facts" aria-label="個人快速資訊">
-    <li>
-      <i class="i-ri-code-s-slash-line" aria-hidden="true" />
-      <span>主要語言</span>
-      <strong>C++</strong>
-    </li>
-    <li>
-      <i class="i-ri-calendar-check-line" aria-hidden="true" />
-      <span>開始學習</span>
-      <strong>2025.08</strong>
-    </li>
-    <li>
-      <i class="i-ri-team-line" aria-hidden="true" />
-      <span>目前身分</span>
-      <strong>大安電研社社長</strong>
-    </li>
-    <li>
-      <i class="i-ri-focus-3-line" aria-hidden="true" />
-      <span>專注方向</span>
-      <strong>演算法與競程</strong>
-    </li>
-  </ul>
+  <aside class="about-status" aria-label="目前狀態">
+    <div class="about-status__topline">
+      <span class="about-status__pulse" aria-hidden="true" />
+      NOW BUILDING
+    </div>
+    <strong>下一個更好的自己</strong>
+    <p>從第一次 APCS 實作 0 分開始，現在還在競賽、專案和社團之間繼續疊經驗值。</p>
+
+    <dl>
+      <div>
+        <dt>MAIN</dt>
+        <dd>C++ / 演算法</dd>
+      </div>
+      <div>
+        <dt>LEVEL</dt>
+        <dd>APCS 實作 4 級</dd>
+      </div>
+      <div>
+        <dt>ROLE</dt>
+        <dd>大安電研社社長</dd>
+      </div>
+      <div>
+        <dt>SINCE</dt>
+        <dd>2025.08</dd>
+      </div>
+    </dl>
+  </aside>
 </section>
 
 <section class="about-focus" aria-labelledby="about-focus-title">
-  <div class="about-section-heading">
-    <span class="about-section-heading__icon">
-      <i class="i-ri-compass-3-line" aria-hidden="true" />
-    </span>
+  <header class="about-heading">
+    <span>01</span>
     <div>
-      <h2 id="about-focus-title">目前正在做的事</h2>
-      <p>比起只列出會什麼，我更想記錄自己正在往哪裡走。</p>
+      <h2 id="about-focus-title">現在的主線任務</h2>
+      <p>先把正在做的事做好，技能樹之後再慢慢點 ww</p>
     </div>
-  </div>
+  </header>
 
   <ul class="about-focus__list">
-    <li>準備成大邀請賽決賽與後續程式競賽</li>
-    <li>持續練習演算法、資料結構與競賽解題</li>
-    <li>把解題過程與參賽心得整理成文章</li>
-    <li>帶領大安電研社進行技術交流與共同學習</li>
+    <li>
+      <i class="i-ri-code-box-line" aria-hidden="true" />
+      <div><strong>競技程式設計</strong><span>持續練演算法、資料結構與正式賽事的臨場能力。</span></div>
+    </li>
+    <li>
+      <i class="i-ri-group-line" aria-hidden="true" />
+      <div><strong>社團與交流</strong><span>帶領大安電研社，一起寫題、做東西和交流技術。</span></div>
+    </li>
+    <li>
+      <i class="i-ri-hammer-line" aria-hidden="true" />
+      <div><strong>把想法做出來</strong><span>用 Java 做 Minecraft 生成插件，順便跟效能問題互毆。</span></div>
+    </li>
   </ul>
 </section>
 
 <style>
-  .about-overview {
+  .about-hero {
+    position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.45fr) minmax(15rem, 0.75fr);
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
+    grid-template-columns: minmax(0, 1.35fr) minmax(17rem, 0.75fr);
+    gap: 1rem;
+    overflow: hidden;
+    margin-bottom: 2.75rem;
     border: 1px solid var(--border-color-muted);
-    border-radius: 1.1rem;
+    border-radius: 1.4rem;
     background:
-      linear-gradient(135deg, var(--cb-focus-bg), transparent 48%), var(--box-bg-shadow);
-    padding: 1.6rem;
+      radial-gradient(circle at 8% 8%, var(--cb-focus-bg), transparent 34%),
+      var(--box-bg-shadow);
+    padding: clamp(1.25rem, 4vw, 2.4rem);
     box-shadow: var(--shadow-card-soft);
   }
 
-  .about-overview__eyebrow {
+  .about-hero::after {
+    position: absolute;
+    right: -3rem;
+    bottom: -5rem;
+    width: 15rem;
+    height: 15rem;
+    border: 1px solid color-mix(in srgb, var(--color-blue) 22%, transparent);
+    border-radius: 50%;
+    content: "";
+  }
+
+  .about-hero__copy,
+  .about-status {
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     color: var(--color-blue);
-    font-size: 0.72rem;
+    font-size: 0.73rem;
     font-weight: 800;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
   }
 
-  .about-overview__intro h2 {
-    margin: 0.45rem 0 0.8rem;
-    font-size: clamp(1.55rem, 3vw, 2rem);
+  .about-hero h2 {
+    margin: 0.6rem 0 1rem;
+    font-size: clamp(1.8rem, 4.8vw, 3.25rem);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
   }
 
-  .about-overview__intro > p:not(.about-overview__updated) {
-    margin: 0.45rem 0;
+  .about-hero h2 em {
+    color: var(--color-blue);
+    font-style: normal;
+  }
+
+  .about-hero__copy > p:not(.about-hero__updated) {
+    max-width: 42rem;
+    margin: 0.55rem 0;
     color: var(--text-color-muted);
     line-height: 1.85;
   }
 
-  .about-overview__actions {
+  .about-hero__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.65rem;
-    margin-top: 1.1rem;
+    margin-top: 1.3rem;
   }
 
-  .about-overview__actions a {
+  .about-hero__actions a {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     border: 1px solid var(--color-blue);
-    border-radius: 999px;
+    border-radius: 0.75rem;
     background: var(--color-blue);
-    padding: 0.55rem 0.9rem;
+    padding: 0.62rem 0.95rem;
     color: var(--grey-0);
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: 0.84rem;
+    font-weight: 750;
     text-decoration: none;
+    transition: transform 160ms ease;
   }
 
-  .about-overview__actions .about-overview__secondary-action {
+  .about-hero__actions a:hover {
+    transform: translateY(-2px);
+  }
+
+  .about-hero__actions .about-hero__secondary-action {
     background: transparent;
     color: var(--color-blue);
   }
 
-  .about-overview__updated {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
+  .about-hero__updated {
     margin: 1rem 0 0;
     color: var(--text-color-subtle);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
   }
 
-  .about-facts {
+  .about-status {
+    align-self: center;
+    border: 1px solid color-mix(in srgb, var(--color-blue) 24%, var(--border-color-muted));
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--box-bg-shadow) 88%, transparent);
+    padding: 1.15rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .about-status__topline {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--color-green);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+
+  .about-status__pulse {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-green);
+    box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--color-green) 15%, transparent);
+  }
+
+  .about-status > strong {
+    display: block;
+    margin-top: 0.7rem;
+    font-size: 1.05rem;
+  }
+
+  .about-status > p {
+    margin: 0.4rem 0 1rem;
+    color: var(--text-color-muted);
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+
+  .about-status dl {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem;
-    align-content: start;
+    gap: 0.55rem;
     margin: 0;
-    padding: 0;
-    list-style: none;
   }
 
-  .about-facts > li {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 0.15rem 0.45rem;
-    margin: 0;
-    border-radius: 0.75rem;
+  .about-status dl > div {
+    border-radius: 0.65rem;
     background: var(--line-hover-bg);
-    padding: 0.75rem;
+    padding: 0.65rem;
   }
 
-  .about-facts > li::before,
-  .about-focus__list > li::before {
-    display: none;
-    content: none;
+  .about-status dt,
+  .about-status dd {
+    margin: 0;
   }
 
-  .about-facts i {
-    grid-row: span 2;
-    color: var(--color-blue);
-    font-size: 1.1rem;
-  }
-
-  .about-facts span {
+  .about-status dt {
     color: var(--text-color-subtle);
-    font-size: 0.7rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
   }
 
-  .about-facts strong {
+  .about-status dd {
+    margin-top: 0.2rem;
     color: var(--text-color);
-    font-size: 0.82rem;
-    line-height: 1.4;
+    font-size: 0.76rem;
+    font-weight: 700;
   }
 
   .about-focus {
-    margin: 0 0 2.5rem;
+    margin-bottom: 2.75rem;
   }
 
-  .about-section-heading {
+  .about-heading {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.85rem;
     margin-bottom: 1rem;
   }
 
-  .about-section-heading__icon {
-    display: grid;
-    flex: 0 0 auto;
-    width: 2.5rem;
-    height: 2.5rem;
-    place-items: center;
-    border-radius: 0.75rem;
-    background: var(--cb-focus-bg);
+  .about-heading > span {
     color: var(--color-blue);
-    font-size: 1.3rem;
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
   }
 
-  .about-section-heading h2,
-  .about-section-heading p {
+  .about-heading h2,
+  .about-heading p {
     margin: 0;
   }
 
-  .about-section-heading p {
-    margin-top: 0.2rem;
+  .about-heading h2 {
+    font-size: 1.25rem;
+  }
+
+  .about-heading p {
+    margin-top: 0.18rem;
     color: var(--text-color-muted);
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
 
   .about-focus__list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .about-focus__list > li {
-    position: relative;
+    display: flex;
+    gap: 0.75rem;
     margin: 0;
     border: 1px solid var(--border-color-muted);
-    border-radius: 0.75rem;
-    padding: 0.85rem 0.9rem 0.85rem 2rem;
-    color: var(--text-color-muted);
+    border-radius: 0.9rem;
+    background: var(--box-bg-shadow);
+    padding: 1rem;
+  }
+
+  .about-focus__list > li::before {
+    display: none;
+    content: none;
+  }
+
+  .about-focus__list i {
+    flex: 0 0 auto;
+    color: var(--color-blue);
+    font-size: 1.25rem;
+  }
+
+  .about-focus__list strong,
+  .about-focus__list span {
+    display: block;
+  }
+
+  .about-focus__list strong {
     font-size: 0.88rem;
+  }
+
+  .about-focus__list span {
+    margin-top: 0.3rem;
+    color: var(--text-color-muted);
+    font-size: 0.78rem;
     line-height: 1.6;
   }
 
-  .about-focus__list > li::after {
-    position: absolute;
-    top: 1.15rem;
-    left: 0.85rem;
-    width: 0.45rem;
-    height: 0.45rem;
-    border-radius: 999px;
-    background: var(--color-blue);
-    content: "";
-  }
-
-  @media (max-width: 720px) {
-    .about-overview {
+  @media (max-width: 780px) {
+    .about-hero {
       grid-template-columns: 1fr;
-      padding: 1.15rem;
     }
 
     .about-focus__list {
@@ -268,9 +357,24 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
     }
   }
 
-  @media (max-width: 340px) {
-    .about-facts {
+  @media (max-width: 420px) {
+    .about-status dl {
       grid-template-columns: 1fr;
+    }
+
+    .about-hero__actions a {
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-hero__actions a {
+      transition: none;
+    }
+
+    .about-hero__actions a:hover {
+      transform: none;
     }
   }
 </style>

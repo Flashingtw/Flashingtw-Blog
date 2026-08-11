@@ -1,35 +1,27 @@
 <section class="about-contact" aria-labelledby="about-contact-title">
-  <header>
-    <span>
-      <i class="i-ri-chat-smile-3-line" aria-hidden="true" />
-    </span>
-    <div>
-      <h2 id="about-contact-title">聯絡與社群</h2>
-      <p>歡迎交流技術、競賽心得或社團相關內容。</p>
-    </div>
-  </header>
+  <div class="about-contact__copy">
+    <span>04 · CONTACT</span>
+    <h2 id="about-contact-title">想聊競程、社團或奇怪的生成想法？</h2>
+    <p>可以來找我，回覆速度取決於我是不是又卡在某題上面 uwu</p>
+  </div>
 
   <div class="about-contact__links">
-    <a href="mailto:0624joshua@gmail.com">
+    <a href="mailto:0624joshua@gmail.com" aria-label="寄 Email 給我">
       <i class="i-ri-mail-line" aria-hidden="true" />
       <span>Email</span>
-      <strong>0624joshua@gmail.com</strong>
     </a>
-
     <a
       href="https://github.com/Flashingtw/"
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="前往 Flashingtw 的 GitHub"
     >
       <i class="i-ri-github-fill" aria-hidden="true" />
       <span>GitHub</span>
-      <strong>Flashingtw</strong>
     </a>
-
-    <button type="button" data-copy-discord>
+    <button type="button" data-copy-discord aria-label="複製 Discord 帳號 flash.zcx">
       <i class="i-ri-discord-fill" aria-hidden="true" />
-      <span>Discord · 點擊複製</span>
-      <strong>flash.zcx</strong>
+      <span>Discord</span>
       <em role="status" aria-live="polite" data-copy-status></em>
     </button>
   </div>
@@ -46,12 +38,12 @@
     button.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText("flash.zcx");
-        status.textContent = "已複製！";
+        status.textContent = "已複製 flash.zcx :D";
         window.setTimeout(() => {
           status.textContent = "";
-        }, 2000);
+        }, 2200);
       } catch (error) {
-        status.textContent = "複製失敗，請手動複製";
+        status.textContent = "複製失敗，帳號是 flash.zcx";
         console.error("複製 Discord 帳號失敗:", error);
       }
     });
@@ -63,97 +55,100 @@
 
 <style>
   .about-contact {
-    margin-top: 2.5rem;
-  }
-
-  .about-contact > header {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-  }
-
-  .about-contact > header > span {
     display: grid;
-    width: 2.5rem;
-    height: 2.5rem;
-    place-items: center;
-    border-radius: 0.75rem;
-    background: color-mix(in srgb, var(--color-green) 14%, transparent);
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.25rem;
+    align-items: center;
+    overflow: hidden;
+    margin-top: 2.75rem;
+    border: 1px solid color-mix(in srgb, var(--color-green) 25%, var(--border-color-muted));
+    border-radius: 1.15rem;
+    background:
+      linear-gradient(120deg, color-mix(in srgb, var(--color-green) 10%, transparent), transparent 55%),
+      var(--box-bg-shadow);
+    padding: clamp(1.1rem, 3vw, 1.6rem);
+  }
+
+  .about-contact__copy > span {
     color: var(--color-green);
-    font-size: 1.3rem;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
   }
 
-  .about-contact h2,
-  .about-contact header p {
-    margin: 0;
+  .about-contact h2 {
+    margin: 0.4rem 0 0;
+    font-size: clamp(1.15rem, 3vw, 1.55rem);
+    line-height: 1.35;
   }
 
-  .about-contact header p {
-    margin-top: 0.2rem;
+  .about-contact p {
+    margin: 0.4rem 0 0;
     color: var(--text-color-muted);
     font-size: 0.82rem;
   }
 
   .about-contact__links {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    justify-content: flex-end;
   }
 
   .about-contact__links > a,
   .about-contact__links > button {
     position: relative;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 0.1rem 0.6rem;
+    display: inline-flex;
     align-items: center;
-    min-width: 0;
+    gap: 0.38rem;
+    min-height: 2.5rem;
     margin: 0;
     border: 1px solid var(--border-color-muted);
-    border-radius: 0.8rem;
+    border-radius: 0.75rem;
     background: var(--box-bg-shadow);
-    padding: 0.9rem;
+    padding: 0.6rem 0.75rem;
     color: var(--text-color);
     font: inherit;
-    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 750;
     text-decoration: none;
     cursor: pointer;
   }
 
   .about-contact__links > :is(a, button):hover {
     border-color: var(--color-green);
+    color: var(--color-green);
   }
 
   .about-contact__links i {
-    grid-row: span 2;
-    color: var(--color-green);
-    font-size: 1.25rem;
-  }
-
-  .about-contact__links span {
-    color: var(--text-color-subtle);
-    font-size: 0.7rem;
-  }
-
-  .about-contact__links strong {
-    overflow: hidden;
-    font-size: 0.82rem;
-    text-overflow: ellipsis;
+    font-size: 1rem;
   }
 
   .about-contact__links em {
     position: absolute;
-    right: 0.75rem;
-    bottom: 0.35rem;
+    right: 0;
+    bottom: -1.25rem;
+    width: max-content;
     color: var(--color-green);
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-style: normal;
   }
 
   @media (max-width: 720px) {
-    .about-contact__links {
+    .about-contact {
       grid-template-columns: 1fr;
+    }
+
+    .about-contact__links {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .about-contact__links > a,
+    .about-contact__links > button {
+      justify-content: center;
+      width: 100%;
     }
   }
 </style>
