@@ -93,10 +93,10 @@ test("@critical 搜索命中后可点击结果跳转到对应文章", async ({ p
   await expect(page.locator("h1").first()).toContainText(SEARCH_TERMS.publicPostTitle);
 });
 
-test("@critical 分页与标签/分类列表进入文章后回退，URL与列表状态保持一致", async ({ page }) => {
-  await page.goto(ROUTES.page2);
-  await expect(page).toHaveURL(ROUTES.page2);
-  await expect(page.locator("nav.pagination [aria-current='page']")).toHaveText("2");
+test("@critical 文章彙整与标签/分类列表进入文章后回退，URL与列表状态保持一致", async ({ page }) => {
+  await page.goto(ROUTES.archives);
+  await expect(page).toHaveURL(ROUTES.archives);
+  await expect(page.locator(".timeline")).toBeVisible();
 
   const pagePostLink = page.locator("main article a[href^='/posts/']").first();
   await expect(pagePostLink).toBeVisible();
@@ -106,8 +106,8 @@ test("@critical 分页与标签/分类列表进入文章后回退，URL与列表
   await expect(page).toHaveURL(/\/posts\/.+\/$/);
 
   await page.goBack();
-  await expect(page).toHaveURL(ROUTES.page2);
-  await expect(page.locator("nav.pagination [aria-current='page']")).toHaveText("2");
+  await expect(page).toHaveURL(ROUTES.archives);
+  await expect(page.locator(".timeline")).toBeVisible();
 
   await page.goto(ROUTES.tags);
   const firstTag = page.locator(".tag-cloud .tag-cloud-item").first();

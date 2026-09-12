@@ -43,17 +43,13 @@ export default defineConfig({
     },
     {
       "dropbox": {
-        "enable": false,
-        "items": []
-      },
-      "href": "/about/",
-      "icon": "i-ri-user-3-line",
-      "text": "關於我"
-    },
-    {
-      "dropbox": {
         "enable": true,
         "items": [
+          {
+            "href": "/archives/",
+            "icon": "i-ri-quill-pen-fill",
+            "text": "全部文章"
+          },
           {
             "dropbox": {
               "enable": false,

@@ -49,3 +49,13 @@ test("@critical 搜索结果排除加密文章", async ({ page }) => {
     })
     .toBe(0);
 });
+
+test("@critical 搜尋個人介紹只連到新首頁", async ({ page }) => {
+  const searchInput = await openSearchPanel(page);
+  await searchInput.fill("關於我");
+  const profile = page.locator("pagefind-results a", { hasText: "關於我" });
+  await expect(profile).toHaveCount(1);
+  const href = await profile.getAttribute("href");
+  expect(new URL(href ?? "", page.url()).pathname).toBe("/");
+  await expect(page.locator('pagefind-results a[href*="/about/"]')).toHaveCount(0);
+});

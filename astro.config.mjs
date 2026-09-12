@@ -68,6 +68,10 @@ if (themeConfig.diagnostics?.suppressFsWatcherMaxListenersWarning !== false) {
 export default defineConfig({
   site: "https://flashing.tw",
   trailingSlash: "always",
+  redirects: {
+    "/about/": "/",
+    "/page/2/": "/archives/",
+  },
   build: {
     format: "directory",
   },
@@ -86,7 +90,9 @@ export default defineConfig({
         customElement: true,
       },
     }),
-    sitemap(),
+    sitemap({
+      filter: (page) => !["/about/", "/page/2/"].includes(new URL(page).pathname),
+    }),
     hyacinePlugin(),
     mdx({
       remarkPlugins: [remarkMath],

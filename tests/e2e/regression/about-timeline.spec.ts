@@ -27,10 +27,10 @@ test("@regression 關於我時間線具備完整語意與文章連結", async ({
   await expect(timeline.getByText("2025", { exact: true })).toBeAttached();
   await expect(timeline.locator("[data-timeline-event]")).toHaveCount(12);
 
-  const ytpLink = timeline.getByRole("link", { name: "看相關紀錄" }).filter({
+  const relatedLinks = timeline.getByRole("link", { name: "看相關紀錄" }).filter({
     has: page.locator('i[class*="arrow-right"]'),
   });
-  await expect(ytpLink).toHaveCount(4);
+  await expect(relatedLinks).toHaveCount(5);
 
   const dates = timeline.locator("time");
   await expect(dates).toHaveCount(12);

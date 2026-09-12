@@ -1,6 +1,8 @@
 export const ROUTES = {
   home: "/",
-  about: "/about/",
+  about: "/",
+  legacyAbout: "/about/",
+  archives: "/archives/",
   page2: "/page/2/",
   moments: "/moments/",
   tags: "/tags/",

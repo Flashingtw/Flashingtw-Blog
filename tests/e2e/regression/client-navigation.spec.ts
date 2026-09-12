@@ -26,7 +26,7 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
     await page.goBack();
     await expect(page).toHaveURL(/\/$/);
     await expect(page).toHaveTitle(initialTitle);
-    await expect(page.locator("#segment-container article").first()).toHaveClass(/show/);
+    await expect(page.locator("article.about-page")).toBeVisible();
     await page.goForward();
     await expect(page).toHaveURL(/\/friends\/$/);
     await expect

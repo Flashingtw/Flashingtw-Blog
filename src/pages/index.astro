@@ -1,111 +1,103 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import IndexContent from "../components/IndexContent.astro";
-import Pagination from "../components/Pagination.astro";
-import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import AboutOverview from "@/components/about/AboutOverview.astro";
+import WalineComments from "@/components/post/WalineComments.svelte";
+import { currentLocale } from "@/i18n";
+import AboutContent, { frontmatter as aboutFrontmatter } from "@/content/about.mdx";
 import themeConfig from "@/theme.config";
+import "@/styles/post.css";
+import "@/styles/spoiler.css";
+import "katex/dist/katex-swap.min.css";
 
-// Fetch all posts
-const allPosts = await getCollection("posts");
-
-// Filter out drafts
-const publishedPosts = allPosts.filter((post) => !post.data.draft);
-
-// Separate sticky posts and regular posts
-const stickyPosts = publishedPosts
-  .filter((post) => post.data.sticky === true)
-  .toSorted(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-  );
-
-const regularPosts = publishedPosts
-  .filter((post) => !post.data.sticky)
-  .toSorted(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-  );
-
-const pageSize = themeConfig.home?.pageSize ?? 10;
-const lastPage = Math.max(1, Math.ceil(regularPosts.length / pageSize));
-const currentPage = 1;
-const pagePosts = regularPosts.slice(0, pageSize);
-
-// Build pagination navigation
-const paginationNavigation = {
-  prevUrl: undefined,
-  nextUrl: lastPage > 1 ? "/page/2/" : undefined,
-};
-
-// Build category list with post counts
-const categoryMap = new Map<
-  string,
-  {
-    name: string;
-    posts: Array<{ title: string; slug: string }>;
-  }
->();
-
-publishedPosts.forEach((post) => {
-  const categories = post.data.categories || [];
-  categories.forEach((cat) => {
-    if (!categoryMap.has(cat)) {
-      categoryMap.set(cat, {
-        name: cat,
-        posts: [],
-      });
-    }
-    categoryMap.get(cat)!.posts.push({
-      title: post.data.title,
-      slug: post.id,
-    });
-  });
-});
-
-// Transform categories for CategoryCards component
-const categories = Array.from(categoryMap.entries())
-  .filter(([name, _]) =>
-    themeConfig.home?.selectedCategories?.some((cat) => cat.name === name),
-  )
-  .map(([name, data]) => ({
-    name,
-    cover: themeConfig.home?.selectedCategories?.find(
-      (cat) => cat.name === name,
-    )?.cover,
-    url: `/categories/${name}/`,
-    postCount: data.posts.length,
-    posts: data.posts.slice(0, 6).map((p) => ({
-      title: p.title,
-      url: `/posts/${p.slug}/`,
-    })),
-  }))
-  .toSorted((a, b) => b.postCount - a.postCount);
-
-let pageTitle = themeConfig.home?.title?.customTitle ?? "";
-
-if (themeConfig.home?.title?.behavior === "default") {
-  pageTitle =
-    `${themeConfig.brand?.logo || ""} = ${themeConfig.brand?.title || ""} = ${themeConfig.brand?.subtitle || ""}`.trim();
+interface AboutFrontmatter {
+  title?: string;
+  description?: string;
+  date?: string | Date;
+  updated?: string | Date;
+  image?: string;
+  cover?: string;
 }
+
+const frontmatter = (aboutFrontmatter ?? {}) as AboutFrontmatter;
+const parseDate = (value: string | Date | undefined, fallback: Date) => {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const parsed = new Date(value);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed;
+    }
+  }
+
+  return fallback;
+};
+const fallbackDate = new Date();
+const title = frontmatter.title || "關於我";
+const description = frontmatter.description || "一個從不會演算法到熱愛演算法的人";
+const updatedDate = parseDate(frontmatter.updated ?? frontmatter.date, fallbackDate);
+
+// 保留原本的留言識別，搬到首頁後仍可讀取既有留言。
+const postPath = "/about/";
+const commentsConfig = themeConfig.comments || {};
+const walineConfig = commentsConfig.waline || {};
+
+const finalPageCover = frontmatter.image || frontmatter.cover;
 ---
 
-<Layout
-  pageTitle={pageTitle}
-  indexPage={true}
-  navigation={paginationNavigation}
->
+<Layout pageTitle={title} description={description} ogImage={finalPageCover}>
   <Fragment slot="head">
-    <meta name="description" content={themeConfig.sidebar?.description} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL("/", Astro.site)} />
   </Fragment>
 
-  <IndexContent
-    posts={pagePosts}
-    stickyPosts={stickyPosts}
-    categories={categories}
-    isFirstPage={true}
-  />
-  <Pagination
-    currentPage={currentPage}
-    lastPage={lastPage}
-    firstPageHref="/"
-    routePrefix="/page"
-  />
+  <div class="article wrap">
+
+    <article
+      itemscope
+      itemtype="https://schema.org/ProfilePage"
+      class="post block about-page"
+      data-pagefind-body
+      lang={currentLocale}
+    >
+      <div
+        class="body md about-page__body"
+        itemprop="mainEntity"
+        itemscope
+        itemtype="https://schema.org/Person"
+      >
+        <meta itemprop="name" content="Flashingtw" />
+        <AboutOverview updated={updatedDate} />
+        <AboutContent />
+      </div>
+    </article>
+  </div>
+
+  {
+    commentsConfig.enable !== false && (
+      <div id="comments" class="comment">
+        <WalineComments
+          client:visible
+          serverURL={walineConfig.serverURL}
+          lang={walineConfig.lang || currentLocale}
+          dark={walineConfig.dark}
+          path={walineConfig.path}
+          pagePath={postPath}
+        />
+      </div>
+    )
+  }
 </Layout>
+
+<style>
+  .about-page__body {
+    padding-top: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .about-page__body {
+      padding-top: 1.2rem;
+    }
+  }
+</style>
