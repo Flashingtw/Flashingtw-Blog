@@ -16,6 +16,12 @@ test("@regression 關於我使用專屬個人概覽而非文章資訊", async ({
   await expect(featuredContent.getByRole("link")).toHaveCount(3);
   await expect(featuredContent.getByRole("link", { name: /DungeonGenerator/ })).toBeVisible();
   await expect(featuredContent.getByRole("link", { name: /CityGenerator/ })).toBeVisible();
+  await expect(featuredContent.getByRole("link", { name: /CP-Practice/ })).toHaveAttribute(
+    "href",
+    "https://github.com/Flashingtw/CP-Practice",
+  );
+  await expect(featuredContent.locator('img[src="/assets/projects/minecraft.svg"]')).toHaveCount(2);
+  await expect(featuredContent.locator('img[src="/assets/projects/terminal.svg"]')).toHaveCount(1);
 });
 
 test("@regression 關於我時間線具備完整語意與文章連結", async ({ page }) => {

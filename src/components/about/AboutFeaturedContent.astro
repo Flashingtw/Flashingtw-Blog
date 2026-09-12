@@ -7,7 +7,7 @@ import { aboutProjects } from "@/data/about";
     <span>01</span>
     <div>
       <h2 id="about-projects-title">三個精選小專案</h2>
-      <p>都是和 AI 一起慢慢做出來的，點進去可以去 GitHub 逛逛。</p>
+      <p>點進去可以去 GitHub 逛逛。</p>
     </div>
   </header>
 
@@ -15,7 +15,7 @@ import { aboutProjects } from "@/data/about";
     {aboutProjects.map((project, index) => (
       <a href={project.href} target="_blank" rel="noopener noreferrer">
         <span class="about-projects__number">0{index + 1}</span>
-        <i class={project.icon} aria-hidden="true" />
+        <img class="project-sticker" src={project.image} alt="" width="56" height="56" />
         <small>{project.tech}</small>
         <strong>{project.name}</strong>
         <p>{project.description}</p>
@@ -85,15 +85,12 @@ import { aboutProjects } from "@/data/about";
     transform: translateY(-3px);
   }
 
-  .about-projects__grid > a > i {
-    display: grid;
-    width: 2.5rem;
-    height: 2.5rem;
-    place-items: center;
-    border-radius: 0.75rem;
-    background: color-mix(in srgb, var(--color-purple) 12%, transparent);
-    color: var(--color-purple);
-    font-size: 1.25rem;
+  .project-sticker {
+    display: block;
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: contain;
+    flex-shrink: 0;
   }
 
   .about-projects__number {
