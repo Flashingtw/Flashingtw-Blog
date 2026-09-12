@@ -1,9 +1,4 @@
-/* 页面导航过渡 */
-@media (prefers-reduced-motion: no-preference) {
-  @view-transition {
-    navigation: auto;
-  }
-}
+/* 页面导航由 Astro ClientRouter 处理，沿用淡入淡出动画。 */
 
 /* ============================================
    主题切换淡入淡出动画

@@ -23,22 +23,29 @@
 </div>
 
 <script>
-  // 使用 IntersectionObserver 在元素离开视口时暂停动画，节省性能
-  const wavesEl = document.querySelector("#waves");
-  if (wavesEl) {
-    const parallaxEl = wavesEl.querySelector<HTMLElement>(".parallax");
-    if (parallaxEl) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            parallaxEl.classList.toggle("paused", !entry.isIntersecting);
-          });
-        },
-        { threshold: 0.1 },
-      );
-      observer.observe(wavesEl);
+  let observer: IntersectionObserver | undefined;
+  function setupPage() {
+    observer?.disconnect();
+
+    // 使用 IntersectionObserver 在元素离开视口时暂停动画，节省性能
+    const wavesEl = document.querySelector("#waves");
+    if (wavesEl) {
+      const parallaxEl = wavesEl.querySelector<HTMLElement>(".parallax");
+      if (parallaxEl) {
+        observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              parallaxEl.classList.toggle("paused", !entry.isIntersecting);
+            });
+          },
+          { threshold: 0.1 },
+        );
+        observer.observe(wavesEl);
+      }
     }
   }
+  document.addEventListener("astro:page-load", setupPage);
+  document.addEventListener("astro:before-swap", () => observer?.disconnect());
 </script>
 
 <style>

@@ -45,78 +45,75 @@ const msgNoScript = t("random.noScript");
 </Layout>
 
 <script>
-  const randomPageElement = document.querySelector<HTMLElement>(".random-page");
-  const postUrlsRaw = randomPageElement?.dataset.postUrls ?? "[]";
-  const msgNoPost = randomPageElement?.dataset.msgNoPost ?? "暂无可跳转文章";
-
-  let postUrls: string[] = [];
-  try {
-    const parsed = JSON.parse(postUrlsRaw) as unknown;
-    if (Array.isArray(parsed)) {
-      postUrls = parsed.filter((url): url is string => typeof url === "string");
-    }
-  } catch {
-    postUrls = [];
-  }
-
-  let hasRedirected = false;
-
-  function pickRandom() {
-    if (hasRedirected) {
-      return;
-    }
-
-    if (!postUrls || postUrls.length === 0) {
-      showNoPost();
-      return;
-    }
-
-    const targetUrl = postUrls[Math.floor(Math.random() * postUrls.length)];
-    if (!targetUrl) {
-      showNoPost();
-      return;
-    }
-
-    hasRedirected = true;
-    window.location.replace(targetUrl);
-  }
-
-  function showNoPost() {
-    const iconSpin = document.querySelector("#icon-spin");
-    const msg = document.querySelector("#msg");
-    const card = document.querySelector("#random-card");
-    const homeLink = document.querySelector("#home-link");
-
-    if (iconSpin) {
-      (iconSpin as HTMLElement).style.animation = "none";
-      const icon = iconSpin.querySelector("i");
-      if (icon) {
-        icon.className = "i-ri-inbox-line";
-      }
-    }
-    if (msg) {
-      msg.textContent = msgNoPost;
-    }
-    if (card) {
-      card.classList.add("no-post");
-    }
-    if (homeLink) {
-      homeLink.classList.remove("hidden");
-    }
-  }
+  import { navigate } from "astro:transitions/client";
 
   function handlePageReady() {
+    const randomPageElement = document.querySelector<HTMLElement>(".random-page");
+    if (!randomPageElement || randomPageElement.dataset.redirected) return;
+    randomPageElement.dataset.redirected = "true";
+    const postUrlsRaw = randomPageElement?.dataset.postUrls ?? "[]";
+    const msgNoPost = randomPageElement?.dataset.msgNoPost ?? "暂无可跳转文章";
+
+    let postUrls: string[] = [];
+    try {
+      const parsed = JSON.parse(postUrlsRaw) as unknown;
+      if (Array.isArray(parsed)) {
+        postUrls = parsed.filter((url): url is string => typeof url === "string");
+      }
+    } catch {
+      postUrls = [];
+    }
+
+    let hasRedirected = false;
+
+    function pickRandom() {
+      if (hasRedirected) {
+        return;
+      }
+
+      if (!postUrls || postUrls.length === 0) {
+        showNoPost();
+        return;
+      }
+
+      const targetUrl = postUrls[Math.floor(Math.random() * postUrls.length)];
+      if (!targetUrl) {
+        showNoPost();
+        return;
+      }
+
+      hasRedirected = true;
+      void navigate(targetUrl, { history: "replace" });
+    }
+
+    function showNoPost() {
+      const iconSpin = document.querySelector("#icon-spin");
+      const msg = document.querySelector("#msg");
+      const card = document.querySelector("#random-card");
+      const homeLink = document.querySelector("#home-link");
+
+      if (iconSpin) {
+        (iconSpin as HTMLElement).style.animation = "none";
+        const icon = iconSpin.querySelector("i");
+        if (icon) {
+          icon.className = "i-ri-inbox-line";
+        }
+      }
+      if (msg) {
+        msg.textContent = msgNoPost;
+      }
+      if (card) {
+        card.classList.add("no-post");
+      }
+      if (homeLink) {
+        homeLink.classList.remove("hidden");
+      }
+    }
+
     pickRandom();
   }
 
-  document.addEventListener("DOMContentLoaded", handlePageReady, {
-    once: true,
-  });
   document.addEventListener("astro:page-load", handlePageReady);
-
-  if (document.readyState !== "loading") {
-    handlePageReady();
-  }
 </script>
 
 <style>

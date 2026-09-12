@@ -42,39 +42,46 @@ const { posts = [] } = Astro.props;
   }
 </div>
 <script>
-  const container = document.querySelector("#segment-container");
+  let observer: IntersectionObserver | undefined;
+  function setupPage() {
+    observer?.disconnect();
 
-  if (container) {
-    const items = Array.from(
-      container.querySelectorAll("article.segment-item"),
-    );
+    const container = document.querySelector("#segment-container");
 
-    if (items.length > 0) {
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.target.classList.contains("show")) {
-              io.unobserve(entry.target);
-            } else if (entry.isIntersecting || entry.intersectionRatio > 0) {
-              entry.target.classList.add("show");
-              io.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          root: null,
-          threshold: [0.3],
-        },
+    if (container) {
+      const items = Array.from(
+        container.querySelectorAll("article.segment-item"),
       );
 
-      items.forEach((item) => io.observe(item));
+      if (items.length > 0) {
+        observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.target.classList.contains("show")) {
+                observer?.unobserve(entry.target);
+              } else if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                entry.target.classList.add("show");
+                observer?.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            root: null,
+            threshold: [0.3],
+          },
+        );
 
-      // Show first item immediately
-      if (items[0]) {
-        items[0].classList.add("show");
+        items.forEach((item) => observer?.observe(item));
+
+        // Show first item immediately
+        if (items[0]) {
+          items[0].classList.add("show");
+        }
       }
     }
   }
+  document.addEventListener("astro:page-load", setupPage);
+  document.addEventListener("astro:before-swap", () => observer?.disconnect());
 </script>
 
 <style>

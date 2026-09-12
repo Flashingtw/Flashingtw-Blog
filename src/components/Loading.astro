@@ -1,4 +1,4 @@
-<div id="loading">
+<div id="loading" transition:persist="initial-loading">
   <div class="cat">
     <div class="body"></div>
     <div class="head">
@@ -398,7 +398,7 @@
 <script>
   const MINIMUM_LOADING_TIME = 500;
 
-  // TODO: 仅在第一次访问时显示加载动画
+  // 遮罩跨页面保留，只有首次载入时显示。
   window.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {

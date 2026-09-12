@@ -64,66 +64,69 @@ const singleImage =
 )}
 
 <script>
-  const CAROUSEL_INTERVAL_MS = 6000;
+  function setupPage() {
+    const CAROUSEL_INTERVAL_MS = 6000;
 
-  document.querySelectorAll<HTMLElement>("[data-cover-carousel]").forEach((carousel) => {
-    if (carousel.dataset.carouselInitialized === "true") return;
+    document.querySelectorAll<HTMLElement>("[data-cover-carousel]").forEach((carousel) => {
+      if (carousel.dataset.carouselInitialized === "true") return;
 
-    const items = Array.from(carousel.querySelectorAll<HTMLElement>(".cover-item"));
-    if (items.length < 2) return;
+      const items = Array.from(carousel.querySelectorAll<HTMLElement>(".cover-item"));
+      if (items.length < 2) return;
 
-    carousel.dataset.carouselInitialized = "true";
-    let activeIndex = Math.max(
-      0,
-      items.findIndex((item) => item.classList.contains("is-active")),
-    );
-    let isPointerOver = false;
+      carousel.dataset.carouselInitialized = "true";
+      let activeIndex = Math.max(
+        0,
+        items.findIndex((item) => item.classList.contains("is-active")),
+      );
+      let isPointerOver = false;
 
-    const prepareImage = async (index: number) => {
-      const image = items[index]?.querySelector<HTMLImageElement>("img");
-      if (!image) return;
+      const prepareImage = async (index: number) => {
+        const image = items[index]?.querySelector<HTMLImageElement>("img");
+        if (!image) return;
 
-      image.loading = "eager";
-      if (image.complete && image.naturalWidth > 0) return;
+        image.loading = "eager";
+        if (image.complete && image.naturalWidth > 0) return;
 
-      try {
-        await image.decode();
-      } catch {
-        // 圖片載入失敗時仍繼續輪播，避免計時器永久停止。
-      }
-    };
+        try {
+          await image.decode();
+        } catch {
+          // 圖片載入失敗時仍繼續輪播，避免計時器永久停止。
+        }
+      };
 
-    const showNext = async () => {
+      const showNext = async () => {
+        const nextIndex = (activeIndex + 1) % items.length;
+        const currentItem = items[activeIndex];
+        const nextItem = items[nextIndex];
+
+        await prepareImage(nextIndex);
+        currentItem?.classList.remove("is-active");
+        nextItem?.classList.add("is-active");
+
+        activeIndex = nextIndex;
+        const upcomingIndex = (activeIndex + 1) % items.length;
+        void prepareImage(upcomingIndex);
+      };
+
+      const tick = async () => {
+        if (!carousel.isConnected) return;
+        if (!document.hidden && !isPointerOver) await showNext();
+        window.setTimeout(tick, CAROUSEL_INTERVAL_MS);
+      };
+
+      carousel.addEventListener("pointerenter", () => {
+        isPointerOver = true;
+      });
+      carousel.addEventListener("pointerleave", () => {
+        isPointerOver = false;
+      });
+
       const nextIndex = (activeIndex + 1) % items.length;
-      const currentItem = items[activeIndex];
-      const nextItem = items[nextIndex];
-
-      await prepareImage(nextIndex);
-      currentItem?.classList.remove("is-active");
-      nextItem?.classList.add("is-active");
-
-      activeIndex = nextIndex;
-      const upcomingIndex = (activeIndex + 1) % items.length;
-      void prepareImage(upcomingIndex);
-    };
-
-    const tick = async () => {
-      if (!carousel.isConnected) return;
-      if (!document.hidden && !isPointerOver) await showNext();
+      void prepareImage(nextIndex);
       window.setTimeout(tick, CAROUSEL_INTERVAL_MS);
-    };
-
-    carousel.addEventListener("pointerenter", () => {
-      isPointerOver = true;
     });
-    carousel.addEventListener("pointerleave", () => {
-      isPointerOver = false;
-    });
-
-    const nextIndex = (activeIndex + 1) % items.length;
-    void prepareImage(nextIndex);
-    window.setTimeout(tick, CAROUSEL_INTERVAL_MS);
-  });
+  }
+  document.addEventListener("astro:page-load", setupPage);
 </script>
 
 <style>

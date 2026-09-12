@@ -1,5 +1,6 @@
 ---
 import NavBar from "@/components/navbar/NavBar.svelte";
+import { ClientRouter } from "astro:transitions";
 import Analytics from "@/components/Analytics.astro";
 import Brand from "@/components/Brand.astro";
 import HeaderCover from "@/components/HeaderCover.astro";
@@ -11,7 +12,6 @@ import type {
   QuickNavigation,
 } from "@/components/sidebar/SidebarTypes";
 import "@/styles/view-transition.css";
-import "@vtbag/element-crossing?url";
 
 import themeConfig from "@/theme.config.ts";
 
@@ -206,6 +206,7 @@ import SearchPage from "@/components/search/SearchPage.svelte";
 <!doctype html>
 <html lang={currentLocale}>
   <head>
+    <ClientRouter />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.png" />
@@ -288,15 +289,15 @@ import SearchPage from "@/components/search/SearchPage.svelte";
     </script>
     <script>
       import { css } from "@/assets/fonts/LXGWWenKai-Regular.ttf?subsets";
+      import { initTheme } from "@/toolkit/ui/theme";
 
-      document.addEventListener("pagereveal", () => {
+      const applyPageAppearance = () => {
+        initTheme(document, window);
         document.body.style.fontFamily = css.family as string;
         document.documentElement.style.setProperty("--pf-font", css.family as string);
-      });
-      document.addEventListener("DOMContentLoaded", () => {
-        document.body.style.fontFamily = css.family as string;
-        document.documentElement.style.setProperty("--pf-font", css.family as string);
-      });
+      };
+      applyPageAppearance();
+      document.addEventListener("astro:after-swap", applyPageAppearance);
     </script>
     <script>
       type VisibilityTitleScriptConfig = {
@@ -374,6 +375,10 @@ import SearchPage from "@/components/search/SearchPage.svelte";
         };
 
         document.addEventListener("visibilitychange", onVisibilityChange);
+        document.addEventListener("astro:after-swap", () => {
+          clearRestoreTimer();
+          originalTitle = document.title;
+        });
       }
     </script>
     <div class="hidden">

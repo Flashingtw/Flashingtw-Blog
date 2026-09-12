@@ -116,22 +116,13 @@ function formatWordCount(count: number): string {
 
 <!-- 滚动监听脚本 -->
 <script>
-  let isAffix = false;
-  const brandElement = document.querySelector("#brand");
-
   function handleScroll() {
-    const shouldAffix = window.scrollY > 0;
-
-    if (shouldAffix !== isAffix) {
-      isAffix = shouldAffix;
-      if (brandElement) {
-        brandElement.classList.toggle("affix", isAffix);
-      }
-    }
+    document.querySelector("#brand")?.classList.toggle("affix", window.scrollY > 0);
   }
 
   // 初始化
   handleScroll();
+  document.addEventListener("astro:page-load", handleScroll);
 
   // 监听滚动
   window.addEventListener("scroll", handleScroll, { passive: true });

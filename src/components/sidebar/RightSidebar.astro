@@ -281,39 +281,17 @@ const hasRenderedContent =
   </div>
 </aside>
 
-<script is:inline>
+<script>
   const onSearchOpen = () => {
     const searchButton = document.querySelector("#search");
-
-    if (searchButton instanceof HTMLElement) {
-      searchButton.click();
-    }
+    if (searchButton instanceof HTMLElement) searchButton.click();
   };
 
-  (() => {
-    const registryKey = "__hyacineRightSidebarAffix";
-    const previous = window[registryKey];
-
-    if (previous?.cleanup) {
-      previous.cleanup();
-    }
-
-    const searchTriggers = Array.from(
-      document.querySelectorAll("[data-open-global-search]"),
-    );
-
-    searchTriggers.forEach((trigger) => {
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll("[data-open-global-search]").forEach((trigger) => {
       trigger.addEventListener("click", onSearchOpen);
     });
-
-    window[registryKey] = {
-      cleanup() {
-        searchTriggers.forEach((trigger) => {
-          trigger.removeEventListener("click", onSearchOpen);
-        });
-      },
-    };
-  })();
+  });
 </script>
 
 <style>
