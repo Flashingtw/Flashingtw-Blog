@@ -3,7 +3,7 @@ import Layout from "../../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { structurePostsByDate } from "@/toolkit/posts/structurePostsByDate";
 import { buildArchiveTimeline } from "@/toolkit/posts/buildArchiveTimeline";
-import { toCategoryHref, toPostHref } from "@/toolkit/posts/url";
+import ArchivePreview from "@/components/post/ArchivePreview.astro";
 import { fmtNum } from "@/toolkit/tools/fmtNum";
 import { t } from "@/i18n";
 import "../../../styles/collapse.css";
@@ -38,17 +38,12 @@ const { year, posts } = Astro.props as {
   posts: CollectionEntry<"posts">[];
 };
 
-// Helper to format date
-function formatDate(date: Date): string {
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${month}-${day}`;
-}
+
 ---
 
 <Layout pageTitle={t("archive.yearTitle", { year })}>
   <div class="wrap">
-    <div class="timeline">
+    <div class="timeline archive-timeline">
       <h2 class="item header">
         <a href="/archives/">{t("archive.all")}</a>
         <small>/</small>
@@ -59,9 +54,6 @@ function formatDate(date: Date): string {
       {
         buildArchiveTimeline(posts).map(
           ({ post, month, showMonthSection, monthPostCount }) => {
-            const postDate = post.data.date;
-            const lastCategory =
-              post.data.categories?.[post.data.categories.length - 1];
 
             return (
               <>
@@ -74,36 +66,7 @@ function formatDate(date: Date): string {
                   </h3>
                 )}
 
-                <article
-                  class="item normal"
-                  itemscope
-                  itemtype="http://schema.org/Article"
-                >
-                  <div class="meta">
-                    <time
-                      itemprop="dateCreated"
-                      datetime={postDate.toISOString()}
-                    >
-                      {formatDate(postDate)}
-                    </time>
-                  </div>
-
-                  {lastCategory && (
-                    <div class="meta">
-                      <span>
-                        <a href={toCategoryHref(lastCategory)}>{lastCategory}</a>
-                      </span>
-                    </div>
-                  )}
-
-                  <div class="title">
-                    <a href={toPostHref(post.id)} itemprop="url">
-                      <span itemprop="name">
-                        {post.data.title || t("post.noContent")}
-                      </span>
-                    </a>
-                  </div>
-                </article>
+                <ArchivePreview post={post} />
               </>
             );
           },

@@ -27,7 +27,23 @@ import { aboutProjects } from "@/data/about";
 
 <style>
   .about-projects {
+    /* 色票只作用於專案卡片，保留全站原本配色。 */
+    --surface-mint: #e6f5ed;
+    --surface-aqua: #e5f4f6;
+    --surface-purple: #f1eaff;
+    --accent-mint: #28654d;
+    --accent-aqua: #226570;
+    --accent-purple: #69478d;
     margin-bottom: 3rem;
+  }
+
+  :global(:root[data-theme="dark"]) .about-projects {
+    --surface-mint: #213a32;
+    --surface-aqua: #203941;
+    --surface-purple: #342b46;
+    --accent-mint: #a1d9bd;
+    --accent-aqua: #9bd8df;
+    --accent-purple: #d1b5ef;
   }
 
   .about-projects > header {
@@ -65,15 +81,17 @@ import { aboutProjects } from "@/data/about";
   }
 
   .about-projects__grid > a {
+    --project-surface: var(--surface-mint);
+    --project-accent: var(--accent-mint);
     position: relative;
     display: flex;
     min-height: 15rem;
     flex-direction: column;
     align-items: flex-start;
     overflow: hidden;
-    border: 1px solid var(--border-color-muted);
+    border: 1px solid color-mix(in srgb, var(--project-accent) 25%, var(--project-surface));
     border-radius: 1rem;
-    background: var(--box-bg-shadow);
+    background: var(--project-surface);
     padding: 1.1rem;
     color: var(--text-color);
     text-decoration: none;
@@ -81,8 +99,18 @@ import { aboutProjects } from "@/data/about";
   }
 
   .about-projects__grid > a:hover {
-    border-color: var(--color-purple);
+    border-color: var(--project-accent);
     transform: translateY(-3px);
+  }
+
+  .about-projects__grid > a:nth-child(2) {
+    --project-surface: var(--surface-aqua);
+    --project-accent: var(--accent-aqua);
+  }
+
+  .about-projects__grid > a:nth-child(3) {
+    --project-surface: var(--surface-purple);
+    --project-accent: var(--accent-purple);
   }
 
   .project-sticker {
@@ -97,13 +125,13 @@ import { aboutProjects } from "@/data/about";
     position: absolute;
     top: 0.8rem;
     right: 0.9rem;
-    color: var(--text-color-subtle);
+    color: var(--text-color-muted);
     font-size: 0.68rem;
   }
 
   .about-projects small {
     margin-top: 0.85rem;
-    color: var(--text-color-subtle);
+    color: var(--text-color-muted);
     font-size: 0.63rem;
     font-weight: 750;
     letter-spacing: 0.07em;
@@ -126,7 +154,7 @@ import { aboutProjects } from "@/data/about";
     align-items: center;
     gap: 0.25rem;
     margin-top: auto;
-    color: var(--color-purple);
+    color: var(--project-accent);
     font-size: 0.72rem;
     font-weight: 750;
   }

@@ -1,0 +1,75 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { archiveExcerpt } from "@/toolkit/posts/archiveExcerpt";
+import { toCategoryHref, toPostHref } from "@/toolkit/posts/url";
+import { t } from "@/i18n";
+interface Props { post: CollectionEntry<"posts"> }
+const { post } = Astro.props;
+const href = toPostHref(post.id);
+const category = post.data.categories?.at(-1);
+const cover = post.data.image || post.data.cover;
+const excerpt = archiveExcerpt(post, t("post.encryptedExcerpt"));
+const date = post.data.date;
+const dateLabel = `${String(date.getMonth() + 1).padStart(2, "0")}.${String(date.getDate()).padStart(2, "0")}`;
+---
+<article class="item normal archive-entry" itemscope itemtype="https://schema.org/Article">
+  <time class="archive-date" itemprop="dateCreated" datetime={date.toISOString()}>{dateLabel}</time>
+  <div class="archive-card">
+    {cover && (
+      <a class="archive-cover" href={href} tabindex="-1" aria-hidden="true">
+        {typeof cover === "string"
+          ? <img src={cover} alt="" width="480" height="300" loading="lazy" decoding="async" />
+          : <Image src={cover} alt="" width={480} height={300} loading="lazy" />}
+      </a>
+    )}
+    <div class="archive-copy">
+      {category && <a class="archive-category" href={toCategoryHref(category)}>{category}</a>}
+      <h3><a href={href} itemprop="url"><span itemprop="headline">{post.data.title}</span></a></h3>
+      {excerpt && <p class="archive-excerpt" itemprop="description">{excerpt}</p>}
+      <a class="archive-read" href={href}>{t("button.readMore")} <i class="i-ri-arrow-right-line" aria-hidden="true" /></a>
+    </div>
+  </div>
+</article>
+<style>
+  :global(.archive-timeline) { --archive-accent: #69478d; }
+  :global(:root[data-theme="dark"] .archive-timeline) { --archive-accent: #d1b5ef; }
+  :global(.archive-timeline.timeline .item:not(:last-child):not(.title)::after) { border-left-color: color-mix(in srgb, var(--archive-accent) 30%, var(--border-color-muted)); }
+  :global(.archive-timeline .item::before) { border-color: var(--archive-accent); }
+  .archive-entry.item.normal {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    align-items: start;
+    gap: 0.8rem;
+    padding: 0.7rem 0 0.7rem 1.8rem;
+  }
+  .archive-entry.item.normal::before { background: var(--archive-accent); }
+  .archive-date { padding-top: 1rem; color: var(--text-color-muted); font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+  .archive-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--border-color-muted);
+    border-radius: 1rem;
+    background: var(--box-bg-shadow);
+    box-shadow: var(--shadow-card-soft);
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+  }
+  .archive-card:hover, .archive-card:focus-within { border-color: var(--archive-accent); box-shadow: var(--shadow-card-soft-hover); }
+  .archive-cover { display: block; }
+  .archive-cover img { width: 100%; height: 10rem; object-fit: cover; margin: 0; }
+  .archive-copy { padding: 1.1rem 1.25rem; }
+  .archive-category { color: var(--archive-accent); font-size: 0.72rem; text-decoration: none; }
+  .archive-copy h3 { margin: 0.3rem 0 0.6rem; font-size: 1.1rem; line-height: 1.5; overflow-wrap: anywhere; }
+  .archive-copy h3 a { color: var(--text-color); text-decoration: none; }
+  .archive-copy h3 a:hover { color: var(--archive-accent); }
+  .archive-excerpt { margin: 0 0 0.8rem; color: var(--text-color-muted); font-size: 0.84rem; line-height: 1.8; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .archive-read { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.76rem; color: var(--archive-accent); text-decoration: none; }
+  a:focus-visible { outline: 2px solid var(--archive-accent); outline-offset: 3px; }
+  @media (max-width: 640px) {
+    .archive-entry.item.normal { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; padding-left: 1.2rem; }
+    .archive-date { padding-top: 0; }
+    .archive-copy { padding: 1rem; }
+    .archive-cover img { height: 9rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .archive-card { transition: none; } }
+</style>

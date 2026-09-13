@@ -28,7 +28,7 @@ function getCategoryTone(category: string) {
   <header class="about-timeline__heading">
     <span>02</span>
     <div>
-      <h2 id="about-timeline-title">一路亂撞的紀錄</h2>
+      <h2 id="about-timeline-title">時間線</h2>
       <p>不是每一次都很厲害，但都是我真的走過、真的學到東西的地方。</p>
     </div>
   </header>
@@ -97,8 +97,13 @@ function getCategoryTone(category: string) {
 
 <style>
   .about-timeline {
+    --timeline-accent: #69478d;
     margin: 0 0 2.75rem;
     scroll-margin-top: 5rem;
+  }
+
+  :global(:root[data-theme="dark"]) .about-timeline {
+    --timeline-accent: #d1b5ef;
   }
 
   .about-timeline__heading {
@@ -109,7 +114,7 @@ function getCategoryTone(category: string) {
   }
 
   .about-timeline__heading > span {
-    color: var(--color-orange);
+    color: var(--timeline-accent);
     font-size: 0.78rem;
     font-weight: 850;
   }
@@ -145,7 +150,7 @@ function getCategoryTone(category: string) {
     position: sticky;
     top: 5rem;
     align-self: start;
-    border-top: 2px solid var(--color-orange);
+    border-top: 2px solid var(--timeline-accent);
     padding-top: 0.55rem;
     cursor: pointer;
     list-style: none;
@@ -172,7 +177,7 @@ function getCategoryTone(category: string) {
   .timeline-year > summary i {
     display: inline-block;
     margin-left: 0.2rem;
-    color: var(--color-orange);
+    color: var(--timeline-accent);
     font-size: 0.85rem;
     transition: transform 160ms ease;
   }
@@ -233,7 +238,7 @@ function getCategoryTone(category: string) {
     height: 0.45rem;
     border: 2px solid var(--box-bg-shadow);
     border-radius: 50%;
-    background: var(--color-orange);
+    background: var(--timeline-accent);
     box-sizing: content-box;
   }
 
@@ -247,14 +252,14 @@ function getCategoryTone(category: string) {
   }
 
   .timeline-card:hover {
-    border-color: color-mix(in srgb, var(--color-orange) 55%, var(--border-color-muted));
+    border-color: color-mix(in srgb, var(--timeline-accent) 55%, var(--border-color-muted));
     box-shadow: var(--shadow-card-soft-hover);
     transform: translateX(3px);
   }
 
   .timeline-card--featured {
     background:
-      linear-gradient(110deg, color-mix(in srgb, var(--color-orange) 5%, transparent), transparent 45%),
+      linear-gradient(110deg, color-mix(in srgb, var(--timeline-accent) 5%, transparent), transparent 45%),
       var(--box-bg-shadow);
   }
 
@@ -280,10 +285,10 @@ function getCategoryTone(category: string) {
 
   .timeline-card__category[data-tone="assessment"] { color: var(--color-purple); }
   .timeline-card__category[data-tone="opportunity"] { color: var(--color-green); }
-  .timeline-card__category[data-tone="milestone"] { color: var(--color-orange); }
+  .timeline-card__category[data-tone="milestone"] { color: var(--timeline-accent); }
 
   .timeline-card__featured {
-    color: var(--color-orange);
+    color: var(--timeline-accent);
     font-size: 0.9rem;
   }
 
@@ -335,7 +340,7 @@ function getCategoryTone(category: string) {
     align-items: center;
     gap: 0.25rem;
     margin-top: 0.7rem;
-    color: var(--color-orange);
+    color: var(--timeline-accent);
     font-size: 0.76rem;
     font-weight: 750;
     text-decoration: none;
