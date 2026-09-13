@@ -1,5 +1,6 @@
 ---
 import type { ImageMetadata } from 'astro'
+import { createHash } from 'node:crypto'
 import CoverImage from './CoverImage.astro'
 
 interface Props {
@@ -31,6 +32,14 @@ const isMultipleImages =
 // 单图模式图片来源
 const singleImage =
   fixedCover || (gradient ? 'https://7ed.net/bing/api' : covers[0])
+
+// 相同封面沿用原本的 DOM 與計時器，文章專屬封面則另外建立。
+const coverSources = (isMultipleImages ? covers : [singleImage]).map(
+  (cover) => typeof cover === 'string' ? cover : cover?.src,
+)
+const coverKey = `header-cover-${createHash('sha256')
+  .update(JSON.stringify([isMultipleImages, coverSources]))
+  .digest('hex')}`
 ---
 {enable && (
     <div class="spacer"></div>
@@ -38,6 +47,7 @@ const singleImage =
     <div
       id="imgs"
       class="imgs-container"
+      data-astro-transition-persist={coverKey}
     >
       {isMultipleImages ? (
         <ul class="image-list" data-cover-carousel>
@@ -64,6 +74,23 @@ const singleImage =
 )}
 
 <script>
+  // 部分瀏覽器在搬移節點或替換樣式時會重建 CSS 動畫，補回原本進度。
+  let coverProgress: { image: HTMLImageElement; time: number; capturedAt: number } | undefined;
+  document.addEventListener("astro:before-swap", () => {
+    const image = document.querySelector<HTMLImageElement>("#imgs .is-active img");
+    const animation = image?.getAnimations().find((item) => item instanceof CSSAnimation && item.animationName === "cover-image-zoom");
+    coverProgress = image && animation && typeof animation.currentTime === "number"
+      ? { image, time: animation.currentTime, capturedAt: performance.now() }
+      : undefined;
+  });
+  document.addEventListener("astro:after-swap", () => {
+    if (coverProgress?.image.isConnected) {
+      const animation = coverProgress.image.getAnimations().find((item) => item instanceof CSSAnimation && item.animationName === "cover-image-zoom");
+      if (animation) animation.currentTime = coverProgress.time + performance.now() - coverProgress.capturedAt;
+    }
+    coverProgress = undefined;
+  });
+
   function setupPage() {
     const CAROUSEL_INTERVAL_MS = 6000;
 

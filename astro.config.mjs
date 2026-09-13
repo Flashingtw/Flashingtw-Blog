@@ -71,6 +71,11 @@ export default defineConfig({
   redirects: {
     "/about/": "/",
     "/page/2/": "/archives/",
+    // 保留舊動態分頁，以及先前 rel=next/prev 使用過的網址。
+    "/moments/2/": "/moments/",
+    "/moments/3/": "/moments/",
+    "/moments/page/2/": "/moments/",
+    "/moments/page/3/": "/moments/",
   },
   build: {
     format: "directory",
@@ -91,7 +96,12 @@ export default defineConfig({
       },
     }),
     sitemap({
-      filter: (page) => !["/about/", "/page/2/"].includes(new URL(page).pathname),
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        return (
+          !["/about/", "/page/2/"].includes(path) && !/^\/moments\/(?:page\/)?\d+\/$/.test(path)
+        );
+      },
     }),
     hyacinePlugin(),
     mdx({

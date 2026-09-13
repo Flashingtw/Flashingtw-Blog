@@ -1,0 +1,37 @@
+<div id="seasonal-weather" aria-hidden="true" transition:persist="seasonal-weather" transition:animate="none"></div>
+
+<script>
+  import { startSeasonalWeather } from "@/toolkit/ui/seasonalWeather";
+  let current: HTMLElement | null = null;
+  let dispose: (() => void) | undefined;
+  function setupWeather() {
+    const layer = document.getElementById("seasonal-weather");
+    if (layer === current) return;
+    dispose?.();
+    current = layer;
+    dispose = layer ? startSeasonalWeather(layer) : undefined;
+  }
+  setupWeather();
+  document.addEventListener("astro:page-load", setupWeather);
+</script>
+
+<style>
+  #seasonal-weather {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+    contain: strict;
+  }
+  #seasonal-weather :global(.seasonal-particle) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    will-change: transform;
+  }
+  #seasonal-weather :global(svg) { display: block; width: 100%; height: auto; }
+  @media (prefers-reduced-motion: reduce) { #seasonal-weather { display: none; } }
+</style>

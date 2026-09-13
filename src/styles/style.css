@@ -4,7 +4,8 @@ a:after {
 }
 
 body {
-  background: linear-gradient(to top, var(--body-bg-shadow) 0, var(--grey-1) 20%) no-repeat bottom;
+  /* 頁尾外距露出的底色與頁尾一致，避免漸層在邊界形成橫向色帶。 */
+  background: var(--body-bg-shadow);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   font-size: 1em;

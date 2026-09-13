@@ -44,10 +44,10 @@ const content = moment.body || "";
   <div class="timeline-dot"></div>
 
   <div class="moment-header">
-    <span class="moment-date text-grey-5">
+    <time class="moment-date text-grey-5" datetime={moment.data.date.toISOString()}>
       <i class="i-ri-calendar-line"></i>
       {formatDate(moment.data.date)}
-    </span>
+    </time>
   </div>
 
   <div class="moment-content text-color">

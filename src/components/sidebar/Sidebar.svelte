@@ -246,6 +246,18 @@
     display: none;
   }
 
+  /* 固定內層時保留原本高度，避免短頁面的網格列收縮、帶動頁尾跳動。 */
+  @media (min-width: 1024px) {
+    #sidebar {
+      display: flow-root;
+      height: calc(100vh + 3.5rem);
+    }
+
+    #sidebar .panels {
+      height: 100vh;
+    }
+  }
+
   /* Tablet/Mobile styles */
   @media (max-width: 1023px) {
     #sidebar {

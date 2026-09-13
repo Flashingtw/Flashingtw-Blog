@@ -21,6 +21,7 @@ import "@/styles/header-cover.css";
 import "@/styles/mdx-components.css";
 
 import Loading from "@/components/Loading.astro";
+import SeasonalWeather from "@/components/SeasonalWeather.astro";
 import { covers, resolveFixedCover } from "@/components/Images.astro";
 import FloatingToolbar from "@/components/FloatingToolbar.svelte";
 import TwoColumnLayout from "@/layouts/TwoColumnLayout.astro";
@@ -243,6 +244,7 @@ import SearchPage from "@/components/search/SearchPage.svelte";
     />
     <SearchPage client:idle selector="#search" />
     <Loading />
+    <SeasonalWeather />
     <div id="container">
       <HeaderCover
         enable={coverConfig.enable}
