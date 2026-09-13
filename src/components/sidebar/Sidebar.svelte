@@ -139,11 +139,8 @@
       }
 
       const sidebarTopInDocument = sidebarElement.getBoundingClientRect().top + window.scrollY;
-      const innerMarginTop = Number.parseFloat(
-        window.getComputedStyle(innerElement).marginTop,
-      );
-
-      affixThreshold = Math.max(sidebarTopInDocument - innerMarginTop, 0);
+      // 一般與固定定位都保留內層的頂部間距，門檻不應再扣一次。
+      affixThreshold = Math.max(sidebarTopInDocument, 0);
     };
 
     // Handle scroll for affix behavior on desktop

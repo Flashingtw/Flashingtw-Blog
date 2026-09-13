@@ -3,6 +3,32 @@
 import { expect, test } from "@playwright/test";
 import sharp from "sharp";
 
+test("@regression 側欄固定前後位置連續", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/tags/");
+  await expect(page.locator("#loading")).toHaveCSS("opacity", "0");
+  const inner = page.locator("#sidebar > .inner");
+  const initial = await inner.evaluate((el) => ({
+    top: el.getBoundingClientRect().top + scrollY,
+    margin: Number.parseFloat(getComputedStyle(el).marginTop),
+    left: el.getBoundingClientRect().left,
+  }));
+  const threshold = initial.top - initial.margin;
+  for (const offset of [-58, -54, -2, 2, -2, -54, -58]) {
+    await page.evaluate((top) => scrollTo({ top, behavior: "instant" }), threshold + offset);
+    await page.waitForTimeout(100);
+    const position = await inner.evaluate((el) => ({
+      top: el.getBoundingClientRect().top,
+      left: el.getBoundingClientRect().left,
+      scroll: scrollY,
+    }));
+    expect(
+      Math.abs(position.top - Math.max(initial.top - position.scroll, initial.margin)),
+    ).toBeLessThan(2);
+    expect(Math.abs(position.left - initial.left)).toBeLessThan(2);
+  }
+});
+
 for (const width of [1280, 1440]) {
   test(`@regression 短頁面捲動時隨機文章位置與頁面高度穩定 (${width})`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -11,12 +37,7 @@ for (const width of [1280, 1440]) {
     await expect(page.locator("#loading")).toHaveCSS("opacity", "0");
     const threshold = await page
       .locator("#sidebar")
-      .evaluate(
-        (el) =>
-          el.getBoundingClientRect().top +
-          scrollY -
-          Number.parseFloat(getComputedStyle(el.children[0]).marginTop),
-      );
+      .evaluate((el) => el.getBoundingClientRect().top + scrollY);
     const positions: number[] = [];
     const heights: number[] = [];
     for (const top of [threshold - 2, threshold + 2, threshold - 2, threshold + 2]) {

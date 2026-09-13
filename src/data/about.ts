@@ -11,8 +11,8 @@ export const aboutIntro = {
   grade: "準高二",
   school: "大安高工電子科",
   roles: ["競程新手", "大安電研社社長"],
-  greeting: "嗨，歡迎來到我的小角落 :D",
-  message: "我主要在學競程，也會隨手做一些小專案。想把在高中生活裡做過的東西留下來 ww",
+  greeting: "嗨! 歡迎來到我的網站 :D",
+  message: "我主要在學競程,有時候也會做些專案，把高中生活記錄下來",
 } as const;
 
 export const aboutProjects = [
