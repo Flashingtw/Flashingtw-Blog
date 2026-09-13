@@ -124,17 +124,13 @@
   }
 
   .menu .item.active {
-    background: linear-gradient(
-      to right,
-      var(--color-pink),
-      var(--color-orange)
-    );
-    color: var(--grey-0);
-    box-shadow: 0 0.25rem 0.625rem var(--color-pink-a3);
+    background: var(--sidebar-active-bg);
+    color: var(--sidebar-active-text);
+    box-shadow: 0 0.25rem 0.625rem var(--sidebar-active-shadow);
   }
 
   .menu .item.active:hover {
-    box-shadow: 0 0 0.75rem var(--color-pink);
-    color: var(--grey-0);
+    box-shadow: 0 0 0.75rem var(--sidebar-active-shadow);
+    color: var(--sidebar-active-text);
   }
 </style>

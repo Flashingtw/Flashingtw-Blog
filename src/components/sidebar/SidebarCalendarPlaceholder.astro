@@ -175,13 +175,9 @@ const buildDay = today;
   }
 
   .date.today {
-    background: linear-gradient(
-      to right,
-      var(--color-pink) 0,
-      var(--color-orange) 100%
-    );
+    background: var(--sidebar-active-bg);
     border-color: transparent;
-    color: var(--grey-0);
+    color: var(--sidebar-active-text);
     font-weight: 700;
   }
 
@@ -200,7 +196,7 @@ const buildDay = today;
   }
 
   :global(:root[data-theme="dark"]) .date.today {
-    color: var(--grey-0);
+    color: var(--sidebar-active-text);
   }
 </style>
 

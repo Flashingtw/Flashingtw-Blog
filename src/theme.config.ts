@@ -157,8 +157,8 @@ export default defineConfig({
     }
   },
   "tagCloud": {
-    "startColor": "#faa332",
-    "endColor": "#F8C8DC"
+    "startColor": "var(--tag-cloud-start)",
+    "endColor": "var(--tag-cloud-end)"
   },
   "widgets": {
     "randomPosts": true,

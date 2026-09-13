@@ -1,4 +1,11 @@
 :root {
+  --tag-cloud-start: #995400;
+  --tag-cloud-end: #9e426c;
+  /* 側欄選取與日曆今天共用藍紫色。 */
+  --sidebar-active-bg: linear-gradient(to right, #4567b0, #7755a6);
+  --sidebar-active-text: #ffffff;
+  --sidebar-active-shadow: rgb(91 96 171 / 25%);
+
   /* 亮色模式：溫潤的和紙白 (實色) */
   --grey-0: oklch(0.99 0.01 250);
   --grey-1: oklch(0.96 0.015 250);
@@ -179,6 +186,8 @@
    深海琉璃色，絕對實心，無透底
 ------------------------------ */
 :root[data-theme="dark"] {
+  --tag-cloud-start: #faa332;
+  --tag-cloud-end: #f8c8dc;
   /* 基礎灰階：扎實深邃的夜空藍 (實色) */
   --grey-0: oklch(0.20 0.03 260); 
   --grey-1: oklch(0.24 0.03 260);
