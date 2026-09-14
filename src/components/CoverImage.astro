@@ -93,6 +93,7 @@ const assetSrc = !isStringSrc ? (src as ImageMetadata) : undefined;
   }
 
   .cover-image {
+    filter: brightness(var(--header-cover-brightness));
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -105,6 +106,7 @@ const assetSrc = !isStringSrc ? (src as ImageMetadata) : undefined;
   }
 
   .single-image {
+    filter: brightness(var(--header-cover-brightness));
     height: 100%;
     width: 100%;
     left: 0;

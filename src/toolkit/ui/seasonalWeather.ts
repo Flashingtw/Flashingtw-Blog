@@ -30,8 +30,13 @@ export function startSeasonalWeather(layer: HTMLElement): () => void {
     particle.dataset.kind = kind;
     particle.innerHTML = artwork[kind];
     const size = kind === "sakura" ? 11 + Math.random() * 7 : 6 + Math.random() * 5;
-    const x = Math.random() * window.innerWidth;
-    const drift = (Math.random() - 0.5) * 130;
+    // 從上緣或右側上半部進場，沿著同一股風往左下飄。
+    const slope = 0.5 + Math.random() * 0.25;
+    const entry = Math.random() * (window.innerWidth + window.innerHeight * slope * 0.5);
+    const x = Math.min(entry, window.innerWidth + 30);
+    const y = -40 + Math.max(0, entry - x) / slope;
+    const fall = window.innerHeight + 50 - y;
+    const drift = -fall * slope;
     const rotation = Math.random() * 360;
     particle.style.width = `${size}px`;
     layer.append(particle);
@@ -40,7 +45,7 @@ export function startSeasonalWeather(layer: HTMLElement): () => void {
         const progress = index / 4;
         const sway = Math.sin(progress * Math.PI * 2) * 28;
         return {
-          transform: `translate3d(${x + drift * progress + sway}px, ${-40 + (window.innerHeight + 90) * progress}px, 0) rotate(${rotation + progress * (kind === "sakura" ? 250 : 80)}deg)`,
+          transform: `translate3d(${x + drift * progress + sway}px, ${y + fall * progress}px, 0) rotate(${rotation + progress * (kind === "sakura" ? 250 : 80)}deg)`,
           opacity: index === 0 || index === 4 ? 0 : kind === "sakura" ? 0.72 : 0.65,
           offset: progress,
         };
@@ -58,11 +63,11 @@ export function startSeasonalWeather(layer: HTMLElement): () => void {
     if (disposed || document.hidden || motion.matches) return;
     // 每次生成前讀取，避免快速切換或站內換頁留下過期的主題。
     const kind = readKind();
-    const limit = window.innerWidth < 768 ? 14 : 28;
+    const limit = window.innerWidth < 768 ? 21 : 42;
     // 各種類分開計數，舊粒子仍在畫面時也能立即生成新種類。
     const count = [...active.keys()].filter((particle) => particle.dataset.kind === kind).length;
     if (count < limit) spawn(kind);
-    timer = window.setTimeout(tick, window.innerWidth < 768 ? 1000 : 650);
+    timer = window.setTimeout(tick, window.innerWidth < 768 ? 650 : 430);
   };
   const sync = () => {
     clearTimer();

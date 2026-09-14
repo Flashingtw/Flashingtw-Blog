@@ -1,6 +1,36 @@
 import { expect, test } from "@playwright/test";
 import { ROUTES } from "../support/routes";
 
+for (const width of [390, 3840]) {
+  test(`@critical 封面離開可見範圍暫停並接續 (${width})`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto(ROUTES.home);
+    const carousel = page.locator("[data-cover-carousel]");
+    await expect(carousel).toHaveAttribute("data-carousel-initialized", "true");
+    await page.mouse.move(width - 1, 899);
+    await page.waitForTimeout(1000);
+    await page.evaluate(() => scrollTo({ top: 1100, behavior: "instant" }));
+    await expect(carousel).toHaveCSS("visibility", "hidden");
+    const image = carousel.locator(".is-active img");
+    const src = await image.getAttribute("src");
+    await expect(image).toHaveCSS("animation-play-state", "paused");
+    const time = await image.evaluate((el) => Number(el.getAnimations()[0].currentTime));
+    await page.waitForTimeout(6500);
+    expect(await image.getAttribute("src")).toBe(src);
+    expect(await image.evaluate((el) => Number(el.getAnimations()[0].currentTime))).toBeCloseTo(
+      time,
+      0,
+    );
+    await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+    await expect(carousel).toHaveCSS("visibility", "visible");
+    await expect(image).toHaveCSS("animation-play-state", "running");
+    await expect
+      .poll(() => carousel.locator(".is-active img").getAttribute("src"), { timeout: 6000 })
+      .not.toBe(src);
+  });
+}
+
 test("@critical 頂部封面輪播始終只有一張活動圖片", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto(ROUTES.home);

@@ -37,7 +37,7 @@ test("@regression 換頁保留粒子，減少動態偏好會停止效果", async
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await layer.evaluate((el) => Reflect.get(window, "weatherLayer") === el)).toBe(true);
   await expect(layer).toHaveCount(1);
-  expect(await layer.locator(".seasonal-particle").count()).toBeLessThanOrEqual(14);
+  expect(await layer.locator(".seasonal-particle").count()).toBeLessThanOrEqual(21);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(layer.locator(".seasonal-particle")).toHaveCount(0);
   await page.emulateMedia({ reducedMotion: "no-preference" });

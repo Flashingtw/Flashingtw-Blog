@@ -74,19 +74,20 @@ const coverKey = `header-cover-${createHash('sha256')
 )}
 
 <script>
+  let disposeCover: (() => void) | undefined;
   // 部分瀏覽器在搬移節點或替換樣式時會重建 CSS 動畫，補回原本進度。
-  let coverProgress: { image: HTMLImageElement; time: number; capturedAt: number } | undefined;
+  let coverProgress: { image: HTMLImageElement; time: number; capturedAt: number; paused: boolean } | undefined;
   document.addEventListener("astro:before-swap", () => {
     const image = document.querySelector<HTMLImageElement>("#imgs .is-active img");
     const animation = image?.getAnimations().find((item) => item instanceof CSSAnimation && item.animationName === "cover-image-zoom");
     coverProgress = image && animation && typeof animation.currentTime === "number"
-      ? { image, time: animation.currentTime, capturedAt: performance.now() }
+      ? { image, time: animation.currentTime, capturedAt: performance.now(), paused: animation.playState === "paused" }
       : undefined;
   });
   document.addEventListener("astro:after-swap", () => {
     if (coverProgress?.image.isConnected) {
       const animation = coverProgress.image.getAnimations().find((item) => item instanceof CSSAnimation && item.animationName === "cover-image-zoom");
-      if (animation) animation.currentTime = coverProgress.time + performance.now() - coverProgress.capturedAt;
+      if (animation) animation.currentTime = coverProgress.time + (coverProgress.paused ? 0 : performance.now() - coverProgress.capturedAt);
     }
     coverProgress = undefined;
   });
@@ -96,6 +97,7 @@ const coverKey = `header-cover-${createHash('sha256')
 
     document.querySelectorAll<HTMLElement>("[data-cover-carousel]").forEach((carousel) => {
       if (carousel.dataset.carouselInitialized === "true") return;
+      disposeCover?.();
 
       const items = Array.from(carousel.querySelectorAll<HTMLElement>(".cover-item"));
       if (items.length < 2) return;
@@ -106,6 +108,38 @@ const coverKey = `header-cover-${createHash('sha256')
         items.findIndex((item) => item.classList.contains("is-active")),
       );
       let isPointerOver = false;
+      let paused = false;
+      let timer: number | undefined;
+      let remaining = CAROUSEL_INTERVAL_MS;
+      let scheduledAt = performance.now();
+      let coveredAt = Infinity;
+      let disposed = false;
+
+      const measure = () => {
+        const main = document.querySelector("main");
+        coveredAt = main ? main.getBoundingClientRect().top + scrollY : Infinity;
+        syncPlayback();
+      };
+      const syncPlayback = () => {
+        const covered = scrollY >= coveredAt;
+        const nextPaused = document.hidden || covered || isPointerOver;
+        carousel.style.visibility = covered ? "hidden" : "";
+        if (nextPaused === paused) return;
+        paused = nextPaused;
+        carousel.querySelectorAll<HTMLElement>("img").forEach((image) => {
+          image.style.animationPlayState = paused ? "paused" : "running";
+        });
+        if (paused && timer !== undefined) {
+          remaining = Math.max(0, remaining - (performance.now() - scheduledAt));
+          clearTimeout(timer);
+          timer = undefined;
+        } else if (!paused) schedule();
+      };
+      const schedule = () => {
+        if (paused || disposed || timer !== undefined) return;
+        scheduledAt = performance.now();
+        timer = window.setTimeout(tick, remaining);
+      };
 
       const prepareImage = async (index: number) => {
         const image = items[index]?.querySelector<HTMLImageElement>("img");
@@ -127,6 +161,7 @@ const coverKey = `header-cover-${createHash('sha256')
         const nextItem = items[nextIndex];
 
         await prepareImage(nextIndex);
+        if (disposed || paused || !carousel.isConnected) return;
         currentItem?.classList.remove("is-active");
         nextItem?.classList.add("is-active");
 
@@ -136,22 +171,43 @@ const coverKey = `header-cover-${createHash('sha256')
       };
 
       const tick = async () => {
-        if (!carousel.isConnected) return;
-        if (!document.hidden && !isPointerOver) await showNext();
-        window.setTimeout(tick, CAROUSEL_INTERVAL_MS);
+        timer = undefined;
+        if (!carousel.isConnected || disposed) return;
+        if (!paused) await showNext();
+        remaining = CAROUSEL_INTERVAL_MS;
+        schedule();
       };
 
       carousel.addEventListener("pointerenter", () => {
         isPointerOver = true;
+        syncPlayback();
       });
       carousel.addEventListener("pointerleave", () => {
         isPointerOver = false;
+        syncPlayback();
       });
 
       const nextIndex = (activeIndex + 1) % items.length;
       void prepareImage(nextIndex);
-      window.setTimeout(tick, CAROUSEL_INTERVAL_MS);
+      measure();
+      schedule();
+      window.addEventListener("scroll", syncPlayback, { passive: true });
+      window.addEventListener("resize", measure, { passive: true });
+      document.addEventListener("visibilitychange", syncPlayback);
+      document.addEventListener("astro:page-load", measure);
+      disposeCover = () => {
+        disposed = true;
+        clearTimeout(timer);
+        window.removeEventListener("scroll", syncPlayback);
+        window.removeEventListener("resize", measure);
+        document.removeEventListener("visibilitychange", syncPlayback);
+        document.removeEventListener("astro:page-load", measure);
+      };
     });
+    if (!document.querySelector("[data-cover-carousel]")) {
+      disposeCover?.();
+      disposeCover = undefined;
+    }
   }
   document.addEventListener("astro:page-load", setupPage);
 </script>
@@ -186,7 +242,6 @@ const coverKey = `header-cover-${createHash('sha256')
     min-height: 25rem;
     content-visibility: auto;
     contain-intrinsic-size: 100vw 70vh;
-    filter: brightness(var(--header-cover-brightness));
   }
 
   .image-list {
