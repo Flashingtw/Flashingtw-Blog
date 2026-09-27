@@ -64,8 +64,9 @@ function getCategoryTone(category: string) {
                     <i class={getCategoryIcon(event.category)} aria-hidden="true" />{event.category}
                   </span>
                   {event.featured && (
-                    <span class="timeline-card__featured" aria-label="精選紀錄" title="精選紀錄">
+                    <span class="timeline-card__featured">
                       <i class="i-ri-star-fill" aria-hidden="true" />
+                      重點
                     </span>
                   )}
                 </div>
@@ -258,6 +259,7 @@ function getCategoryTone(category: string) {
   }
 
   .timeline-card--featured {
+    border-inline-start: 3px solid var(--timeline-accent);
     background:
       linear-gradient(110deg, color-mix(in srgb, var(--timeline-accent) 5%, transparent), transparent 45%),
       var(--box-bg-shadow);
@@ -288,8 +290,18 @@ function getCategoryTone(category: string) {
   .timeline-card__category[data-tone="milestone"] { color: var(--timeline-accent); }
 
   .timeline-card__featured {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-shrink: 0;
+    padding: 0.25rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--timeline-accent) 30%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--timeline-accent) 12%, transparent);
     color: var(--timeline-accent);
-    font-size: 0.9rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.3;
   }
 
   .timeline-card h4 {
