@@ -116,7 +116,7 @@ test("@critical 文章彙整与标签/分类列表进入文章后回退，URL与
   await expect(page).toHaveURL(/\/tags\/[^/]+\/?$/);
 
   const tagListingUrl = page.url();
-  const tagPostLink = page.locator(".timeline article.item.normal .title a").first();
+  const tagPostLink = page.locator(".archive-copy h3 a").first();
   await expect(tagPostLink).toBeVisible();
   await tagPostLink.click();
   await expect(page).toHaveURL(/\/posts\/.+\/$/);
@@ -132,7 +132,7 @@ test("@critical 文章彙整与标签/分类列表进入文章后回退，URL与
   await expect(page).toHaveURL(/\/categories\/[^/]+\/?$/);
 
   const categoryListingUrl = page.url();
-  const categoryPostLink = page.locator(".timeline article.item.normal .title a").first();
+  const categoryPostLink = page.locator(".archive-copy h3 a").first();
   await expect(categoryPostLink).toBeVisible();
   await categoryPostLink.click();
   await expect(page).toHaveURL(/\/posts\/.+\/$/);

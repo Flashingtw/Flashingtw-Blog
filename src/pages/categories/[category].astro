@@ -2,7 +2,8 @@
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { currentLocale, getT } from "@/i18n";
-import { toCategoryHref, toPostHref } from "@/toolkit/posts/url";
+import { toCategoryHref } from "@/toolkit/posts/url";
+import ArchivePreview from "@/components/post/ArchivePreview.astro";
 import "../../styles/collapse.css";
 
 export async function getStaticPaths() {
@@ -36,9 +37,9 @@ const postsInCategory = publishedPosts.filter((post) => {
   return categories.includes(category);
 });
 
-// Sort posts by date ascending (older first, matching old project)
+// 與歸檔頁相同，最新文章排在前面。
 const sortedPosts = postsInCategory.toSorted(
-  (a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime(),
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 
 // Build parent categories breadcrumb
@@ -89,19 +90,13 @@ sortedPosts.forEach((post) => {
   }
 });
 
-function formatDate(date: Date): string {
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${month}-${day}`;
-}
-
 // Track current subcategory slug to insert section headers
 let currentSlug = "c";
 ---
 
 <Layout pageTitle={category}>
   <div class="wrap">
-    <div class="timeline">
+    <div class="timeline archive-timeline">
       <h2 class="item header">
         <a href="/categories/">{t("category.all")}</a>
         {
@@ -140,25 +135,7 @@ let currentSlug = "c";
                 </h3>
               )}
 
-              <article
-                class="item normal"
-                itemscope
-                itemtype="http://schema.org/Article"
-              >
-                <div class="meta">
-                  <time
-                    itemprop="dateCreated"
-                    datetime={post.data.date.toISOString()}
-                  >
-                    {formatDate(post.data.date)}
-                  </time>
-                </div>
-                <div class="title">
-                  <a href={toPostHref(post.id)} itemprop="url">
-                    <span itemprop="name">{post.data.title || t("category.untitled")}</span>
-                  </a>
-                </div>
-              </article>
+              <ArchivePreview post={post} />
             </>
           );
         })

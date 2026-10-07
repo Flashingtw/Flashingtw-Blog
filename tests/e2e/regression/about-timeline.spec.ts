@@ -33,9 +33,7 @@ test("@regression 關於我時間線具備完整語意與文章連結", async ({
   await expect(timeline.getByText("2025", { exact: true })).toBeAttached();
   await expect(timeline.locator("[data-timeline-event]")).toHaveCount(13);
 
-  const relatedLinks = timeline.getByRole("link", { name: "看相關紀錄" }).filter({
-    has: page.locator('i[class*="arrow-right"]'),
-  });
+  const relatedLinks = timeline.getByRole("link", { name: /^閱讀：/ });
   await expect(relatedLinks).toHaveCount(6);
 
   const dates = timeline.locator("time");
@@ -44,10 +42,9 @@ test("@regression 關於我時間線具備完整語意與文章連結", async ({
   const cpe = timeline.locator("[data-timeline-event]").first();
   await expect(cpe.getByText("4/7 題｜總排名 31・高中職第 2")).toBeVisible();
   await expect(cpe.getByText("重點", { exact: true })).toBeVisible();
-  await expect(cpe.getByRole("link", { name: "看相關紀錄" })).toHaveAttribute(
-    "href",
-    "/posts/experience/cpe/",
-  );
+  await expect(
+    cpe.getByRole("link", { name: "閱讀：CPE 大學程式能力檢定・臺大考場" }),
+  ).toHaveAttribute("href", "/posts/experience/cpe/");
 });
 
 test("@regression 關於我時間線在手機尺寸不會產生水平捲動", async ({ page }) => {
@@ -83,7 +80,8 @@ test("@regression 首頁最新文章提供摘要與可用的文章入口", async
     .first()
     .getByRole("link", { name: /^閱讀：/ });
   await expect(readLink).toHaveAttribute("href", "/posts/experience/cpe/");
-  await readLink.click();
+  await expect(recentPosts.getByText("繼續看", { exact: true })).toHaveCount(0);
+  await readLink.click({ position: { x: 8, y: 8 } });
   await expect(page).toHaveURL(/\/posts\/experience\/cpe\/$/);
   await expect(
     page.locator("#main").getByRole("heading", { name: "CPE 2026/10/06 心得", exact: true }),
@@ -97,4 +95,25 @@ test("@regression 關於我 Discord 按鈕可提供複製結果", async ({ page,
   const discordButton = page.getByRole("button", { name: "複製 Discord 帳號 flash.zcx" });
   await discordButton.click();
   await expect(discordButton.getByRole("status")).toHaveText("已複製 flash.zcx :D");
+});
+
+test("@regression 首頁時間線卡片提供滑過提示與整張導覽", async ({ page }) => {
+  await page.goto("/");
+  const timeline = page.locator("[data-about-timeline]");
+  const card = timeline.locator(".timeline-card--linked").first();
+  const hint = card.locator(".timeline-card__hint");
+  await expect(hint).toHaveCSS("opacity", "0");
+  await card.hover();
+  await expect(hint).toHaveCSS("opacity", "1");
+  await card.click({ position: { x: 8, y: 8 } });
+  await expect(page).toHaveURL(/\/posts\/experience\/cpe\/$/);
+  await page.goBack();
+  await card.locator("a").focus();
+  await page.keyboard.press("Shift+Tab");
+  await page.keyboard.press("Tab");
+  await expect(hint).toHaveCSS("opacity", "1");
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/posts\/experience\/cpe\/$/);
+  await page.goBack();
+  await expect(timeline.locator(".timeline-card:not(.timeline-card--linked) a")).toHaveCount(0);
 });

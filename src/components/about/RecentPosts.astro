@@ -22,10 +22,11 @@ const posts = (await getCollection("posts"))
     <div class="recent-posts__list">
       {posts.map((post) => (
         <article>
+          <a class="recent-posts__card" href={toPostHref(post.id)} aria-label={`閱讀：${post.data.title}`}>
           <time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10).replaceAll("-", ".")}</time>
-          <h3><a href={toPostHref(post.id)}>{post.data.title}</a></h3>
+          <h3>{post.data.title}</h3>
           <p>{archiveExcerpt(post, t("post.encryptedExcerpt"))}</p>
-          <a class="recent-posts__read" href={toPostHref(post.id)} aria-label={`閱讀：${post.data.title}`}>繼續看 <i class="i-ri-arrow-right-line" aria-hidden="true" /></a>
+          </a>
         </article>
       ))}
     </div>
@@ -37,16 +38,18 @@ const posts = (await getCollection("posts"))
   .recent-posts > header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
   .recent-posts h2 { margin: 0; font-size: 1.3rem; }
   .recent-posts header p { margin: 0.2rem 0 0; color: var(--text-color-muted); font-size: 0.8rem; }
-  .recent-posts__all, .recent-posts__read { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--color-blue); text-decoration: none; font-size: 0.76rem; }
+  .recent-posts__all { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--color-blue); text-decoration: none; font-size: 0.76rem; }
   .recent-posts__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
-  .recent-posts article { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--border-color-muted); border-radius: 1rem; background: var(--box-bg-shadow); padding: 1.1rem; }
-  .recent-posts article:focus-within, .recent-posts article:hover { border-color: var(--color-blue); }
+  .recent-posts article { --post-accent: var(--color-green); display: flex; min-width: 0; }
+  .recent-posts article:nth-child(2) { --post-accent: var(--color-blue); }
+  .recent-posts article:nth-child(3) { --post-accent: var(--color-purple); }
+  .recent-posts__card { display: flex; flex-direction: column; width: 100%; min-width: 0; border: 1px solid color-mix(in srgb, var(--post-accent) 25%, var(--border-color-muted)); border-radius: 1rem; background: color-mix(in srgb, var(--post-accent) 12%, var(--box-bg-shadow)); padding: 1.1rem; color: var(--text-color); text-decoration: none; transition: border-color 180ms ease, transform 180ms ease; }
+  .recent-posts__card:hover { border-color: var(--post-accent); transform: translateY(-3px); }
   .recent-posts time { color: var(--text-color-muted); font-size: 0.72rem; font-variant-numeric: tabular-nums; }
   .recent-posts h3 { margin: 0.5rem 0; font-size: 1rem; line-height: 1.5; overflow-wrap: anywhere; }
-  .recent-posts h3 a { color: var(--text-color); text-decoration: none; }
-  .recent-posts h3 a:hover { color: var(--color-blue); }
-  .recent-posts article p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; margin: 0 0 1rem; color: var(--text-color-muted); font-size: 0.8rem; line-height: 1.8; }
-  .recent-posts__read { margin-top: auto; }
+  .recent-posts__card:hover h3 { color: var(--post-accent); }
+  .recent-posts article p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; margin: 0; color: var(--text-color-muted); font-size: 0.8rem; line-height: 1.8; }
   .recent-posts a:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 3px; }
   @media (max-width: 760px) { .recent-posts__list { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .recent-posts__card { transition: none; } .recent-posts__card:hover { transform: none; } }
 </style>

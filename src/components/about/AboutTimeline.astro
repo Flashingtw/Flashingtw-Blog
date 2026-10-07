@@ -55,6 +55,7 @@ function getCategoryTone(category: string) {
                   "timeline-card",
                   {
                     "timeline-card--featured": event.featured,
+                    "timeline-card--linked": Boolean(event.href),
                     "timeline-card--upcoming": event.status === "upcoming",
                   },
                 ]}
@@ -83,8 +84,8 @@ function getCategoryTone(category: string) {
                 )}
 
                 {event.href && (
-                  <a class="timeline-card__link" href={event.href}>
-                    看相關紀錄 <i class="i-ri-arrow-right-line" aria-hidden="true" />
+                  <a class="timeline-card__link" href={event.href} aria-label={`閱讀：${event.title}`}>
+                    <span class="timeline-card__hint" aria-hidden="true">前往文章 <i class="i-ri-arrow-right-line" aria-hidden="true" /></span>
                   </a>
                 )}
               </article>
@@ -244,6 +245,7 @@ function getCategoryTone(category: string) {
   }
 
   .timeline-card {
+    position: relative;
     min-width: 0;
     border: 1px solid var(--border-color-muted);
     border-radius: 0.95rem;
@@ -252,7 +254,7 @@ function getCategoryTone(category: string) {
     transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
   }
 
-  .timeline-card:hover {
+  .timeline-card--linked:hover, .timeline-card--linked:focus-within {
     border-color: color-mix(in srgb, var(--timeline-accent) 55%, var(--border-color-muted));
     box-shadow: var(--shadow-card-soft-hover);
     transform: translateX(3px);
@@ -348,15 +350,31 @@ function getCategoryTone(category: string) {
   .timeline-card__details span { color: var(--text-color-muted); }
 
   .timeline-card__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    margin-top: 0.7rem;
-    color: var(--timeline-accent);
-    font-size: 0.76rem;
-    font-weight: 750;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    overflow: hidden;
     text-decoration: none;
   }
+
+  .timeline-card__link:focus-visible { outline: 2px solid var(--timeline-accent); outline-offset: 3px; }
+
+  .timeline-card__hint {
+    position: absolute;
+    inset: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    color: #fff;
+    background: linear-gradient(120deg, rgb(24 20 35 / 70%), rgb(69 42 100 / 85%));
+    opacity: 0;
+    transition: opacity 180ms ease;
+    font-size: 0.9rem;
+    font-weight: 750;
+  }
+
+  .timeline-card__link:hover .timeline-card__hint, .timeline-card__link:focus-visible .timeline-card__hint { opacity: 1; }
 
   @media (max-width: 640px) {
     .timeline-year[open] {
@@ -383,6 +401,7 @@ function getCategoryTone(category: string) {
 
   @media (prefers-reduced-motion: reduce) {
     .timeline-card { transition: none; }
+    .timeline-card__hint { transition: none; }
     .timeline-card:hover { transform: none; }
   }
 </style>

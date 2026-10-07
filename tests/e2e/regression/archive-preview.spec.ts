@@ -10,7 +10,13 @@ for (const theme of ["light", "dark"] as const) {
         (value) => localStorage.setItem("shokax-color-scheme", value),
         theme,
       );
-      for (const route of ["/archives/", "/archives/2026/", "/archives/2026/08/"]) {
+      for (const route of [
+        "/archives/",
+        "/archives/2026/",
+        "/categories/%E5%BF%83%E5%BE%97/",
+        "/tags/cpe/",
+        "/archives/2026/08/",
+      ]) {
         await page.goto(route);
         const entries = page.locator(".archive-entry");
         await expect(entries.first()).toBeVisible();
@@ -33,7 +39,9 @@ for (const theme of ["light", "dark"] as const) {
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
           true,
         );
-        const image = page.locator(".archive-cover img").first();
+        const images = page.locator(".archive-cover img");
+        if ((await images.count()) === 0) continue;
+        const image = images.first();
         await image.scrollIntoViewIfNeeded();
         await expect
           .poll(() => image.evaluate((el: HTMLImageElement) => el.naturalWidth))
