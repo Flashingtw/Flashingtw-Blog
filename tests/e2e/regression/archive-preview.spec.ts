@@ -15,7 +15,16 @@ for (const theme of ["light", "dark"] as const) {
         const entries = page.locator(".archive-entry");
         await expect(entries.first()).toBeVisible();
         await expect(entries.first().locator(".archive-excerpt")).not.toBeEmpty();
-        await expect(entries.first().getByRole("link", { name: "閱讀更多" })).toBeVisible();
+        await expect(entries.first().getByRole("link", { name: "閱讀更多" })).toHaveCount(0);
+        const firstCard = entries.first().locator(".archive-card");
+        const titleLink = firstCard.locator("h3 a");
+        const postHref = await titleLink.getAttribute("href");
+        // 點卡片右上角留白，確認不是只有標題能導覽。
+        const cardBounds = await firstCard.boundingBox();
+        await firstCard.click({ position: { x: cardBounds!.width - 8, y: 8 } });
+        await expect(page).toHaveURL(postHref!);
+        await page.goBack();
+        await expect(page).toHaveURL(route);
         const dates = await entries
           .locator("time")
           .evaluateAll((items) => items.map((item) => item.getAttribute("datetime") ?? ""));
@@ -41,3 +50,21 @@ for (const theme of ["light", "dark"] as const) {
     });
   }
 }
+
+test("@regression 歸檔卡片保留分類導覽與鍵盤文章導覽", async ({ page }) => {
+  await page.goto("/archives/");
+  const card = page.locator(".archive-card").first();
+  const category = card.locator(".archive-category");
+  const categoryHref = await category.getAttribute("href");
+  await category.click();
+  await expect(page).toHaveURL(categoryHref!);
+  await page.goBack();
+  const titleLink = card.locator("h3 a");
+  const postHref = await titleLink.getAttribute("href");
+  await card.locator(".archive-category").focus();
+  await page.keyboard.press("Tab");
+  await expect(titleLink).toBeFocused();
+  await expect(card).toHaveCSS("outline-style", "solid");
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(postHref!);
+});

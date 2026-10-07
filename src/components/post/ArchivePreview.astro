@@ -17,17 +17,16 @@ const dateLabel = `${String(date.getMonth() + 1).padStart(2, "0")}.${String(date
   <time class="archive-date" itemprop="dateCreated" datetime={date.toISOString()}>{dateLabel}</time>
   <div class="archive-card">
     {cover && (
-      <a class="archive-cover" href={href} tabindex="-1" aria-hidden="true">
+      <div class="archive-cover">
         {typeof cover === "string"
           ? <img src={cover} alt="" width="480" height="300" loading="lazy" decoding="async" />
           : <Image src={cover} alt="" width={480} height={300} loading="lazy" />}
-      </a>
+      </div>
     )}
     <div class="archive-copy">
       {category && <a class="archive-category" href={toCategoryHref(category)}>{category}</a>}
       <h3><a href={href} itemprop="url"><span itemprop="headline">{post.data.title}</span></a></h3>
       {excerpt && <p class="archive-excerpt" itemprop="description">{excerpt}</p>}
-      <a class="archive-read" href={href}>{t("button.readMore")} <i class="i-ri-arrow-right-line" aria-hidden="true" /></a>
     </div>
   </div>
 </article>
@@ -46,6 +45,8 @@ const dateLabel = `${String(date.getMonth() + 1).padStart(2, "0")}.${String(date
   .archive-entry.item.normal::before { background: var(--archive-accent); }
   .archive-date { padding-top: 1rem; color: var(--text-color-muted); font-size: 0.78rem; font-variant-numeric: tabular-nums; }
   .archive-card {
+    position: relative;
+    isolation: isolate;
     min-width: 0;
     overflow: hidden;
     border: 1px solid var(--border-color-muted);
@@ -58,12 +59,15 @@ const dateLabel = `${String(date.getMonth() + 1).padStart(2, "0")}.${String(date
   .archive-cover { display: block; }
   .archive-cover img { width: 100%; height: 10rem; object-fit: cover; margin: 0; }
   .archive-copy { padding: 1.1rem 1.25rem; }
-  .archive-category { color: var(--archive-accent); font-size: 0.72rem; text-decoration: none; }
+  .archive-category { position: relative; z-index: 2; color: var(--archive-accent); font-size: 0.72rem; text-decoration: none; }
   .archive-copy h3 { margin: 0.3rem 0 0.6rem; font-size: 1.1rem; line-height: 1.5; overflow-wrap: anywhere; }
   .archive-copy h3 a { color: var(--text-color); text-decoration: none; }
+  /* 延伸原生標題連結，讓圖片、摘要和留白都能點進文章。 */
+  .archive-copy h3 a::after { position: absolute; inset: 0; z-index: 1; content: ""; }
+  .archive-copy h3 a:focus-visible { outline: none; }
+  .archive-card:has(h3 a:focus-visible) { outline: 2px solid var(--archive-accent); outline-offset: 3px; }
   .archive-copy h3 a:hover { color: var(--archive-accent); }
-  .archive-excerpt { margin: 0 0 0.8rem; color: var(--text-color-muted); font-size: 0.84rem; line-height: 1.8; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .archive-read { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.76rem; color: var(--archive-accent); text-decoration: none; }
+  .archive-excerpt { margin: 0; color: var(--text-color-muted); font-size: 0.84rem; line-height: 1.8; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   a:focus-visible { outline: 2px solid var(--archive-accent); outline-offset: 3px; }
   @media (max-width: 640px) {
     .archive-entry.item.normal { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; padding-left: 1.2rem; }
