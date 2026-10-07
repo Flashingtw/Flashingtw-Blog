@@ -1,5 +1,15 @@
 [
   {
+    "datetime": "2026-10-06",
+    "title": "CPE 大學程式能力檢定・臺大考場",
+    "category": "能力檢測",
+    "result": "4/7 題｜總排名 31・高中職第 2",
+    "description": "到臺大參加 CPE，從遞迴、字串比對到 DFS，一路跟題目和輸入輸出搏鬥。",
+    "learning": "演算法之外，讀題細節與輸入輸出的檢查也很重要；下次想把第五題寫出來。",
+    "href": "/posts/experience/cpe/",
+    "featured": true
+  },
+  {
     "datetime": "2026-08-14",
     "title": "第 12 屆成大高中生程式設計邀請賽決賽",
     "category": "團隊競賽",

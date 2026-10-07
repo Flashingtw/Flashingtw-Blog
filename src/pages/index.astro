@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import AboutOverview from "@/components/about/AboutOverview.astro";
+import RecentPosts from "@/components/about/RecentPosts.astro";
 import WalineComments from "@/components/post/WalineComments.svelte";
 import { currentLocale } from "@/i18n";
 import AboutContent, { frontmatter as aboutFrontmatter } from "@/content/about.mdx";
@@ -69,6 +70,7 @@ const finalPageCover = frontmatter.image || frontmatter.cover;
       >
         <meta itemprop="name" content="Flashingtw" />
         <AboutOverview updated={updatedDate} />
+        <RecentPosts />
         <AboutContent />
       </div>
     </article>
