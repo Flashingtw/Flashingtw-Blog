@@ -1,5 +1,5 @@
 ---
-title: CPE 臺大考場心得
+title: CPE 2026/10/06 心得
 date: 2026-10-07
 categories: [心得]
 tags: [競程,C++,CPE]
