@@ -8,11 +8,11 @@ export type AboutProject = {
 
 export const aboutIntro = {
   name: "Flashingtw",
-  grade: "準高二",
-  school: "大安高工電子科",
+  grade: "高二",
+  school: "大安高工-電子科",
   roles: ["競程新手", "大安電研社社長"],
   greeting: "嗨! 歡迎來到我的網站 :D",
-  message: "我主要在學競程,有時候也會做些專案，把高中生活記錄下來",
+  message: "我主要在學競程,這裡通常都在記錄我的生活及競賽經歷~",
 } as const;
 
 export const aboutProjects = [
@@ -21,7 +21,7 @@ export const aboutProjects = [
     href: "https://github.com/Flashingtw/DungeonGenerator-paper",
     image: "/assets/projects/minecraft.svg",
     tech: "Java · Minecraft",
-    description: "一個會在 Minecraft 裡生成迷宮的插件，順便讓我體驗效能問題有多可怕。",
+    description: "一個會在 Minecraft 裡生成迷宮的插件。",
   },
   {
     name: "anonymous-ig",
