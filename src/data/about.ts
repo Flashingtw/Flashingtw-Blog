@@ -24,11 +24,11 @@ export const aboutProjects = [
     description: "一個會在 Minecraft 裡生成迷宮的插件，順便讓我體驗效能問題有多可怕。",
   },
   {
-    name: "CityGenerator",
-    href: "https://github.com/Flashingtw/CityGenerator-Paper",
-    image: "/assets/projects/minecraft.svg",
-    tech: "Java · Minecraft",
-    description: "試著用道路和建築模板拼出城市。想法很大，現在還在慢慢長大中。",
+    name: "anonymous-ig",
+    href: "https://github.com/Flashingtw/anonymous-ig",
+    image: "/assets/projects/terminal.svg",
+    tech: "JavaScript · Web",
+    description: "大安匿名投稿網站，包含投稿與管理介面。",
   },
   {
     name: "CP-Practice",
