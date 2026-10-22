@@ -59,36 +59,43 @@ bun run build
 
 ## 📂 项目结构
 
-该项目遵循 Astro 5 和 Vite 的目录规范标准：
+本站使用 Astro 7、Svelte 5 與 Bun，檔案依用途集中放置：
 
-```tree
-astro-blog-shokax
-├── src/                          # 源文件文件夹
-│   ├── assets/                   # 图片/字体存放处
-│   │   ├── fonts/                # 字体
-│   │   ├── images/               # 🌟 封面图片
-│   │   ├── icons/                # RemixIcon 的部分图标（用于 Shadow DOM）
-│   │   ├── avatar.avif           # 🌟 站点所有者头像
-│   ├── components/               # Astro / Svelte 组件
-│   ├── content/                  # 不属于内容集合的内容
-│   │   ├── friend-rules.md       # 🌟 友链规则
-│   ├── i18n/                     # i18n 系统
-│   ├── layouts/                  # 页面布局
-│   ├── moments/                  # 🌟 动态/说说内容集合
-│   ├── pages/                    # 页面路由
-│   ├── posts/                    # 🌟 文章内容集合
-│   ├── remark-plugins/           # Markdown 扩展
-│   ├── stores/                   # 全局 Store
-│   ├── styles/                   # 非组件化样式表
-│   ├── toolkit/                  # 工具函数
-│   ├── content.config.ts         # 内容集合配置文件
-│   ├── theme.config.ts           # 🌟 主题配置文件
-│   ├── theme.config.template.txt # HyC 交互式配置模板
-├── hyacine.yml                   # HyC 配置文件
-├── astro.config.mjs              # 🌟 Astro 配置文件
-
-# 带有 🌟 的是使用本主题时需要关注的文件夹和文件
+```text
+scripts/                    # 本機發布工具：動態編輯器、Windows 更新腳本
+src/
+├── assets/                 # 需要經過建置處理的圖片、字體
+├── components/
+│   ├── home/               # 首頁自我介紹、專案、最新文章與時間線
+│   ├── header/             # 站名、封面輪播、波浪
+│   ├── moments/            # 動態卡片與連續時間線
+│   ├── post/               # 歸檔共用卡片、文章資訊與導覽
+│   ├── mdx/                # Markdown / MDX 內可用的元件
+│   └── …                   # navbar、sidebar、footer、search 等功能
+├── content/                # 獨立內容：about.mdx、friends-rules.md、announcement.md
+├── data/                   # 首頁資料、時間線、圖片目錄
+├── i18n/                   # 翻譯與語言處理
+├── layouts/                # 頁面骨架、雙欄與三欄布局
+├── moments/                # 動態內容集合
+├── pages/                  # 對外路由
+├── posts/                  # 文章內容集合，資料夾也參與分類處理
+├── satteri-plugins/        # Markdown 解析擴充
+├── stores/                 # 共用互動狀態
+├── styles/                 # 全域樣式；元件樣式保留在元件旁
+└── toolkit/
+    ├── markdown/           # 內容渲染轉換與 Markdown 互動
+    ├── posts/              # 已發布文章篩選、網址、摘要、統計
+    ├── ui/                 # 瀏覽器互動
+    └── …                   # 設定、加密、語言等工具
+tests/e2e/                  # critical、regression、smoke 瀏覽器測試
+public/                     # 保留原始網址、直接提供的靜態資源
 ```
+
+可重用邏輯放在 `src/toolkit/`，對應的 `.test.ts` 與實作放在一起。`src/pages/` 負責路由與頁面組裝，畫面細節放進對應功能的元件目錄。文章的草稿篩選與排序共用 `selectPublishedPosts`；歸檔、分類、標籤的文章卡片共用 `ArchivePreview.astro`。
+
+首頁是 `/`，文章歸檔在 `/archives/`，動態在 `/moments/`。`src/posts/` 的檔名會形成公開文章網址，整理元件時保留文章檔名。Astro、套件管理器和託管平台需要的設定留在根目錄，例如 `astro.config.mjs`、`package.json`、`hyacine.yml`。
+
+動態編輯器用 `python scripts/add-moments.py` 啟動；Windows 的 `scripts/update.bat` 提供既有的互動式提交、推送流程。`dist/`、`.astro/`、測試報告及 `debug.log` 都是產物，不納入版本控制。
 
 ## ⚙️ HyC 能力
 

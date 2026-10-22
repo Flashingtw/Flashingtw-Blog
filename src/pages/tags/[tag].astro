@@ -1,14 +1,14 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
+import { selectPublishedPosts } from "@/toolkit/posts/selectPublishedPosts";
 import { toTagSlug } from "@/toolkit/posts/url";
 import { t } from "@/i18n";
 import ArchivePreview from "@/components/post/ArchivePreview.astro";
 import "../../styles/collapse.css";
 
 export async function getStaticPaths() {
-  const allPosts = await getCollection("posts");
-  const publishedPosts = allPosts.filter((post) => !post.data.draft);
+  const publishedPosts = selectPublishedPosts(await getCollection("posts"), { sortByDate: false });
 
   // Collect all unique tags
   const tagSet = new Set<string>();
@@ -31,19 +31,13 @@ interface Props {
 const { tag } = Astro.props;
 
 // Get all published posts
-const allPosts = await getCollection("posts");
-const publishedPosts = allPosts.filter((post) => !post.data.draft);
+const publishedPosts = selectPublishedPosts(await getCollection("posts"));
 
 // Filter posts that have this tag
-const postsWithTag = publishedPosts.filter((post) => {
+const sortedPosts = publishedPosts.filter((post) => {
   const tags = post.data.tags || [];
   return tags.includes(tag);
 });
-
-// Sort posts by date descending (newest first)
-const sortedPosts = postsWithTag.toSorted(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
 
 ---
 

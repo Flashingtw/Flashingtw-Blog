@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { selectPublishedPosts } from "@/toolkit/posts/selectPublishedPosts";
 import { currentLocale, getT } from "@/i18n";
 import { sanitizeThemeColor, type ThemeColorValue } from "@/toolkit/themeColor";
 import SiteUptime from "./SiteUptime.svelte";
@@ -32,8 +33,7 @@ const { config = {}, siteName = "ShokaX", author = "Author" } = Astro.props;
 const t = getT(currentLocale);
 
 // Get all posts for statistics
-const allPosts = await getCollection("posts");
-const posts = allPosts.filter((post) => !post.data.draft);
+const posts = selectPublishedPosts(await getCollection("posts"), { sortByDate: false });
 
 // Calculate statistics
 const wordCounts = posts.map((post) => {

@@ -66,7 +66,12 @@ test("@regression 歸檔卡片保留分類導覽與鍵盤文章導覽", async ({
   const categoryHref = await category.getAttribute("href");
   await category.click();
   await expect(page).toHaveURL(categoryHref!);
+  await expect(page.locator(".timeline .item.header a").first()).toHaveAttribute(
+    "href",
+    "/categories/",
+  );
   await page.goBack();
+  await expect(page.locator(".timeline .item.header a").first()).toHaveAttribute("href", "/");
   const titleLink = card.locator("h3 a");
   const postHref = await titleLink.getAttribute("href");
   await card.locator(".archive-category").focus();

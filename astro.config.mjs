@@ -70,6 +70,7 @@ export default defineConfig({
   trailingSlash: "always",
   redirects: {
     "/about/": "/",
+    "/posts/experience/cpe/": "/posts/experience/cpe-261002/",
     "/page/2/": "/archives/",
     // 保留舊動態分頁，以及先前 rel=next/prev 使用過的網址。
     "/moments/2/": "/moments/",
@@ -99,7 +100,8 @@ export default defineConfig({
       filter: (page) => {
         const path = new URL(page).pathname;
         return (
-          !["/about/", "/page/2/"].includes(path) && !/^\/moments\/(?:page\/)?\d+\/$/.test(path)
+          !["/about/", "/page/2/", "/posts/experience/cpe/"].includes(path) &&
+          !/^\/moments\/(?:page\/)?\d+\/$/.test(path)
         );
       },
     }),

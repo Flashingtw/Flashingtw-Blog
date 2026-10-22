@@ -7,8 +7,8 @@ from tkinter import messagebox
 import threading
 from pathlib import Path
 
-# 預設以腳本所在位置作為專案根目錄，不再綁定特定電腦路徑。
-REPO_PATH = Path(__file__).resolve().parent
+# 從 scripts/ 找回專案根目錄，從任何工作目錄啟動都能寫入同一個內容集合。
+REPO_PATH = Path(__file__).resolve().parent.parent
 MOMENTS_DIR = REPO_PATH / "src" / "moments"
 
 TRANSLATIONS = {

@@ -57,7 +57,7 @@ interface CoverConfig {
 
     /**
      * 固定封面 URL。
-     * - 推荐填 Images.astro 的预设 key："cover-1" ~ "cover-6"（会走 Astro 静态导入与 <Image />）
+     * - 使用 assets/images/cover/ 的圖片檔名（不含副檔名，透過 Astro 靜態匯入與 <Image /> 渲染）
      * - 也可填 public 路径或远程 URL（会使用 <img> 兜底渲染）
      */
     url?: string;

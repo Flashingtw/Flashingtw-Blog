@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
+import { selectPublishedPosts } from "@/toolkit/posts/selectPublishedPosts";
 import { generateTagCloud } from "@/toolkit/posts/generateTagCloud";
 import { toTagHref } from "@/toolkit/posts/url";
 import { t } from "@/i18n";
@@ -8,8 +9,7 @@ import themeConfig from "@/theme.config";
 import "../../styles/tags.css";
 
 // Get all published posts
-const allPosts = await getCollection("posts");
-const publishedPosts = allPosts.filter((post) => !post.data.draft);
+const publishedPosts = selectPublishedPosts(await getCollection("posts"), { sortByDate: false });
 
 // Collect all tags with their counts
 interface TagCount {

@@ -17,10 +17,12 @@ export const POSTS = {
   imageZoomTest: "/posts/image-zoom-test/",
   noteMdxDemo: "/posts/note-mdx-demo/",
   postMigrationTest: "/posts/experience/2026-toi-pre/",
+  codeBlockPost: "/posts/experience/hspc-12th-pre/",
 } as const;
 
 export const FIXTURES = {
   encryptedPost: existsSync(join(process.cwd(), "dist", "posts", "encrypted-test", "index.html")),
+  noteMdxDemo: existsSync(join(process.cwd(), "dist", "posts", "note-mdx-demo", "index.html")),
 } as const;
 
 export const SEARCH_TERMS = {

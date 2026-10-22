@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { POSTS } from "../support/routes";
+import { FIXTURES, POSTS } from "../support/routes";
+
+test.skip(!FIXTURES.noteMdxDemo, "目前內容沒有 MDX 示範文章測試資料");
 
 test("@regression Code Group 渲染多 tab 并可切换", async ({ page }) => {
   const response = await page.goto(POSTS.noteMdxDemo);

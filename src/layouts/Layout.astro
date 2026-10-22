@@ -2,10 +2,11 @@
 import NavBar from "@/components/navbar/NavBar.svelte";
 import { ClientRouter } from "astro:transitions";
 import Analytics from "@/components/Analytics.astro";
-import Brand from "@/components/Brand.astro";
-import HeaderCover from "@/components/HeaderCover.astro";
-import Waves from "@/components/Waves.astro";
+import Brand from "@/components/header/Brand.astro";
+import HeaderCover from "@/components/header/HeaderCover.astro";
+import Waves from "@/components/header/Waves.astro";
 import { getCollection } from "astro:content";
+import { selectPublishedPosts } from "@/toolkit/posts/selectPublishedPosts";
 import type {
   TocItem,
   RelatedPost,
@@ -22,7 +23,7 @@ import "@/styles/mdx-components.css";
 
 import Loading from "@/components/Loading.astro";
 import SeasonalWeather from "@/components/SeasonalWeather.astro";
-import { covers, resolveFixedCover } from "@/components/Images.astro";
+import { covers, resolveFixedCover } from "@/data/images";
 import FloatingToolbar from "@/components/FloatingToolbar.svelte";
 import TwoColumnLayout from "@/layouts/TwoColumnLayout.astro";
 import ThreeColumnLayout from "@/layouts/ThreeColumnLayout.astro";
@@ -91,7 +92,7 @@ const shouldComputeRightSidebarTagCloud =
   enableThirdColumn && rightSidebarConfig.tagCloud === true;
 const ActiveLayout = enableThirdColumn ? ThreeColumnLayout : TwoColumnLayout;
 
-// fixedCover：通过 Images.astro 统一解析（静态导入走 <Image />，字符串走 <img> 兜底）
+// fixedCover：通过图片资料模块统一解析（静态导入走 <Image />，字符串走 <img> 兜底）
 const fixedCover = coverConfig.fixedCover?.enable
   ? resolveFixedCover(coverConfig.fixedCover.url)
   : undefined;
@@ -142,7 +143,7 @@ const absoluteOgImage = new URL(
 
 // Get all posts for widgets
 const allPosts = await getCollection("posts");
-const posts = allPosts.filter((post) => !post.data.draft);
+const posts = selectPublishedPosts(allPosts, { sortByDate: false });
 const moments = shouldComputeRightSidebarRecentMoments
   ? (await getCollection("moments")).toSorted(
       (a, b) =>
@@ -287,7 +288,7 @@ import SearchPage from "@/components/search/SearchPage.svelte";
       <Footer config={footerConfig} {siteName} author={sidebarConfig.author || ""} />
     </div>
     <script>
-      import "@/toolkit/initMdxComponents";
+      import "@/toolkit/markdown/initMdxComponents";
     </script>
     <script>
       import { css } from "@/assets/fonts/LXGWWenKai-Regular.ttf?subsets";

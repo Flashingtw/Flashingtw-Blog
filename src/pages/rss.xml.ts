@@ -1,16 +1,14 @@
 import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
+import { selectPublishedPosts } from "@/toolkit/posts/selectPublishedPosts";
 import themeConfig from "@/theme.config";
 import { toPostHref } from "@/toolkit/posts/url";
 import { t } from "@/i18n";
 
 // 生成站点 RSS 订阅源（/rss.xml）
 export async function GET(context: APIContext) {
-  const posts = await getCollection("posts");
-  const published = posts
-    .filter((post) => !post.data.draft)
-    .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  const published = selectPublishedPosts(await getCollection("posts"));
 
   const siteName = themeConfig.siteName;
   const description =

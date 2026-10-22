@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
+import { selectPublishedPosts } from "@/toolkit/posts/selectPublishedPosts";
 import { structurePostsByDate } from "@/toolkit/posts/structurePostsByDate";
 import { buildArchiveTimeline } from "@/toolkit/posts/buildArchiveTimeline";
 import ArchivePreview from "@/components/post/ArchivePreview.astro";
@@ -9,10 +10,7 @@ import { t } from "@/i18n";
 import "../../styles/collapse.css";
 
 // Get all published posts sorted by date
-const allPosts = await getCollection("posts");
-const publishedPosts = allPosts
-  .filter((post) => !post.data.draft)
-  .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const publishedPosts = selectPublishedPosts(await getCollection("posts"));
 
 // Structure posts by date
 const structuredPosts = structurePostsByDate(publishedPosts, { daily: false });

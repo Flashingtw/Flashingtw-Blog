@@ -1,13 +1,11 @@
 ---
 import { getCollection } from "astro:content";
+import { selectPublishedPosts } from "@/toolkit/posts/selectPublishedPosts";
 import { archiveExcerpt } from "@/toolkit/posts/archiveExcerpt";
 import { toPostHref } from "@/toolkit/posts/url";
 import { t } from "@/i18n";
 
-const posts = (await getCollection("posts"))
-  .filter((post) => !post.data.draft)
-  .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+const posts = selectPublishedPosts(await getCollection("posts")).slice(0, 3);
 ---
 
 {posts.length > 0 && (

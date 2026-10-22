@@ -3,7 +3,7 @@
  * 将 <div class="code-group"> 内连续的 <code-block> 重组为可切换的 Tabs 结构。
  *
  * 输出结构与 src/components/mdx/Tabs.astro 一致，因此客户端无需新增初始化逻辑——
- * initAllTabs()（src/toolkit/initMdxComponents.ts）会自动识别 .md .tabs 并绑定交互。
+ * initAllTabs()（src/toolkit/markdown/initMdxComponents.ts）会自动识别 .md .tabs 并绑定交互。
  *
  * Tab 标签取自代码块语言（<pre class="...language-XXX"> 中的 XXX，大写化）。
  *

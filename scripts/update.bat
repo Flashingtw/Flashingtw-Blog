@@ -1,5 +1,6 @@
 @echo off
 chcp 65001 >nul
+cd /d "%~dp0.."
 echo 正在準備更新你的 GitHub 專案...
 
 git add .

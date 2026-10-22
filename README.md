@@ -59,36 +59,43 @@ Your site is now ready to use. If you'd like to customize it, check the full doc
 
 ## 📂 Project Structure
 
-This project follows the standard directory conventions of Astro 5 and Vite:
+This site uses Astro 7, Svelte 5 and Bun. Files are grouped by their purpose:
 
-```tree
-astro-blog-shokax
-├── src/                          # Source files
-│   ├── assets/                   # Images / fonts
-│   │   ├── fonts/                # Fonts
-│   │   ├── images/               # 🌟 Cover images
-│   │   ├── icons/                # Part of RemixIcon assets (used for Shadow DOM)
-│   │   ├── avatar.avif           # 🌟 Site owner avatar
-│   ├── components/               # Astro / Svelte components
-│   ├── content/                  # Content outside collections
-│   │   ├── friend-rules.md       # 🌟 Friends link rules
-│   ├── i18n/                     # i18n system
-│   ├── layouts/                  # Page layouts
-│   ├── moments/                  # 🌟 Moments / status content collection
-│   ├── pages/                    # Route pages
-│   ├── posts/                    # 🌟 Post content collection
-│   ├── remark-plugins/           # Markdown extensions
-│   ├── stores/                   # Global stores
-│   ├── styles/                   # Non-component stylesheets
-│   ├── toolkit/                  # Utilities
-│   ├── content.config.ts         # Content collections config
-│   ├── theme.config.ts           # 🌟 Theme configuration
-│   ├── theme.config.template.txt # HyC interactive config template
-├── hyacine.yml                   # HyC configuration
-├── astro.config.mjs              # 🌟 Astro configuration
-
-# Items marked with 🌟 are the key files/folders you will likely care about when using this theme
+```text
+scripts/                    # Local publishing tools (Python GUI / Windows batch)
+src/
+├── assets/                 # Images and fonts processed during the build
+├── components/
+│   ├── home/               # Homepage introduction, projects, articles and timeline
+│   ├── header/             # Brand, cover carousel and waves
+│   ├── moments/            # Moment cards and continuous timeline
+│   ├── post/               # Shared archive cards and post details
+│   ├── mdx/                # Components available inside Markdown / MDX
+│   └── …                   # Navbar, sidebar, footer, search and other features
+├── content/                # Standalone content: about.mdx, friends-rules.md, announcement.md
+├── data/                   # Homepage data, timeline and image catalog
+├── i18n/                   # Translations and locale handling
+├── layouts/                # Page shell and two/three-column layouts
+├── moments/                # Moment content collection
+├── pages/                  # Public routes
+├── posts/                  # Article collection; folders also feed category handling
+├── satteri-plugins/        # Markdown parser extensions
+├── stores/                 # Shared interactive state
+├── styles/                 # Global styles; component styles stay with their component
+└── toolkit/
+    ├── markdown/           # Rendering transforms and Markdown interactions
+    ├── posts/              # Published-post selection, URLs, excerpts and statistics
+    ├── ui/                 # Browser interactions
+    └── …                   # Configuration, encryption, i18n and other helpers
+tests/e2e/                  # Critical, regression and smoke browser tests
+public/                     # Static files served at their original URLs
 ```
+
+Reusable logic lives in `src/toolkit/` with its `.test.ts` file beside it. Route files in `src/pages/` assemble layouts and feature components. `selectPublishedPosts` centralizes draft filtering and article ordering; `ArchivePreview.astro` is the shared card for archives, categories and tags.
+
+The homepage is `/`, article archives are `/archives/`, and moments are `/moments/`. Keep filenames in `src/posts/` stable because they determine public article URLs. Build tools and hosting configuration stay at the repository root, including `astro.config.mjs`, `package.json` and `hyacine.yml`.
+
+Run the moment editor with `python scripts/add-moments.py`. On Windows, `scripts/update.bat` provides the existing interactive commit-and-push flow. Generated output (`dist/`, `.astro/`, test reports and `debug.log`) stays out of version control.
 
 ## ⚙️ HyC Capabilities
 
