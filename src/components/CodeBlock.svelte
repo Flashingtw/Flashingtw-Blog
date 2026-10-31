@@ -2,7 +2,6 @@
 
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import { css } from "../assets/fonts/MapleMono-CN-Regular.ttf?subsets";
   import ArrowDownSLine from "@/assets/icons/arrow-down-s-line.svg";
   import ArrowUpSLine from "@/assets/icons/arrow-up-s-line.svg";
   import CheckFill from "@/assets/icons/check-fill.svg";
@@ -214,7 +213,6 @@
     <div
       bind:this={container}
       class="content-wrapper"
-      style="font-family: {css.family};"
     >
       <slot />
     </div>
@@ -243,7 +241,7 @@
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: var(--codeblock-shadow);
-    font-family: "Maple Mono", "Courier New", monospace;
+    font-family: var(--font-code);
   }
 
   .dark.codeblock {
@@ -403,7 +401,7 @@
 
   /* 核心：处理插槽内的样式 */
   :global(code-block pre *) {
-    font-family: Consolas;
+    font-family: var(--font-code);
     font-size: 0.925rem;
     line-height: 1.25rem;
     line-break: anywhere;
