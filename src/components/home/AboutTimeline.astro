@@ -29,7 +29,7 @@ function getCategoryTone(category: string) {
     <span>02</span>
     <div>
       <h2 id="about-timeline-title">時間線</h2>
-      <p>不是每一次都很厲害，但都是我真的走過、真的學到東西的地方。</p>
+      <p>比賽、檢定，還有一些近況。</p>
     </div>
   </header>
 
@@ -74,12 +74,12 @@ function getCategoryTone(category: string) {
 
                 <h4>{event.title}</h4>
                 {event.result && <p class="timeline-card__result">{event.result}</p>}
-                <p class="timeline-card__description">{event.description}</p>
+                {event.description && <p class="timeline-card__description">{event.description}</p>}
 
                 {(event.role || event.learning) && (
                   <div class="timeline-card__details">
                     {event.role && <p><strong>我做了什麼</strong><span>{event.role}</span></p>}
-                    {event.learning && <p><strong>帶走了什麼</strong><span>{event.learning}</span></p>}
+                    {event.learning && <p><strong>補記</strong><span>{event.learning}</span></p>}
                   </div>
                 )}
 

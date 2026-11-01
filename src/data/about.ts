@@ -35,6 +35,6 @@ export const aboutProjects = [
     href: "https://github.com/Flashingtw/CP-Practice",
     image: "/assets/projects/terminal.svg",
     tech: "競程 · 演算法",
-    description: "放平常練競程的程式碼，記錄在各個題庫裡慢慢練習的過程。",
+    description: "放平常在各個題庫寫的練習程式。",
   },
 ] satisfies AboutProject[];

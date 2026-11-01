@@ -18,7 +18,7 @@ test("@regression 關於我使用專屬個人概覽而非文章資訊", async ({
   await expect(article.locator(":scope > header")).toHaveCount(0);
   await expect(article.getByText("閱讀時間", { exact: true })).toHaveCount(0);
 
-  const featuredContent = article.getByRole("region", { name: "三個精選小專案" });
+  const featuredContent = article.getByRole("region", { name: "寫過的東西" });
   await expect(featuredContent.getByRole("link")).toHaveCount(aboutProjects.length);
   await Promise.all(
     aboutProjects.map(async (project) => {

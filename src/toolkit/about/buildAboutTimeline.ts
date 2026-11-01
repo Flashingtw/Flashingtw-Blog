@@ -4,7 +4,7 @@ export interface AboutTimelineEvent {
   title: string;
   category: string;
   result?: string;
-  description: string;
+  description?: string;
   role?: string;
   learning?: string;
   href?: string;
