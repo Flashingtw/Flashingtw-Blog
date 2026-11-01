@@ -1,5 +1,14 @@
 [
   {
+    "datetime": "2026-11-01",
+    "title": "APCS 大學程式設計先修檢測・高級",
+    "category": "能力檢測",
+    "result": "成績待公布",
+    "description": "AACPOJ 測試 255/300，正式成績等 11/13 更新。",
+    "href": "/posts/apcs/26111-h/",
+    "featured": true
+  },
+  {
     "datetime": "2026-10-06",
     "title": "CPE 大學程式能力檢定・臺大考場",
     "category": "能力檢測",
