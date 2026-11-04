@@ -18,7 +18,7 @@ test("@regression 關於我使用專屬個人概覽而非文章資訊", async ({
   await expect(article.locator(":scope > header")).toHaveCount(0);
   await expect(article.getByText("閱讀時間", { exact: true })).toHaveCount(0);
 
-  const featuredContent = article.getByRole("region", { name: "寫過的東西" });
+  const featuredContent = article.getByRole("region", { name: "小專案!" });
   await expect(featuredContent.getByRole("link")).toHaveCount(aboutProjects.length);
   await Promise.all(
     aboutProjects.map(async (project) => {
@@ -72,7 +72,7 @@ test("@regression 關於我時間線在手機尺寸不會產生水平捲動", as
 
 test("@regression 首頁最新文章提供摘要與可用的文章入口", async ({ page }) => {
   await page.goto("/");
-  const recentPosts = page.getByRole("region", { name: "最近寫的文章" });
+  const recentPosts = page.getByRole("region", { name: "最近文章" });
   await expect(recentPosts.locator("article")).toHaveCount(3);
   const title = await recentPosts.locator("article").first().getByRole("heading").innerText();
   await expect(recentPosts.getByRole("link", { name: "所有文章" })).toHaveAttribute(
