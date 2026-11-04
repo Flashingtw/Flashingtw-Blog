@@ -129,7 +129,8 @@ export default defineConfig({
       Font.vite({
         scanFiles: ["src/**/*.{svelte,ts,tsx,js,jsx,md,mdx,json,astro}"],
         css: {
-          fontDisplay: "optional",
+          // 先顯示備用字型，下載完成後再套用網站字型。
+          fontDisplay: "swap",
         },
       }),
       esToolkitPlugin(),
