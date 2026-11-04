@@ -2,6 +2,15 @@
 /* eslint-disable no-await-in-loop */
 import { expect, test, type Page } from "@playwright/test";
 
+test.beforeEach(async ({ page, baseURL }) => {
+  await page.bringToFront();
+  // 只驗證站內版面與互動，避免外部統計、留言和圖片拖延載入。
+  const siteOrigin = new URL(baseURL!).origin;
+  await page.route("**/*", (route) =>
+    new URL(route.request().url()).origin === siteOrigin ? route.continue() : route.abort(),
+  );
+});
+
 async function replayScrollOffsets(page: Page, offsets: number[]) {
   // Windows WebKit 沒有原生回彈，模擬 Safari 會暴露給 scroll listener 的座標。
   await page.evaluate(async (values) => {
@@ -28,10 +37,12 @@ async function settleNavigation(page: Page) {
 }
 
 test("@regression Safari 頂端回彈後仍能點擊導覽列", async ({ page, hasTouch }) => {
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await expect(page.locator("#loading")).toHaveClass(/hidden/);
   await page.waitForFunction(
     () => !document.querySelector("#nav")?.closest("astro-island")?.hasAttribute("ssr"),
+    undefined,
+    { polling: 50 },
   );
 
   const themeButton = page.locator("#nav button[aria-label='切換主題']");
@@ -52,10 +63,12 @@ test("@regression Safari 頂端回彈後仍能點擊導覽列", async ({ page, h
 });
 
 test("@regression Safari 底端回彈不誤判方向，往上捲仍會顯示導覽列", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await expect(page.locator("#loading")).toHaveClass(/hidden/);
   await page.waitForFunction(
     () => !document.querySelector("#nav")?.closest("astro-island")?.hasAttribute("ssr"),
+    undefined,
+    { polling: 50 },
   );
   const maximum = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
   await page.evaluate((y) => scrollTo({ top: y, behavior: "instant" }), maximum);
@@ -71,11 +84,8 @@ test("@regression Safari 底端回彈不誤判方向，往上捲仍會顯示導�
 
 test("@regression Safari 側邊欄固定前後不蓋住正文", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/tags/");
+  await page.goto("/tags/", { waitUntil: "domcontentloaded" });
   await expect(page.locator("#loading")).toHaveClass(/hidden/);
-  await page.waitForFunction(
-    () => !document.querySelector("#sidebar")?.closest("astro-island")?.hasAttribute("ssr"),
-  );
   await page.evaluate(async () => {
     await document.fonts.ready;
     await new Promise<void>((resolve) =>
@@ -100,7 +110,7 @@ test("@regression Safari 側邊欄固定前後不蓋住正文", async ({ page })
 
 test("@regression Safari 平板側欄開合後正文仍能點擊", async ({ page, hasTouch }) => {
   test.skip(!hasTouch, "此案例驗證觸控平板抽屜。");
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await expect(page.locator("#loading")).toHaveClass(/hidden/);
   const sidebar = page.locator("#sidebar");
   await page.locator("#nav button[aria-label='切換側欄']").tap();
