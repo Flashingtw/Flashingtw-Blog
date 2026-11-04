@@ -21,6 +21,7 @@
     "e2e:smoke": "bunx playwright test --grep @smoke",
     "e2e:critical": "bunx playwright test --grep @critical",
     "e2e:regression": "bunx playwright test --grep @regression",
+    "e2e:safari": "bunx playwright test --config playwright.safari.config.ts",
     "hyc": "hyc",
     "prisma": "prisma"
   },

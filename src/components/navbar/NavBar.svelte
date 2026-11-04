@@ -25,6 +25,12 @@
   let atTop = $state(true);
   let isDark = $state(false);
 
+  // Safari 回彈會超出頁面邊界，回到邊界的動畫不算使用者反向捲動。
+  function readScrollPosition() {
+    const maximum = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    return Math.min(Math.max(window.scrollY, 0), maximum);
+  }
+
   onMount(() => {
     if (typeof window === "undefined" || typeof document === "undefined")
       return;
@@ -33,7 +39,7 @@
     const currentTheme = initTheme(document, window);
     isDark = currentTheme === "dark";
 
-    let lastScroll = window.scrollY;
+    let lastScroll = readScrollPosition();
     atTop = lastScroll <= 0;
     let ticking = false;
 
@@ -42,8 +48,9 @@
 
       ticking = true;
       window.requestAnimationFrame(() => {
-        const current = window.scrollY;
-        if (current > lastScroll) showNav = false;
+        const current = readScrollPosition();
+        if (current <= 0) showNav = true;
+        else if (current > lastScroll) showNav = false;
         else if (current < lastScroll) showNav = true;
 
         lastScroll = current;

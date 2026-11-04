@@ -44,11 +44,14 @@ jobs:
       - name: Build site and search index
         run: bun run build
 
-      - name: Install Playwright Chromium
-        run: bunx playwright install --with-deps chromium
+      - name: Install Playwright browsers
+        run: bunx playwright install --with-deps chromium webkit
 
       - name: Run critical browser tests
         run: bun run e2e:critical
+
+      - name: Run Safari scroll tests
+        run: bun run e2e:safari
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

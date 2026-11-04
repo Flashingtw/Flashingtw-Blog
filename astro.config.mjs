@@ -112,6 +112,10 @@ export default defineConfig({
     }),
     PlayformInline({
       Logger: 0,
+      // 多個頁面共用 CSS，內嵌後仍須保留來源，避免後續頁面遺失響應式規則。
+      Beasties: {
+        pruneSource: false,
+      },
     }),
   ],
 
