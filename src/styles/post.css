@@ -39,6 +39,16 @@
   vertical-align: baseline;
 }
 
+/* 多行程式碼保留原始換行，長行交由區塊內水平捲動。 */
+.md pre,
+.md pre code,
+.md pre code * {
+  white-space: pre;
+  line-break: auto;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
 .md .exturl .i-ri-external-link-line {
   display: inline-block;
   vertical-align: -0.125em;

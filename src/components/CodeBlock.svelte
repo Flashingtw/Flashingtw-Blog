@@ -404,8 +404,6 @@
     font-family: var(--font-code);
     font-size: 0.925rem;
     line-height: 1.25rem;
-    line-break: anywhere;
-    white-space: break-spaces;
   }
 
   :global(code-block pre) {
@@ -444,6 +442,8 @@
     counter-increment: step 0;
     display: flex;
     flex-direction: column;
+    width: max-content;
+    min-width: 100%;
   }
 
   :global(code-block code .line::before) {

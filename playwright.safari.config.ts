@@ -3,7 +3,7 @@ import baseConfig from "./playwright.config";
 
 export default defineConfig({
   ...baseConfig,
-  testMatch: "**/safari-scroll.spec.ts",
+  testMatch: ["**/safari-scroll.spec.ts", "**/codeblock-mobile.spec.ts"],
   projects: [
     {
       name: "webkit-desktop",
