@@ -24,6 +24,16 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
     {aboutIntro.roles.map((role) => <li>{role}</li>)}
   </ul>
 
+  <div class="about-intro__achievements" role="group" aria-label="檢定成績">
+    {aboutIntro.achievements.map(({ name, result, href }) => (
+      <a href={href}>
+        <span>{name}</span>
+        <strong>{result}</strong>
+        <i class="i-ri-arrow-right-line" aria-hidden="true" />
+      </a>
+    ))}
+  </div>
+
   <p class="about-intro__updated">最後更新 <time datetime={updated.toISOString()}>{updatedLabel}</time></p>
 </section>
 
@@ -120,6 +130,42 @@ const updatedLabel = updated.toLocaleDateString("zh-TW", {
 
   .about-intro li::before {
     display: none;
+  }
+
+  .about-intro__achievements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1rem;
+  }
+
+  .about-intro__achievements a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    border: 1px solid color-mix(in srgb, var(--color-blue) 30%, var(--border-color-muted));
+    border-radius: 0.7rem;
+    background: color-mix(in srgb, var(--color-blue) 10%, var(--box-bg-shadow));
+    padding: 0.45rem 0.75rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+
+  .about-intro__achievements strong,
+  .about-intro__achievements i {
+    color: var(--color-blue);
+  }
+
+  .about-intro__achievements a:hover {
+    border-color: var(--color-blue);
+  }
+
+  .about-intro__achievements a:focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 3px;
   }
 
   .about-intro__updated {

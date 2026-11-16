@@ -11,6 +11,10 @@ export const aboutIntro = {
   grade: "高二",
   school: "大安高工-電子科",
   roles: ["競程新手", "大安電研社社長"],
+  achievements: [
+    { name: "APCS", result: "5/5 級分", href: "/posts/apcs/26111-h/" },
+    { name: "CPE", result: "4/7 題", href: "/posts/experience/cpe-261002/" },
+  ],
   greeting: "嗨! 歡迎來到我的網站 :D",
   message: "我主要在學競程,這裡通常都在記錄我的生活及競賽經歷~",
 } as const;
