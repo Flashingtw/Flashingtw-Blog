@@ -101,7 +101,12 @@ const advancedCarousel = coverConfig.advancedCarousel === true;
 const headerCovers = advancedCarousel
   ? await resolveHeaderCovers({
       coverUrls: coverConfig.coverUrls,
-      fallbackCovers: covers,
+      fallbackCovers: [
+        ...covers.slice(0, 1),
+        // 《請問您今天要來點兔子嗎？》白色情人節官方桌布，沿用原圖網址。
+        "https://gochiusa.com/core_sys/images/main/cont/special/43/chino_1920.jpg",
+        ...covers.slice(1),
+      ],
     })
   : [];
 
