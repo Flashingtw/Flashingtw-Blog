@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import Sidebar from "./Sidebar.svelte";
 import { currentLocale, getT } from "@/i18n";
 import type { NavItemType } from "../navbar/NavTypes";
@@ -57,20 +56,5 @@ const authorLabel = config.author || t("post.author");
   siteState={siteState}
   client:load
 >
-  {
-    (
-      <Image
-        src={avatar}
-        alt={authorLabel}
-        priority
-        quality={65}
-        layout="constrained"
-        class="avatar-image"
-        format="avif"
-        widths={[160, 320]}
-        height={160}
-        width={160}
-      />
-    )
-  }
+  <img src={avatar} alt={authorLabel} width="160" height="160" />
 </Sidebar>

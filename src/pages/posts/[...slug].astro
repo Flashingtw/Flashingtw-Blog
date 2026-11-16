@@ -367,7 +367,7 @@ const computedDescription = post.data.description || post.body?.slice(0, 150).re
           itemscope
           itemtype="http://schema.org/Person"
         >
-          <meta itemprop="image" content={avatar.src} />
+          <meta itemprop="image" content={avatar} />
           <meta itemprop="name" content={author} />
           <meta itemprop="description" content={`${siteName}`} />
         </span>

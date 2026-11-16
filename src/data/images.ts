@@ -2,9 +2,9 @@
 import { sample } from "es-toolkit";
 import type { Post } from "@/toolkit/posts/types";
 import type { ImageMetadata } from "astro";
+import fallbackImage from "../assets/avatar.avif";
 
-import avatarImg from "../assets/avatar.avif";
-export const avatar = avatarImg;
+export const avatar = "/assets/avatar.png";
 
 export const coverMatches = import.meta.glob<{ default: ImageMetadata }>(
   "../assets/images/cover/*.avif",
@@ -34,8 +34,8 @@ export const wallpapers: ImageMetadata[] = Object.values(wallpaperMatches).map(
 );
 
 export function resolveFixedCover(fixedCover?: string): ImageMetadata | string {
-  if (!fixedCover) return avatarImg;
-  return coverPresets[fixedCover] ?? (fixedCover.startsWith("http") ? fixedCover : avatarImg);
+  if (!fixedCover) return fallbackImage;
+  return coverPresets[fixedCover] ?? (fixedCover.startsWith("http") ? fixedCover : fallbackImage);
 }
 
 export function getPostCover(
@@ -47,9 +47,9 @@ export function getPostCover(
   }
 
   const defaultCovers = Covers?.length ? Covers : covers;
-  return sample(defaultCovers) ?? avatarImg;
+  return sample(defaultCovers) ?? fallbackImage;
 }
 
 export function getRandomWallpaper(): ImageMetadata {
-  return sample(wallpapers) ?? avatarImg;
+  return sample(wallpapers) ?? fallbackImage;
 }
